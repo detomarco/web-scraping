@@ -8,11 +8,13 @@ public class Test {
 	public static void main(String[] args) throws JauntException {
 		UserAgent userAgent = new UserAgent();      								
 	    userAgent.settings.autoSaveAsHTML = true;
-	    userAgent.visit("http://www.marcodetoma.altervista.org");       				
-	    for(Element ad: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
-	    	System.out.println(ad);
-	    	
+	    userAgent.visit("http://www.marcodetoma.altervista.org");   
+	    Elements asd;
+	    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
+	    	System.out.println(node.getAttx("name")+": "+ node.getAttx("content"));
+
 	    }
+	    System.out.println(userAgent.doc.innerHTML());
 	    System.out.println("end");
 	}
 
