@@ -9,18 +9,19 @@ import it.univaq.tlp.webscraper.aggregatordata.Storable;
 public abstract class Database implements Storable{
 	
 	@Override
-	public void save(){
-		
+	public void save(String table, Map<String, Object> data) throws Exception{
+		this.insert(table, data);
 	}
 	
 	@Override
-	public void get(){
-		
+	public void get(String table, String condition) throws Exception{
+		this.select(table, condition, "");
 	}
 	
 	@Override
-	public void update(){
-		
+	public void updateStored(String table, Map<String,Object> data, String condition) throws Exception{
+		this.update(table, data, "");
+
 	}
 	
 	protected abstract ResultSet select(String table, String condition, String order) throws Exception;
