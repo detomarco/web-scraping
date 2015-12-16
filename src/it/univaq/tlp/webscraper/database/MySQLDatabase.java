@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
 
-public class MySQLDatabase implements Database {
+public class MySQLDatabase extends Database {
 	
 	private Connection db;
 	
@@ -42,19 +42,19 @@ public class MySQLDatabase implements Database {
 	}
 	
 	@Override
-	public ResultSet select(String table, String condition, String order) throws SQLException{	
+	protected ResultSet select(String table, String condition, String order) throws SQLException{	
 		Statement s = this.db.createStatement();  
 		ResultSet records = s.executeQuery("SELECT * FROM "+table+" WHERE "+condition+" ORDER BY "+order);  
 		return records;
 	}
 	
 	@Override
-	public ResultSet select(String table, String order) throws SQLException{
+	protected ResultSet select(String table, String order) throws SQLException{
 		return this.select(table, "'1'='1'", order);
 	}
 	
 	@Override
-	public void insert(String table, Map<String, Object> data) throws SQLException{	  
+	protected void insert(String table, Map<String, Object> data) throws SQLException{	  
 		Statement s = this.db.createStatement();
 		String query = "INSERT INTO "+table+" SET ";
 		for (Map.Entry<String, Object> entry: data.entrySet()){
@@ -65,7 +65,7 @@ public class MySQLDatabase implements Database {
 	}	
 	
 	@Override
-	public void update(String table, Map<String,Object> data, String condition) throws SQLException{
+	protected void update(String table, Map<String,Object> data, String condition) throws SQLException{
 		Statement s = this.db.createStatement();
 		String query = "UPDATE " +table+" SET ";
 		for(Map.Entry<String, Object> entry: data.entrySet()){
