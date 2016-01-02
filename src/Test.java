@@ -9,7 +9,7 @@ public class Test {
 		UserAgent userAgent = new UserAgent();      								
 	    userAgent.settings.autoSaveAsHTML = true;
 	    userAgent.visit("http://www.marcodetoma.altervista.org");   
-	    Elements asd;
+//	    Elements asd;
 	    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
 	    	System.out.println(node.getAttx("name")+": "+ node.getAttx("content"));
 
@@ -18,6 +18,4 @@ public class Test {
 	    System.out.println("end");
 	}
 	
-	//Prova push Gianluca
-
 }
