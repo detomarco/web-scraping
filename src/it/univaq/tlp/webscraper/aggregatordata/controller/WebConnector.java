@@ -8,7 +8,12 @@ import com.jaunt.UserAgent;
 import it.univaq.tlp.webscraper.aggregatordata.model.AggregatedData;
 
 public class WebConnector {
-
+	
+	/*
+	 * Implementazione test:
+	 * questo metodo deve recuperare le informazioni dalla pagina, collezionando i dati all'interno di un
+	 * oggetto (WebData? per adesso è utilizzato AggregatedData, che deve essere probabilmente modificata).
+	 */
 	public AggregatedData collectData(String source){
 		
 		AggregatedData data = new AggregatedData();
