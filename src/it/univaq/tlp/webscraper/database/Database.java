@@ -1,6 +1,10 @@
 package it.univaq.tlp.webscraper.database;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.lang.Exception;
 
@@ -19,9 +23,34 @@ public abstract class Database implements Storable{
 	}
 	
 	@Override
-	public void get(String table, String condition) throws StorageException{
+	public List<Map<String, String>> get(String table, String condition) throws StorageException{
 		try{
-			this.select(table, condition, "");
+			ResultSet results = this.select(table, condition, "");
+			
+			List<Map<String, String>> rows = new LinkedList<Map<String, String>>();
+			
+			// Recupero nomi colonne (in array)
+			ResultSetMetaData metadata = results.getMetaData();
+			int column_count = metadata.getColumnCount();
+			
+			String column_labels[] = new String[column_count];
+			
+			for(int i=1; i<=column_count; i++){
+				column_labels[i-1] = metadata.getColumnLabel(i);
+			}
+			
+			while (results.next()){
+				Map<String, String> row = new HashMap<String, String>();
+				
+				for (int i=1; i<=column_count; i++){
+					row.put(column_labels[i-1], results.getString(i));
+				}
+				
+				rows.add(row);
+			}
+			
+			return rows;
+			
 		} catch (Exception e){
 			throw new StorageException(e.getMessage(), e.getCause());
 		}
