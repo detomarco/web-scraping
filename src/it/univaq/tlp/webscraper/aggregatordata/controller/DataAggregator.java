@@ -5,7 +5,7 @@ import java.util.Map;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.StorageException;
-import it.univaq.tlp.webscraper.aggregatordata.model.AggregatedData;
+import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 
 public class DataAggregator {
 	

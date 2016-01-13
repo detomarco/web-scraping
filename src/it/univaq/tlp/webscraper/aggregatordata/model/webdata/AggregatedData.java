@@ -1,33 +1,37 @@
-package it.univaq.tlp.webscraper.aggregatordata.model;
+package it.univaq.tlp.webscraper.aggregatordata.model.webdata;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AggregatedData {
 	
-	/*
-	 * NOTA: Gli elementi di questa classe devono essere raffinati, la traccia richiede
-	 * di creare altre classi che vadano a raffinare i dati in modo da poter contenere più informazioni
-	 * 
-	 */
 	private String title;
-	private String text;
+	private String text;	
+	private String author;
 	private String source;
 	private String link;
 	private Date date;
-	private String topic;
+//	private String topic;
+	private Map<String, String> metadata;
 	
 	/*
 	 * Default constructor
 	 */
-	public AggregatedData(){ }
+	public AggregatedData(){
+		this.metadata = new HashMap<String, String>();
+	}
 	
-	public AggregatedData(String title, String text, String source, String link, Date date, String topic){
+	public AggregatedData(String title, String text, String author, String source, String link, Date date/*, String topic*/){
+		this();
+		
 		this.title = title;
 		this.text = text;
+		this.author = author;
 		this.source = source;
 		this.link = link;
 		this.date = date;
-		this.topic = topic;	
+//		this.topic = topic;	
 	}
 	
 	/*
@@ -39,6 +43,10 @@ public class AggregatedData {
 	
 	public void putText(String text){
 		this.text = text;
+	}
+	
+	public void putAuthor(String author){
+		this.author = author;
 	}
 	
 	public void putSource(String source){
@@ -53,9 +61,13 @@ public class AggregatedData {
 		this.date = date;
 	}
 	
-	public void putTopic(String topic){
-		this.topic = topic;
+	public void addMetadata(String key, String value){
+		metadata.put(key, value);
 	}
+	
+//	public void putTopic(String topic){
+//		this.topic = topic;
+//	}
 	
 	/*
 	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
@@ -80,7 +92,15 @@ public class AggregatedData {
 		return this.date;
 	}
 	
-	public String getTopic(){
-		return this.topic;
+	public Map<String, String> getMetadata(){
+		return this.metadata;
 	}
+	
+	public String getMetadata(String key){
+		return metadata.get(key);
+	}
+	
+//	public String getTopic(){
+//		return this.topic;
+//	}
 }
