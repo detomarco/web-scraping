@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jaunt1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.37-bin.jar"/>
+	<classpathentry kind="lib" path="lib/jodd-3.6.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

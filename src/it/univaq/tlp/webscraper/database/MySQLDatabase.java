@@ -13,20 +13,14 @@ public class MySQLDatabase extends Database {
 	private Connection db;
 	
 	// Quando la classe viene istanziata, si connette automaticamente
-	public MySQLDatabase(DatabaseConfig cfg){
-		connect(cfg);
-	}
-	
-	// Connette il database (setta la variabile Connection)
-	public void connect(DatabaseConfig cfg) {
-		
+	public MySQLDatabase(String user, String password, String host, int port, String db_name){
 		Properties connProps = new Properties();
-		connProps.put("user", cfg.getUser());
-		connProps.put("password", cfg.getPassword());
+		connProps.put("user", user);
+		connProps.put("password", password);
 		
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.db = DriverManager.getConnection("jdbc:mysql://"+cfg.getHost()+":"+cfg.getPort()+"/"+cfg.getDbname(), connProps);
+			this.db = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db_name, connProps);
 			System.out.println("Database connesso!");
 		} catch (SQLException e){
 			System.out.println("Errore conenssione: SQLException");
@@ -38,8 +32,8 @@ public class MySQLDatabase extends Database {
 		} finally {
 			System.out.println("End connection try");
 		}
-		
 	}
+	
 	
 	@Override
 	protected ResultSet select(String table, String condition, String order) throws SQLException{	

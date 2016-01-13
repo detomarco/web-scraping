@@ -10,7 +10,7 @@ public class Program {
 
 	public static void main(String[]args){
 		
-		Storable storage = new MySQLDatabase(new DatabaseConfig("root", "root", "localhost","3306", "web_scraping"));
+		Storable storage = new MySQLDatabase("root", "root", "localhost", 3306, "web_scraping");
 		
 		WebConnector connector = new WebConnector();
 		DataAggregator aggregator = new DataAggregator(storage);
