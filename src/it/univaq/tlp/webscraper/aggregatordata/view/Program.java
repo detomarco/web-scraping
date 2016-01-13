@@ -17,7 +17,7 @@ public class Program {
 		
 		AggregatedData data = connector.collectData("http://www.marcodetoma.altervista.org");
 		
-		aggregator.aggregate(data);
+//		aggregator.aggregate(data);
 		
 		System.out.println(data.getTitle());
 		

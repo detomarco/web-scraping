@@ -12,6 +12,8 @@ public class Website {
 	
 	private Set<String> topics;
 	
+	private Template template;
+	
 	public Website(String name, String address){
 		this.name = name;
 		this.address = address;
@@ -35,12 +37,20 @@ public class Website {
 		return this.topics;
 	}
 	
+	public Template getTemplate(){
+		return this.template;
+	}
+	
 	public void updateAddress(String address){
 		this.address = address;
 	}
 	
 	public void updateDescription(String description){
 		this.description = description;
+	}
+	
+	public void setTemplate(Template template){
+		this.template = template;
 	}
 	
 	public void addTopic(String topic){

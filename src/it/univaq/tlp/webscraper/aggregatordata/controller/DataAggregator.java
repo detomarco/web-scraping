@@ -15,9 +15,7 @@ public class DataAggregator {
 		this.storage = storage;
 	}
 	
-	public void aggregate(AggregatedData data){
-		
-		String source = data.getSource();
+	public void aggregate(String source){
 		
 		List<Map<String, String>> results;
 		try{
@@ -29,6 +27,16 @@ public class DataAggregator {
 		}
 		
 	}
+	
+	/*
+	 * Componente Data Aggregator:
+	 * 
+	 * 1) riceve in input un url da cui ricavare dati
+	 * 2) controlla nel database quali sono gli ultimi dati registrati per quell'url
+	 * 3) controlla nel database qual e' il template utilizzato dal sito web
+	 * 4) chiama il connettore web per recuperare i dati
+	 * 5) memorizza i nuovi dati nel database
+	 */
 	
 	
 }
