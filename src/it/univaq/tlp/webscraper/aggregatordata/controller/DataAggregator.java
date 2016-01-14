@@ -18,13 +18,6 @@ public class DataAggregator {
 	public void aggregate(String source){
 		
 		List<Map<String, String>> results;
-		try{
-			results = storage.get("web_datas", "source = "+source);
-		} catch (StorageException e){
-			e.printStackTrace();
-			
-			return;
-		}
 		
 	}
 	

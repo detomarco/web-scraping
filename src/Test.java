@@ -5,13 +5,6 @@ import com.jaunt.UserAgent;
 
 import jodd.jerry.Jerry;
 
-//import jodd.io.FileUtil;
-//import jodd.io.NetUtil;
-//import jodd.jerry.Jerry;
-//import jodd.util.SystemUtil;
-
-//import static jodd.jerry.Jerry.jerry;
-
 public class Test {
 
 	public static void main(String[] args) throws JauntException {
