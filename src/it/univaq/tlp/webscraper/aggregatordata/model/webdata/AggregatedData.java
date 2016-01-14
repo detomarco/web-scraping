@@ -1,5 +1,8 @@
 package it.univaq.tlp.webscraper.aggregatordata.model.webdata;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +64,20 @@ public class AggregatedData {
 		this.date = date;
 	}
 	
+	public void putDate(String date, String format){
+		DateFormat df = new SimpleDateFormat(format);
+		
+		Date parsedDate;
+		
+		try{
+			parsedDate = df.parse(date);
+		} catch (ParseException e){
+			parsedDate = null;
+		}
+		
+		this.date = parsedDate;
+	}
+	
 	public void addMetadata(String key, String value){
 		metadata.put(key, value);
 	}
@@ -103,4 +120,9 @@ public class AggregatedData {
 //	public String getTopic(){
 //		return this.topic;
 //	}
+	
+	@Override
+	public String toString(){
+		return title+": "+text+"\n"+metadata;
+	}
 }

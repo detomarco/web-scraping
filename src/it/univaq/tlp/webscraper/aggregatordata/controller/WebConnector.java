@@ -1,9 +1,7 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.jaunt.Element;
 import com.jaunt.NotFound;
@@ -40,7 +38,8 @@ public class WebConnector {
 		try{
 			HTML = userAgent.doc.getFirst("<html>").innerHTML();
 		} catch (NotFound e){
-			e.printStackTrace();
+//			e.printStackTrace();
+			
 		}
 		// ...fine pezzo comune	
 		
@@ -51,18 +50,25 @@ public class WebConnector {
 		data.putText((doc.$(template.getTextSelector()).html()));
 		data.putAuthor((doc.$(template.getTextSelector()).html()));
 		
-		String date = doc.$(template.getDateSelector()).html();
-		DateFormat df = new SimpleDateFormat(template.getDateFormat());
-		Date parsedDate;
+		data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
+		
+		data.putAuthor((doc.$(template.getTextSelector()).html()));
+		
+		data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
+
+
+		data.putSource(url);
+		
+		// Inserimento metadati
+		Map<String, String> metadata = new HashMap<String, String>();
 		
 		try{
-			parsedDate = df.parse(date);
-		} catch (ParseException e){
-			parsedDate = null;
-		}
-		
-		data.putDate(parsedDate);
-		data.putSource(url);
+		    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
+		    	data.addMetadata(node.getAttx("name"), node.getAttx("content"));
+		    }
+	    } catch (NotFound e){
+	    	
+	    }
 		
 	    return data;
 	}

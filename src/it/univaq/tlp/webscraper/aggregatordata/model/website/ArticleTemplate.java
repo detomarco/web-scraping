@@ -8,6 +8,10 @@ public class ArticleTemplate extends Template{
 	private String author_selector;
 	private String date_format;
 	
+	public ArticleTemplate(){
+		super("ciao");
+	}
+	
 	public ArticleTemplate(String context, String title_selector, String text_selector, String author_selector, String date_selector, String date_format){
 		super(context);
 		this.title_selector = title_selector;
