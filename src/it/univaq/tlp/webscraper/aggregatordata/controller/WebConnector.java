@@ -1,6 +1,8 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.jaunt.Element;
@@ -9,7 +11,6 @@ import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
-import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import jodd.jerry.Jerry;
 
@@ -48,15 +49,8 @@ public class WebConnector {
 		// Estrazione informazioni ed inserimento nell'oggetto
 		data.putTitle((doc.$(template.getTitleSelector()).html()));
 		data.putText((doc.$(template.getTextSelector()).html()));
-		data.putAuthor((doc.$(template.getTextSelector()).html()));
-		
+		data.putAuthor((doc.$(template.getAuthorSelector()).html()));
 		data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
-		
-		data.putAuthor((doc.$(template.getTextSelector()).html()));
-		
-		data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
-
-
 		data.putSource(url);
 		
 		// Inserimento metadati
@@ -64,16 +58,24 @@ public class WebConnector {
 		
 		try{
 		    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
-		    	data.addMetadata(node.getAttx("name"), node.getAttx("content"));
+		    	// Se è presente un contenuto (verificare che questo sia il controllo giusto)
+		    	if(!node.getAttx("content").equals("")){
+		    		data.addMetadata(node.getAttx("name"), node.getAttx("content"));
+		    	}
 		    }
-	    } catch (NotFound e){
+	    } catch (NotFound e){ }
+		
+		// Inserimento didascalie delle immagini
+		List img_caption = new ArrayList<>();
+	    for(Element node: userAgent.doc.findEvery("<img>")){
+	    	// Se è presente una didascalia (verificare che questo sia il controllo giusto)
+	    	if(!node.getAttx("alt").equals("")){
+	    		data.addImgCaption(node.getAttx("alt"));
+	    	}
 	    	
 	    }
-		
+	    
 	    return data;
 	}
-	
-	
-	
-	
+
 }

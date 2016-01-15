@@ -3,32 +3,39 @@ package it.univaq.tlp.webscraper.aggregatordata.model.webdata;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AggregatedData {
 	
 	private String title;
+	private String heading;
 	private String text;	
 	private String author;
+	
 	private String source;
 	private String link;
 	private Date date;
 //	private String topic;
+	private List<String> img_caption;
 	private Map<String, String> metadata;
 	
 	/*
 	 * Default constructor
 	 */
 	public AggregatedData(){
+		this.img_caption = new ArrayList<>();
 		this.metadata = new HashMap<String, String>();
 	}
 	
-	public AggregatedData(String title, String text, String author, String source, String link, Date date/*, String topic*/){
+	public AggregatedData(String title, String heading, String text, String author, String source, String link, Date date/*, String topic*/){
 		this();
 		
 		this.title = title;
+		this.heading = heading;
 		this.text = text;
 		this.author = author;
 		this.source = source;
@@ -42,6 +49,10 @@ public class AggregatedData {
 	 */
 	public void putTitle(String title){
 		this.title = title;
+	}
+	
+	public void putHeading(String heading){
+		this.heading = heading;
 	}
 	
 	public void putText(String text){
@@ -80,6 +91,10 @@ public class AggregatedData {
 	
 	public void addMetadata(String key, String value){
 		metadata.put(key, value);
+	}
+	
+	public void addImgCaption(String value){
+		img_caption.add(value);
 	}
 	
 //	public void putTopic(String topic){
