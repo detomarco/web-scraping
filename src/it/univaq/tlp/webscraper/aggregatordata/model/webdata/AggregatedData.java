@@ -112,6 +112,10 @@ public class AggregatedData {
 		return this.text;
 	}
 	
+	public String getAuthor(){
+		return this.author;
+	}
+	
 	public String getSource(){
 		return this.source;
 	}

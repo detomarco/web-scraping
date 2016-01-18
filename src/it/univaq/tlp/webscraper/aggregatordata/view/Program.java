@@ -14,7 +14,7 @@ public class Program {
 		
 		DataAggregator aggregator = new DataAggregator();
 		
-		aggregator.aggregate("http://www.repubblica.it/cronaca/2016/01/18/news/maltempo_bufere_neve_su_adriatico_scuole_chiuse_in_abruzzo_e_puglia-131504217/");
+		aggregator.aggregate("http://www.wired.it/attualita/ambiente/2016/01/18/pontevedra-smog-linquinamento-banditi-15-anni-rischio-misure-immediate/?utm_source=facebook.com&utm_medium=marketing&utm_campaign=wired");
 		
 //		AggregatedData data = connector.collectData("http://www.marcodetoma.altervista.org");
 		

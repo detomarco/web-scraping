@@ -24,9 +24,12 @@ public class DataAggregator {
 		
 //		List<Map<String, String>> results;
 		
-		AggregatedData data = connector.collectArticleData(new ArticleTemplate("cronaca","body div.inner-container h1",), source);
+		AggregatedData data = connector.collectArticleData(new ArticleTemplate("attualita", "body div#main-article header h1", "body div#main-article > p", "body div.author div.who h4 a", "body div.author div.when p0", "dd/mm/yyyy"), source);
+		System.out.println("Title: " + data.getTitle());
+		System.out.println("Text: " + data.getText());
+		System.out.println("Author: " + data.getAuthor());
 		
-		System.out.println(data);
+		
 	}
 	
 	/*
