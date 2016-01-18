@@ -17,12 +17,14 @@ public class DataAggregator {
 		this.storage = storage;
 		this.connector = new WebConnector();
 	}
-	
+	public DataAggregator(){
+		this.connector = new WebConnector();
+	}
 	public void aggregate(String source){
 		
 //		List<Map<String, String>> results;
 		
-		AggregatedData data = connector.collectArticleData(new ArticleTemplate(), source);
+		AggregatedData data = connector.collectArticleData(new ArticleTemplate("cronaca","body div.inner-container h1",), source);
 		
 		System.out.println(data);
 	}

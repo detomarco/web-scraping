@@ -47,7 +47,13 @@ public class WebConnector {
 		Jerry doc = Jerry.jerry(HTML);
 		
 		// Estrazione informazioni ed inserimento nell'oggetto
-		data.putTitle((doc.$(template.getTitleSelector()).html()));
+		try {
+			data.putTitle(userAgent.doc.findFirst("<head>").findEvery("<title>").innerHTML());
+		} catch (NotFound e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		data.putHeading((doc.$(template.getHeadingSelector()).html()));
 		data.putText((doc.$(template.getTextSelector()).html()));
 		data.putAuthor((doc.$(template.getAuthorSelector()).html()));
 		data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
