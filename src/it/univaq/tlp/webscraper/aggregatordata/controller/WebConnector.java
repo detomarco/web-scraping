@@ -47,13 +47,14 @@ public class WebConnector {
 		Jerry doc = Jerry.jerry(HTML);
 		
 		// Estrazione informazioni ed inserimento nell'oggetto
+		data.putTitle((doc.$("head title").html()));
+		if(template.getHeadingSelector() != null) 	data.putHeading((doc.$(template.getHeadingSelector()).html()));
+		if(template.getEyeletSelector() != null) 	data.putEyelet((doc.$(template.getEyeletSelector()).html()));
+		if(template.getSummarySelector() != null) 	data.putSummary((doc.$(template.getSummarySelector()).html()));
+		if(template.getTextSelector() != null) 		data.putText((doc.$(template.getTextSelector()).text()));
+		if(template.getAuthorSelector() != null) 	data.putAuthor((doc.$(template.getAuthorSelector()).html()));
+		if(template.getDateSelector() != null) 		data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
 		
-			data.putTitle((doc.$("head title").html()));
-		
-		data.putHeading((doc.$(template.getHeadingSelector()).html()));
-		data.putText((doc.$(template.getTextSelector()).text()));
-		data.putAuthor((doc.$(template.getAuthorSelector()).html()));
-		//data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
 		data.putSource(url);
 		
 		// Inserimento metadati

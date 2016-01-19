@@ -14,7 +14,7 @@ public class Program {
 		
 		DataAggregator aggregator = new DataAggregator();
 		
-		aggregator.aggregate("http://www.wired.it/attualita/ambiente/2016/01/18/pontevedra-smog-linquinamento-banditi-15-anni-rischio-misure-immediate/?utm_source=facebook.com&utm_medium=marketing&utm_campaign=wired");
+		aggregator.aggregate("http://www.wired.it/play/musica/2016/01/19/50-generi-musicali-strani-spotify/");
 		
 //		AggregatedData data = connector.collectData("http://www.marcodetoma.altervista.org");
 		

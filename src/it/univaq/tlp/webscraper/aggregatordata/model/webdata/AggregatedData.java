@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class AggregatedData {
 	
 	private String title;
+	
 	private String heading;
+	private String summary;
+	private String eyelet;
+	
 	private String text;	
 	private String author;
 	
@@ -31,11 +36,13 @@ public class AggregatedData {
 		this.metadata = new HashMap<String, String>();
 	}
 	
-	public AggregatedData(String title, String heading, String text, String author, String source, String link, Date date/*, String topic*/){
+	public AggregatedData(String title, String heading, String eyelet, String summary,  String text, String author, String source, String link, Date date/*, String topic*/){
 		this();
 		
 		this.title = title;
 		this.heading = heading;
+		this.eyelet = eyelet;
+		this.summary = summary;
 		this.text = text;
 		this.author = author;
 		this.source = source;
@@ -53,6 +60,14 @@ public class AggregatedData {
 	
 	public void putHeading(String heading){
 		this.heading = heading;
+	}
+	
+	public void putEyelet(String eyelet){
+		this.eyelet = eyelet;
+	}
+	
+	public void putSummary(String summary){
+		this.summary = summary;
 	}
 	
 	public void putText(String text){
@@ -77,7 +92,6 @@ public class AggregatedData {
 	
 	public void putDate(String date, String format){
 		DateFormat df = new SimpleDateFormat(format);
-		
 		Date parsedDate;
 		
 		try{
@@ -106,6 +120,20 @@ public class AggregatedData {
 	 */
 	public String getTitle(){
 		return this.title;
+	}
+	
+	
+	
+	public String getHeading() {
+		return heading;
+	}
+
+	public String getEyelet() {
+		return eyelet;
+	}
+	
+	public String getSummary() {
+		return summary;
 	}
 	
 	public String getText(){
@@ -144,4 +172,7 @@ public class AggregatedData {
 	public String toString(){
 		return title+": "+text+"\n"+metadata;
 	}
+
+	
+
 }
