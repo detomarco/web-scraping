@@ -46,9 +46,11 @@ public class DataAggregator {
 		
 		List<AggregatedData> data = connector.collect(website, url, is_list);
 		
-		for(AggregatedData article: data){			
+		for(AggregatedData article: data){		
+			System.out.println("*****************************");
+			System.out.println(article.getSource());
 			System.out.println(article.getHeading());
-			System.out.println(article.getText());
+			System.out.println(article.getText()+"\n");
 		}
 		
 	}

@@ -38,6 +38,9 @@ public class WebConnector implements ConnectorInterface{
 	 * Metodo che restituisce tutti i dati relativi ad un articolo
 	 */
 	public AggregatedData getArticle(ArticleTemplate template, URL url){
+		
+		System.out.println(template.getEyeletSelector());
+		
 		AggregatedData data = new AggregatedData();
 		
 		try{
@@ -59,12 +62,24 @@ public class WebConnector implements ConnectorInterface{
 		
 		// Estrazione informazioni ed inserimento nell'oggetto
 		data.putTitle((doc.$("head title").html()));
-		if(template.getHeadingSelector() != null) 	data.putHeading((doc.$(template.getHeadingSelector()).html()));
-//		if(template.getEyeletSelector() != null) 	data.putEyelet((doc.$(template.getEyeletSelector()).html()));
-		if(template.getSummarySelector() != null) 	data.putSummary((doc.$(template.getSummarySelector()).html()));
-		if(template.getTextSelector() != null) 		data.putText((doc.$(template.getTextSelector()).text()));
-		if(template.getAuthorSelector() != null) 	data.putAuthor((doc.$(template.getAuthorSelector()).html()));
-//		if(template.getDateSelector() != null) 		data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
+		
+		if(!(template.getHeadingSelector().equals("")) && (template.getHeadingSelector()!=null))
+				data.putHeading((doc.$(template.getHeadingSelector()).html()));
+		
+		if(!(template.getEyeletSelector().equals("")) && (template.getEyeletSelector()!=null))
+				data.putEyelet((doc.$(template.getEyeletSelector()).html()));	
+		
+		if(!(template.getSummarySelector().equals("")) && (template.getSummarySelector()!=null))
+				data.putSummary((doc.$(template.getSummarySelector()).html()));
+		
+		if(!(template.getTextSelector().equals("")) && (template.getTextSelector()!=null))
+				data.putText((doc.$(template.getTextSelector()).text()));
+		
+		if(!(template.getAuthorSelector().equals("")) && (template.getAuthorSelector()!=null))
+				data.putAuthor((doc.$(template.getAuthorSelector()).html()));
+		
+		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null))
+				data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
 		
 		data.putSource(url.toString());
 		
@@ -168,7 +183,7 @@ public class WebConnector implements ConnectorInterface{
 				try {
 					template = (ArticleTemplate)website_manager.getTemplate(website, context, false);
 				} catch (TemplateNotFoundException e) {
-					e.printStackTrace();
+					System.out.println("Template not found :(");
 					continue;
 				}
 				articles.add(getArticle(template, current_url));
