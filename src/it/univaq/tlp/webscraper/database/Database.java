@@ -25,7 +25,7 @@ public abstract class Database implements Storable{
 	@Override
 	public List<Map<String, String>> get(String table, String condition) throws StorageException{
 		try{
-			ResultSet results = this.select(table, condition, "");
+			ResultSet results = this.select(table, condition, "'id' DESC");
 			
 			List<Map<String, String>> rows = new LinkedList<Map<String, String>>();
 			

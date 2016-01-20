@@ -1,10 +1,12 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
@@ -35,9 +37,9 @@ public class WebsiteManaging {
 	
 	
 	
-	public Template getTemplate(Website website, String context, boolean is_list){
+	public Template getTemplate(Website website, String context, boolean is_list) throws TemplateNotFoundException{
 		
-		List<Map<String, String>> results;
+		List<Map<String, String>> results = new LinkedList<>();
 		String template_type;
 		
 		if(is_list) {
@@ -47,10 +49,13 @@ public class WebsiteManaging {
 		}
 		
 		try {
-			results = storage.get(template_type, "fk_website = '"+website.getId()+"' AND context_name = '"+context+"'");
+			results = storage.get(template_type, "(fk_website = '"+website.getId()+"' AND context_name ='"+context+"')");
 		} catch (StorageException e) {
 			e.printStackTrace();
-			return null;
+		}
+		
+		if (results==null || results.isEmpty()){
+			throw new TemplateNotFoundException();
 		}
 		
 		Template template;
@@ -60,6 +65,8 @@ public class WebsiteManaging {
 		} else {
 			template = new ArticleTemplate(results.get(0));
 		}
+		
+		System.out.println("Template found on database!");
 		
 		return template;
 		

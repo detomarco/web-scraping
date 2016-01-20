@@ -12,21 +12,16 @@ public class Program {
 
 	public static void main(String[]args){
 		
-		//Storable storage = new MySQLDatabase("root", "root", "localhost", 3306, "web_scraping");
+		Storable storage = new MySQLDatabase("root", "root", "localhost", 3306, "web_scraper");
 		
-		DataAggregator aggregator = new DataAggregator();
+		DataAggregator aggregator = new DataAggregator(storage);
 		
-//		try {
-//			aggregator.crawl("wired.it/play/musica/2016/01/19/50-generi-musicali-strani-spotify/");
-//		} catch (MalformedURLException e){
-//			e.printStackTrace();
-//		}
+		try {
+			aggregator.crawl("http://www.repubblica.it", true);
+		} catch (MalformedURLException e){
+			e.printStackTrace();
+		}
 		
-//		AggregatedData data = connector.collectData("http://www.marcodetoma.altervista.org");
-		
-//		aggregator.aggregate(data);
-		
-//		System.out.println(data.getTitle());
 		
 	}
 	

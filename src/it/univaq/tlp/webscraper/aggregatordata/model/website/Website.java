@@ -60,12 +60,12 @@ public class Website {
 		templates.add(template);
 	}
 	
-	public Template getTemplateByContext(String context){
-		for(Template current: templates){
-			if(current.getContext().equals(context)) return current;
-		}
-		return null;
-	}
+//	public Template getTemplateByContext(String context){
+//		for(Template current: templates){
+//			if(current.getContext().equals(context)) return current;
+//		}
+//		return null;
+//	}
 	
 	public String toString(){
 		return name+" ("+address+"): "+description;

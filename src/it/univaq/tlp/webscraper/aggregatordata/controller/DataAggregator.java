@@ -3,7 +3,6 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.StorageException;
@@ -35,17 +34,22 @@ public class DataAggregator {
 		
 		String host = url.getHost();
 		
-		if(!(host.startsWith("www."))){
-			host = "www." + host;
+		if(host.startsWith("www.")){
+			host = host.substring(4);
 		}
-		
-		String context = "";
 		
 		
 		//**** RECUPERO SITO ****//
 		Website website =  website_manager.getWebsite(host);
 				
-		List<AggregatedData> data = connector.collect(website, source, is_list);
+		System.out.println("Website found on database! + ID:"+website.getId());
+		
+		List<AggregatedData> data = connector.collect(website, url, is_list);
+		
+		for(AggregatedData article: data){			
+			System.out.println(article.getHeading());
+			System.out.println(article.getText());
+		}
 		
 	}
 	
