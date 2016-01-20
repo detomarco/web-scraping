@@ -1,5 +1,7 @@
 package it.univaq.tlp.webscraper.aggregatordata.model.website;
 
+import java.util.Map;
+
 public class ArticleTemplate extends Template{
 	
 	private String heading_selector;
@@ -10,10 +12,6 @@ public class ArticleTemplate extends Template{
 	private String author_selector;
 	private String date_format;
 	
-	public ArticleTemplate(){
-		super("ciao");
-	}
-	
 	public ArticleTemplate(String context, String heading_selector, String eyelet_selector, String summary_selector, String text_selector, String author_selector, String date_selector, String date_format){
 		super(context);
 		this.heading_selector = heading_selector;
@@ -23,6 +21,10 @@ public class ArticleTemplate extends Template{
 		this.author_selector = author_selector;
 		this.date_selector = date_selector;
 		this.date_format = date_format;
+	}
+	
+	public ArticleTemplate(Map<String, String> from_storage){
+		super("ciao");
 	}
 	
 	public String getHeadingSelector(){

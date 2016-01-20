@@ -1,25 +1,35 @@
 package it.univaq.tlp.webscraper.aggregatordata.model.website;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Website {
-
+	
+	private Integer id;
 	private String name;
 	private String address;
 	
 	private String description;
-	
-//	private Set<String> topics;
-	
+		
 	private Set<Template> templates;
 	
 	public Website(String name, String address){
 		this.name = name;
 		this.address = address;
 		this.description = "";
-//		this.topics = new HashSet<String>();
 		this.templates = new HashSet<Template>();
+	}
+	
+	public Website(Map<String, String> from_storage){
+		this.id = Integer.parseInt(from_storage.get("id"));
+		this.name = from_storage.get("mame");
+		this.address = from_storage.get("address");
+		this.description = from_storage.get("description");
+	}
+	
+	public int getId(){
+		return this.id;
 	}
 	
 	public String getName(){
@@ -33,11 +43,7 @@ public class Website {
 	public String getDescription(){
 		return this.description;
 	}
-	
-//	public Set<String> getTopics(){
-//		return this.topics;
-//	}
-	
+		
 	public Set<Template> getTemplates(){
 		return this.templates;
 	}
@@ -60,18 +66,6 @@ public class Website {
 		}
 		return null;
 	}
-	
-//	public void addTopic(String topic){
-//		topics.add(topic);
-//	}
-//	
-//	public void removeTopic(String topic){
-//		topics.remove(topic);
-//	}
-//	
-//	public boolean hasTopic(String topic){
-//		return topics.contains(topic);
-//	}
 	
 	public String toString(){
 		return name+" ("+address+"): "+description;

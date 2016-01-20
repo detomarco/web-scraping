@@ -1,5 +1,7 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -7,44 +9,45 @@ import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
 public class DataAggregator {
 	
 	private Storable storage;
-	private WebConnector connector;
+	private ConnectorInterface connector;
+	private WebsiteManaging website_manager;
 	
 	public DataAggregator(Storable storage){
+		this.website_manager = new WebsiteManaging(storage);
+		this.connector = new WebConnector(website_manager);
 		this.storage = storage;
-		this.connector = new WebConnector();
 	}
-	public DataAggregator(){
-		this.connector = new WebConnector();
+
+	public void crawl(String source, boolean is_list) throws MalformedURLException{
+		
+		//**** CONTROLLO E UNIFORMAZIONE URL ****//
+		if(!(source.startsWith("http"))) {
+			source = "http://" + source;
+		}
+		
+		URL url = new URL(source); // Throws MalformedURLException
+		
+		String host = url.getHost();
+		
+		if(!(host.startsWith("www."))){
+			host = "www." + host;
+		}
+		
+		String context = "";
+		
+		
+		//**** RECUPERO SITO ****//
+		Website website =  website_manager.getWebsite(host);
+				
+		List<AggregatedData> data = connector.collect(website, source, is_list);
+		
 	}
-	public void aggregate(String source){
-		
-//		List<Map<String, String>> results;
-		
-		AggregatedData data = connector.collectArticleData(new ArticleTemplate("attualita", "body div#main-article header h1", null, "body div#main-article > p.lead", "body div#main-article > p", "body div.author div.who h4 a", "body div.author div.when p", "MMMM dd, yyyy"), source);
-		System.out.println("Title: " + data.getTitle());
-		System.out.println("Summary: " + data.getSummary());
-		System.out.println("Eyelet: " + data.getEyelet());
-		System.out.println("Text: " + data.getText());
-		System.out.println("Author: " + data.getAuthor());
-		System.out.println("Date: " + data.getDate());
-		
-		
-	}
-	
-	/*
-	 * Componente Data Aggregator:
-	 * 
-	 * 1) riceve in input un url da cui ricavare dati
-	 * 2) controlla nel database quali sono gli ultimi dati registrati per quell'url
-	 * 3) controlla nel database qual e' il template utilizzato dal sito web
-	 * 4) chiama il connettore web per recuperare i dati
-	 * 5) memorizza i nuovi dati nel database
-	 * 
-	 */
 	
 	
 }

@@ -2,6 +2,7 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,20 +13,23 @@ import com.jaunt.UserAgent;
 
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import jodd.jerry.Jerry;
 
-public class WebConnector {
+public class WebConnector implements ConnectorInterface{
 	
 	private UserAgent userAgent;
+	private WebsiteManaging website_manager;
 	
-	public WebConnector(){
+	public WebConnector(WebsiteManaging website_manager){
+		this.website_manager = website_manager;
 		this.userAgent = new UserAgent();
 		userAgent.settings.autoSaveAsHTML = true;
 	}
-		
-	public AggregatedData collectArticleData(ArticleTemplate template, String url){
-		
-		// Pezzo comune overload metodo
+	
+	
+	public AggregatedData getArticle(ArticleTemplate template, String url){
 		AggregatedData data = new AggregatedData();
 		
 		try{
@@ -62,7 +66,7 @@ public class WebConnector {
 		
 		try{
 		    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
-		    	// Se è presente un contenuto (verificare che questo sia il controllo giusto)
+		    	// Se ï¿½ presente un contenuto (verificare che questo sia il controllo giusto)
 		    	if(!node.getAttx("content").equals("")){
 		    		data.addMetadata(node.getAttx("name"), node.getAttx("content"));
 		    	}
@@ -72,7 +76,7 @@ public class WebConnector {
 		// Inserimento didascalie delle immagini
 		List img_caption = new ArrayList<>();
 	    for(Element node: userAgent.doc.findEvery("<img>")){
-	    	// Se è presente una didascalia (verificare che questo sia il controllo giusto)
+	    	// Se ï¿½ presente una didascalia (verificare che questo sia il controllo giusto)
 	    	if(!node.getAttx("alt").equals("")){
 	    		data.addImgCaption(node.getAttx("alt"));
 	    	}
@@ -81,5 +85,17 @@ public class WebConnector {
 	    
 	    return data;
 	}
-
+	
+	public List<AggregatedData> collect(Website website, String url, boolean is_list){
+		
+		// Pezzo comune overload metodo	
+		List <AggregatedData> list = new LinkedList<>();
+	
+		if (is_list){
+			
+			ArticleListTemplate template = website_manager.getTemplate(website, context, is_list);
+			
+			
+		}
+	}
 }

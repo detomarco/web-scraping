@@ -1,5 +1,7 @@
 package it.univaq.tlp.webscraper.aggregatordata.view;
 
+import java.net.MalformedURLException;
+
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebConnector;
@@ -14,7 +16,11 @@ public class Program {
 		
 		DataAggregator aggregator = new DataAggregator();
 		
-		aggregator.aggregate("http://www.wired.it/play/musica/2016/01/19/50-generi-musicali-strani-spotify/");
+//		try {
+//			aggregator.crawl("wired.it/play/musica/2016/01/19/50-generi-musicali-strani-spotify/");
+//		} catch (MalformedURLException e){
+//			e.printStackTrace();
+//		}
 		
 //		AggregatedData data = connector.collectData("http://www.marcodetoma.altervista.org");
 		
