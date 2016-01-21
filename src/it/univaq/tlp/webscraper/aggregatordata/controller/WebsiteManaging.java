@@ -13,7 +13,7 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
 /**
- * Questa classe si occupa di ......
+ * Questa classe contiene metodi per recuperare ed inserire i template dal database
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico
@@ -48,7 +48,7 @@ public class WebsiteManaging {
 	
 	
 	/**
-	 * Metodo che......
+	 * Metodo che recupera il template dal database
 	 * @param website
 	 * @param context
 	 * @param is_list

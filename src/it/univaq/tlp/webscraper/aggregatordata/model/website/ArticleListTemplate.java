@@ -2,6 +2,13 @@ package it.univaq.tlp.webscraper.aggregatordata.model.website;
 
 import java.util.Map;
 
+/**
+ * Questa classe rappresenta il template per le 
+ * pagine contenenti gli elenchi degli articoli
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico
+ */
 public class ArticleListTemplate extends Template{
 
 	private String article_link_selector;

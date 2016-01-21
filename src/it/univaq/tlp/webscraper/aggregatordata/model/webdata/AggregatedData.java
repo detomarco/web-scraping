@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Questa classe si occupa di ......
+ * Questa classe si occupa di recuperare gli elementi dall'articolo e inserirli nell'oggetto
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico

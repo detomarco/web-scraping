@@ -2,6 +2,12 @@ package it.univaq.tlp.webscraper.aggregatordata.model.website;
 
 import java.util.Map;
 
+/**
+ * Questa classe rappresenta il template dell'articolo recuperato dal web
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico
+ */
 public class ArticleTemplate extends Template{
 	
 	private String heading_selector;
