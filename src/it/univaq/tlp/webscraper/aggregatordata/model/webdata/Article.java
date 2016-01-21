@@ -3,7 +3,7 @@ package it.univaq.tlp.webscraper.aggregatordata.model.webdata;
 import java.util.Date;
 
 /**
- * Questa classe è un estensione di AggregatedData e si occupa di ......
+ * Questa classe &egrave un estensione di AggregatedData e si occupa di ......
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico
