@@ -11,6 +11,12 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
+/**
+ * Questa classe si occupa di salvare gli articoli recuperati dal web.
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico 
+ */
 public class DataAggregator {
 	
 	private Storable storage;
@@ -22,7 +28,13 @@ public class DataAggregator {
 		this.connector = new WebConnector(website_manager);
 		this.storage = storage;
 	}
-
+	
+	/**
+	 * Metodo che recupera informazioni dall'URL e lancia WebConnector.java
+	 * @param source
+	 * @param is_list
+	 * @throws MalformedURLException
+	 */
 	public void crawl(String source, boolean is_list) throws MalformedURLException{
 		
 		//**** CONTROLLO E UNIFORMAZIONE URL ****//

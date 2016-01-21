@@ -109,9 +109,11 @@ public class WebConnector implements ConnectorInterface{
 	}
 	
 	
-	/*
+
+	/**
 	 * 
 	 */
+	@Override
 	public List<AggregatedData> collect(Website website, URL url, boolean is_list){
 		
 		List <URL> urls = new LinkedList<>();
