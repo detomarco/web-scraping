@@ -12,6 +12,12 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
+/**
+ * Questa classe si occupa di ......
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico
+ */
 public class WebsiteManaging {
 	
 	private Storable storage;
@@ -20,6 +26,11 @@ public class WebsiteManaging {
 		this.storage = storage;
 	}
 	
+	/**
+	 * Metodo che ......
+	 * @param hostname
+	 * @return Website
+	 */
 	public Website getWebsite(String hostname){
 		
 		List<Map<String, String>> results;
@@ -36,7 +47,14 @@ public class WebsiteManaging {
 	}
 	
 	
-	
+	/**
+	 * Metodo che......
+	 * @param website
+	 * @param context
+	 * @param is_list
+	 * @return Template
+	 * @throws TemplateNotFoundException
+	 */
 	public Template getTemplate(Website website, String context, boolean is_list) throws TemplateNotFoundException{
 		
 		List<Map<String, String>> results = new LinkedList<>();
