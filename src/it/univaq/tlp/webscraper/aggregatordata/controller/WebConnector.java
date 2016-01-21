@@ -22,6 +22,12 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import jodd.jerry.Jerry;
 import jodd.jerry.JerryFunction;
 
+/**
+ * Questa classe si occupa di recuperare i dati relativi ad un articolo
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico
+ */
 public class WebConnector implements ConnectorInterface{
 	
 	private UserAgent userAgent;
@@ -34,8 +40,11 @@ public class WebConnector implements ConnectorInterface{
 		userAgent.settings.autoRedirect = false;
 	}
 	
-	/*
+	/**
 	 * Metodo che restituisce tutti i dati relativi ad un articolo
+	 * @param template
+	 * @param url
+	 * @return AggregatedData
 	 */
 	public AggregatedData getArticle(ArticleTemplate template, URL url){
 		
@@ -111,7 +120,11 @@ public class WebConnector implements ConnectorInterface{
 	
 
 	/**
-	 * 
+	 * Metodo che si occupa di collezionare gli articoli recuperati
+	 * @param website
+	 * @param url
+	 * @param is_list
+	 * @return List<AggregatedData>
 	 */
 	@Override
 	public List<AggregatedData> collect(Website website, URL url, boolean is_list){
