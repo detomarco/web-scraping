@@ -15,7 +15,7 @@ public class Program {
 		DataAggregator aggregator = new DataAggregator(storage);
 		
 		try {
-			aggregator.crawl("http://www.repubblica.it/politica/2016/01/22/news/renzi_senza_intesa_sulle_unioni_civili_voto_in_aula_secondo_coscienza_-131796009/", false);
+			aggregator.crawl("http://www.repubblica.it/politica/", true);
 		} catch (MalformedURLException e){
 			e.printStackTrace();
 		}

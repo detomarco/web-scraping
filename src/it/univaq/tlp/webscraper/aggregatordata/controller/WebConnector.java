@@ -190,6 +190,7 @@ public class WebConnector implements ConnectorInterface{
 		ArticleTemplate template = null;
 		int count = 1;
 		boolean template_found;
+		boolean supposed_to_be_article;
 		for(URL current_url: urls){
 			template_found = false;
 			System.out.println("Getting #" + count++ +": "+current_url.toString());
@@ -200,7 +201,14 @@ public class WebConnector implements ConnectorInterface{
 			if(host.startsWith("www.")){
 				host = host.substring(4);
 			}
-			if(host.equals(website.getAddress())){
+			
+			String path = current_url.getPath();
+			if(path.contains("/foto/") || path.contains("/video/") || path.contains("/gallery/")){
+				supposed_to_be_article = false;
+			} else {
+				supposed_to_be_article = true;
+			}
+			if(host.equals(website.getAddress()) && supposed_to_be_article){
 				for(ArticleTemplate current_template: website.getArticleTemplates()){
 					if(current_template.getContext().equals(context)){
 						template = current_template;
