@@ -4,8 +4,6 @@ import java.net.MalformedURLException;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
-import it.univaq.tlp.webscraper.aggregatordata.controller.WebConnector;
-import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.database.MySQLDatabase;
 
 public class Program {

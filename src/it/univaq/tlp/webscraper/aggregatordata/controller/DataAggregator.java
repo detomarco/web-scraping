@@ -5,10 +5,8 @@ import java.net.URL;
 import java.util.List;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
-import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
-import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
 /**
@@ -25,7 +23,7 @@ public class DataAggregator {
 	
 	public DataAggregator(Storable storage){
 		this.website_manager = new WebsiteManaging(storage);
-		this.connector = new WebConnector(website_manager);
+		this.connector = new WebConnector();
 		this.storage = storage;
 	}
 	
@@ -56,7 +54,12 @@ public class DataAggregator {
 				
 		System.out.println("Website found on database! + ID:"+website.getId());
 		
-		List<AggregatedData> data = connector.collect(website, url, is_list);
+		List<AggregatedData> data = null;
+		try {
+			data = connector.collect(website, url, is_list);
+		} catch (TemplateNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		for(AggregatedData article: data){		
 			System.out.println("*****************************");

@@ -31,10 +31,8 @@ import jodd.jerry.JerryFunction;
 public class WebConnector implements ConnectorInterface{
 	
 	private UserAgent userAgent;
-	private WebsiteManaging website_manager;
 	
-	public WebConnector(WebsiteManaging website_manager){
-		this.website_manager = website_manager;
+	public WebConnector(){
 		this.userAgent = new UserAgent();
 		userAgent.settings.autoSaveAsHTML = true;
 		userAgent.settings.autoRedirect = false;
@@ -127,7 +125,7 @@ public class WebConnector implements ConnectorInterface{
 	 * @return List<AggregatedData>
 	 */
 	@Override
-	public List<AggregatedData> collect(Website website, URL url, boolean is_list){
+	public List<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException{
 		
 		List <URL> urls = new LinkedList<>();
 		List<AggregatedData> articles = new LinkedList<>();
@@ -143,16 +141,22 @@ public class WebConnector implements ConnectorInterface{
 				context = "";
 			}
 			
-			ArticleListTemplate template;
-			try {
-				template = (ArticleListTemplate)website_manager.getTemplate(website, context, is_list);
-			} catch (TemplateNotFoundException e) {
-				e.printStackTrace();
-				return articles;
+			ArticleListTemplate template = null;
+
+			for(Template current_template: website.getTemplates()){
+				if(current_template.getContext().equals(context) && current_template instanceof ArticleListTemplate){
+					template = (ArticleListTemplate)current_template;
+					break;
+				}
 			}
 			
-			String link_selector = template.getLinkSelector();
-			
+			String link_selector = null;
+			try{
+				link_selector = template.getLinkSelector();
+			} catch (NullPointerException e){
+				throw new TemplateNotFoundException();
+			}
+				
 			try{
 				userAgent.visit(url.toString());		    
 			} catch (ResponseException e){
@@ -170,6 +174,7 @@ public class WebConnector implements ConnectorInterface{
 			Jerry doc = Jerry.jerry(HTML);
 
 			doc.$(link_selector).each(new JerryFunction() {
+				@Override
 				public boolean onNode(Jerry $this, int index) {
 					try {
 						urls.add(new URL($this.attr("href")));
@@ -186,22 +191,29 @@ public class WebConnector implements ConnectorInterface{
 			urls.add(url);
 		}
 		
-		ArticleTemplate template;
+		ArticleTemplate template = null;
 		int count = 1;
+		boolean template_found;
 		for(URL current_url: urls){
+			template_found = false;
 			System.out.println("Getting #" + count++ +": "+current_url.toString());
 			String context = current_url.getPath().substring(1);
 			context = context.substring(0, context.indexOf("/"));			
 			
 			String siteaddress = current_url.getHost();
-			if(!siteaddress.equals(website.getAddress())){
-				try {
-					template = (ArticleTemplate)website_manager.getTemplate(website, context, false);
-				} catch (TemplateNotFoundException e) {
-					System.out.println("Template not found :(");
-					continue;
+			if(siteaddress.equals(website.getAddress())){
+				for(Template current_template: website.getTemplates()){
+					if(current_template.getContext().equals(context) && current_template instanceof ArticleTemplate){
+						template = (ArticleTemplate)current_template;
+						template_found = true;
+						break;
+					}
 				}
+			}
+			if(template_found){
 				articles.add(getArticle(template, current_url));
+			} else {
+				System.out.println("Template not found, skipping");
 			}
 		}
 		

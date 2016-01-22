@@ -7,4 +7,8 @@ public class Template {
 	public Template (String context){
 		this.context = context;
 	}
+	
+	public String getContext(){
+		return this.context;
+	}
 }

@@ -3,11 +3,12 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 import java.net.URL;
 import java.util.List;
 
+import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
 public interface ConnectorInterface {
 
-	public List<AggregatedData> collect(Website website, URL url, boolean is_list);
+	public List<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException;
 	
 }
