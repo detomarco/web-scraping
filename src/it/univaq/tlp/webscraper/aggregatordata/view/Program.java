@@ -3,6 +3,7 @@ package it.univaq.tlp.webscraper.aggregatordata.view;
 import java.net.MalformedURLException;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.database.MySQLDatabase;
 
@@ -17,6 +18,8 @@ public class Program {
 		try {
 			aggregator.crawl("http://www.repubblica.it/politica/", true);
 		} catch (MalformedURLException e){
+			e.printStackTrace();
+		} catch (TemplateNotFoundException e){
 			e.printStackTrace();
 		}
 		

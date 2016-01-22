@@ -6,6 +6,7 @@ import java.util.List;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
@@ -33,7 +34,7 @@ public class DataAggregator {
 	 * @param is_list
 	 * @throws MalformedURLException
 	 */
-	public void crawl(String source, boolean is_list) throws MalformedURLException{
+	public void crawl(String source, boolean is_list) throws MalformedURLException, TemplateNotFoundException{
 		
 		//**** CONTROLLO E UNIFORMAZIONE URL ****//
 		if(!(source.startsWith("http"))) {
@@ -42,15 +43,8 @@ public class DataAggregator {
 		
 		URL url = new URL(source); // Throws MalformedURLException
 		
-		String host = url.getHost();
-		
-		if(host.startsWith("www.")){
-			host = host.substring(4);
-		}
-		
-		
 		// Recupero sito
-		Website website =  website_manager.getWebsite(host);
+		Website website =  website_manager.getWebsite(URLUtility.getHostFromURL(url));
 		
 		System.out.println("Website found on database! + ID:"+website.getId());
 		System.out.println(website);
@@ -58,11 +52,9 @@ public class DataAggregator {
 		System.out.println("Found "+website.getTemplatesCount()+" templates for this website");
 		
 		List<AggregatedData> data = null;
-		try {
-			data = connector.collect(website, url, is_list);
-		} catch (TemplateNotFoundException e) {
-			e.printStackTrace();
-		}
+
+		data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException
+
 		
 		for(AggregatedData article: data){		
 			System.out.println("*****************************");

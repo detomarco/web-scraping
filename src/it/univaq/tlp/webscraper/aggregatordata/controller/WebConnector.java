@@ -11,6 +11,7 @@ import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
@@ -19,7 +20,7 @@ import jodd.jerry.Jerry;
 import jodd.jerry.JerryFunction;
 
 /**
- * Questa classe si occupa di recuperare i dati relativi ad un articolo
+ * Questa classe rappresenta il connettore web, fornisce l'implementazione della funzione di interfaccia collect
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico
@@ -33,6 +34,7 @@ public class WebConnector implements ConnectorInterface{
 		userAgent.settings.autoSaveAsHTML = true;
 		userAgent.settings.autoRedirect = false;
 	}
+	
 	
 	/**
 	 * Metodo che restituisce tutti i dati relativi ad un articolo
@@ -111,32 +113,22 @@ public class WebConnector implements ConnectorInterface{
 	
 
 	/**
-	 * Metodo che si occupa di collezionare gli articoli recuperati
+	 * Metodo che si occupa di collezionare gli articoli referenziati sul sito web da quell'url
 	 * @param website
 	 * @param url
 	 * @param is_list
 	 * @return List<AggregatedData>
+	 * @throws TemplateNotFoundException
 	 */
 	@Override
 	public List<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException{
 		
 		List <URL> urls = new LinkedList<>();
-		List<AggregatedData> articles = new LinkedList<>();
 	
 		if (is_list){
 			
-			String path = url.getPath();
-			String context;
-			if(path.length()>0){
-				context = path.substring(1)+"/";
-				context = context.substring(0, context.indexOf("/"));
-			} else {
-				context = "";
-			}
-			
-			System.out.println(path);
-			System.out.println(context);
-			
+			String context = URLUtility.getWebsiteContext(url);
+						
 			ArticleListTemplate template = null;
 
 			for(ArticleListTemplate current_template: website.getArticleListTemplates()){
@@ -187,20 +179,30 @@ public class WebConnector implements ConnectorInterface{
 			urls.add(url);
 		}
 		
+		return getAllArticles(website, urls); // Può rilanciare l'eccezione TemplateNotFound, deve essere gestita dal chiamante
+	}
+	
+	
+	/**
+	 * Metodo che recupera gli aricoli referenziati da una lista di url
+	 * (Nota: gli url devono puntare direttamente ad articoli, e non ad elenchi)
+	 * @param website
+	 * @param urls
+	 * @return List<AggregatedData>
+	 * @throws TemplateNotFoundException
+	 */
+	public List<AggregatedData> getAllArticles(Website website, List<URL> urls) throws TemplateNotFoundException{
+		
+		List<AggregatedData> articles = new LinkedList<>();
 		ArticleTemplate template = null;
-		int count = 1;
 		boolean template_found;
 		boolean supposed_to_be_article;
+		
 		for(URL current_url: urls){
 			template_found = false;
-			System.out.println("Getting #" + count++ +": "+current_url.toString());
-			String context = current_url.getPath().substring(1)+"/";
-			context = context.substring(0, context.indexOf("/"));			
 			
-			String host = current_url.getHost();
-			if(host.startsWith("www.")){
-				host = host.substring(4);
-			}
+			String context = URLUtility.getHostFromURL(current_url);
+			String host = URLUtility.getHostFromURL(current_url);
 			
 			String path = current_url.getPath();
 			if(path.contains("/foto/") || path.contains("/video/") || path.contains("/gallery/")){
@@ -208,6 +210,7 @@ public class WebConnector implements ConnectorInterface{
 			} else {
 				supposed_to_be_article = true;
 			}
+			
 			if(host.equals(website.getAddress()) && supposed_to_be_article){
 				for(ArticleTemplate current_template: website.getArticleTemplates()){
 					if(current_template.getContext().equals(context)){
@@ -217,13 +220,20 @@ public class WebConnector implements ConnectorInterface{
 					}
 				}
 			}
-			if(template_found){
-				articles.add(getArticle(template, current_url));
-			} else {
-				System.out.println("Template not found, skipping...\n");
+			try{
+				if(template_found){
+					articles.add(getArticle(template, current_url));
+				} else {
+					throw new TemplateNotFoundException();
+				}
+			} catch (TemplateNotFoundException e){
+				// Se non è stato trovato il template, nel caso in cui si stava cercando un solo articolo
+				// viene rilanciata l'eccezione a collect
+				if(urls.size()==1){
+					throw e;
+				}
 			}
 		}
-		
 		return articles;
 	}
 }
