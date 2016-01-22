@@ -1,5 +1,6 @@
 package it.univaq.tlp.webscraper.aggregatordata.model.website;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -66,6 +67,23 @@ public class ArticleTemplate extends Template{
 	
 	public String getDateFormat(){
 		return this.date_format;
+	}
+	
+	public Map<String, Object> toMap(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("heading_selector", this.heading_selector);
+		map.put("eyelet_selector", this.eyelet_selector);
+		map.put("summary_selector", this.summary_selector);
+		map.put("text_selector", this.text_selector);
+		map.put("date_selector", this.date_selector);
+		map.put("author_selector", this.author_selector);
+		map.put("date_format", this.date_format);
+		
+		map.put("context", this.getContext());
+		
+		return map;
+		
 	}
 
 }

@@ -49,10 +49,13 @@ public class DataAggregator {
 		}
 		
 		
-		//**** RECUPERO SITO ****//
+		// Recupero sito
 		Website website =  website_manager.getWebsite(host);
-				
+		
 		System.out.println("Website found on database! + ID:"+website.getId());
+		System.out.println(website);
+		
+		System.out.println("Found "+website.getTemplatesCount()+" templates for this website");
 		
 		List<AggregatedData> data = null;
 		try {

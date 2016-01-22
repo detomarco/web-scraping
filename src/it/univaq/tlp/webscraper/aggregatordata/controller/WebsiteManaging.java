@@ -1,8 +1,10 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.StorageException;
@@ -27,7 +29,7 @@ public class WebsiteManaging {
 	}
 	
 	/**
-	 * Metodo che ......
+	 * Metodo che recupera dal database il sito internet corrispondente all'indirizzo fornito
 	 * @param hostname
 	 * @return Website
 	 */
@@ -35,6 +37,7 @@ public class WebsiteManaging {
 		
 		List<Map<String, String>> results;
 		
+		// Recupero website
 		try {
 			results = storage.get("websites", "address = '"+hostname+"'");
 		} catch (StorageException e) {
@@ -42,7 +45,47 @@ public class WebsiteManaging {
 			return null;
 		}
 		
-		return new Website(results.get(0));		
+		Website website = new Website(results.get(0));
+		
+		// Recupero template di articoli
+		try {
+			results = storage.get("article_templates", "fk_website = '"+website.getId()+"'");
+		} catch (StorageException e) {
+			e.printStackTrace();
+			//return null;
+		}
+		
+		for(Map<String, String> current_result: results){
+			website.addTemplate(new ArticleTemplate(current_result));
+		}
+		
+		// Recupero template di elenchi
+		try {
+			results = storage.get("list_templates", "fk_website = '"+website.getId()+"'");
+		} catch (StorageException e) {
+			e.printStackTrace();
+			//return null;
+		}
+		
+		for(Map<String, String> current_result: results){
+			website.addTemplate(new ArticleListTemplate(current_result));
+		}
+		
+		return website;
+	}
+	
+	public int getWebsiteId(Website website){
+		
+		List<Map<String, String>> results;
+		
+		try{
+			results = storage.get("websites", "host = '"+website.getAddress()+"'");
+		} catch (StorageException e){
+			e.printStackTrace();
+			return 0;
+		}
+		
+		return Integer.parseInt(results.get(0).get("id"));
 		
 	}
 	
@@ -88,5 +131,53 @@ public class WebsiteManaging {
 		
 		return template;
 		
+	}
+	
+	/**
+	 * Metodo che memorizza un nuovo sito web e, se ne contiene, i suoi template
+	 * @param website
+	 * @throws StorageException
+	 */
+	public void saveWebsite(Website website) throws StorageException {
+		
+		Map<String, Object> data = website.toMap();
+		
+		data.remove("id");
+		
+		@SuppressWarnings("unchecked")
+		Set<ArticleTemplate> article_templates = (Set<ArticleTemplate>)data.remove("article.templates");
+		
+		@SuppressWarnings("unchecked")
+		Set<ArticleListTemplate> list_templates = (Set<ArticleListTemplate>)data.remove("list_templates");
+		
+		storage.save("websites", data);
+		
+		for(ArticleTemplate template: article_templates){
+			saveTemplate(template, website);
+		}
+		
+		for(ArticleListTemplate template: list_templates){
+			saveTemplate(template, website);
+		}	}
+	
+	/**
+	 * Metodo che memorizza un template relativo ad un dato sito web
+	 * @param template
+	 * @param website
+	 * @throws StorageException
+	 */
+	public void saveTemplate(Template template, Website website) throws StorageException {
+		
+		Map<String, Object> data = new HashMap<>();
+		
+		data = template.toMap();
+		
+		data.put("fk_website", getWebsiteId(website));
+		
+		if (template instanceof ArticleTemplate){
+			storage.save("article_templates", data);
+		} else {
+			storage.save("list_templates", data);
+		}
 	}
 }

@@ -1,6 +1,8 @@
 package it.univaq.tlp.webscraper.aggregatordata.model.website;
 
-public class Template {
+import java.util.Map;
+
+public abstract class Template {
 	
 	private String context;
 	
@@ -11,4 +13,6 @@ public class Template {
 	public String getContext(){
 		return this.context;
 	}
+	
+	public abstract Map<String, Object> toMap();
 }

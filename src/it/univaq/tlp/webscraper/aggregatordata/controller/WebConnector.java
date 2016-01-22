@@ -2,11 +2,8 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import com.jaunt.Element;
 import com.jaunt.NotFound;
@@ -17,7 +14,6 @@ import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
-import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import jodd.jerry.Jerry;
 import jodd.jerry.JerryFunction;
@@ -90,9 +86,7 @@ public class WebConnector implements ConnectorInterface{
 		
 		data.putSource(url.toString());
 		
-		// Inserimento metadati
-		Map<String, String> metadata = new HashMap<String, String>();
-		
+		// Inserimento metadati		
 		try{
 		    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
 		    	// Se � presente un contenuto (verificare che questo sia il controllo giusto)
@@ -103,7 +97,6 @@ public class WebConnector implements ConnectorInterface{
 	    } catch (NotFound e){ }
 		
 		// Inserimento didascalie delle immagini
-		List img_caption = new ArrayList<>();
 	    for(Element node: userAgent.doc.findEvery("<img>")){
 	    	// Se � presente una didascalia (verificare che questo sia il controllo giusto)
 	    	if(!node.getAttx("alt").equals("")){
@@ -135,17 +128,20 @@ public class WebConnector implements ConnectorInterface{
 			String path = url.getPath();
 			String context;
 			if(path.length()>0){
-				context = path.substring(1);
+				context = path.substring(1)+"/";
 				context = context.substring(0, context.indexOf("/"));
 			} else {
 				context = "";
 			}
 			
+			System.out.println(path);
+			System.out.println(context);
+			
 			ArticleListTemplate template = null;
 
-			for(Template current_template: website.getTemplates()){
-				if(current_template.getContext().equals(context) && current_template instanceof ArticleListTemplate){
-					template = (ArticleListTemplate)current_template;
+			for(ArticleListTemplate current_template: website.getArticleListTemplates()){
+				if(current_template.getContext().equals(context)){
+					template = current_template;
 					break;
 				}
 			}
@@ -197,14 +193,17 @@ public class WebConnector implements ConnectorInterface{
 		for(URL current_url: urls){
 			template_found = false;
 			System.out.println("Getting #" + count++ +": "+current_url.toString());
-			String context = current_url.getPath().substring(1);
+			String context = current_url.getPath().substring(1)+"/";
 			context = context.substring(0, context.indexOf("/"));			
 			
-			String siteaddress = current_url.getHost();
-			if(siteaddress.equals(website.getAddress())){
-				for(Template current_template: website.getTemplates()){
-					if(current_template.getContext().equals(context) && current_template instanceof ArticleTemplate){
-						template = (ArticleTemplate)current_template;
+			String host = current_url.getHost();
+			if(host.startsWith("www.")){
+				host = host.substring(4);
+			}
+			if(host.equals(website.getAddress())){
+				for(ArticleTemplate current_template: website.getArticleTemplates()){
+					if(current_template.getContext().equals(context)){
+						template = current_template;
 						template_found = true;
 						break;
 					}
@@ -213,7 +212,7 @@ public class WebConnector implements ConnectorInterface{
 			if(template_found){
 				articles.add(getArticle(template, current_url));
 			} else {
-				System.out.println("Template not found, skipping");
+				System.out.println("Template not found, skipping...\n");
 			}
 		}
 		

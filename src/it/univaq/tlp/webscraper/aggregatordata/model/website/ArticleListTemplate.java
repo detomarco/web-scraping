@@ -1,5 +1,6 @@
 package it.univaq.tlp.webscraper.aggregatordata.model.website;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,6 +25,15 @@ public class ArticleListTemplate extends Template{
 	
 	public String getLinkSelector(){
 		return this.article_link_selector;
+	}
+	
+	public Map<String, Object> toMap(){
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("article_link_selector", this.article_link_selector);
+		map.put("context", this.getContext());
+		
+		return map;
 	}
 	
 }
