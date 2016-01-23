@@ -69,6 +69,7 @@ public class ArticleTemplate extends Template{
 		return this.date_format;
 	}
 	
+	@Override
 	public Map<String, Object> toMap(){
 		Map<String, Object> map = new HashMap<String, Object>();
 		

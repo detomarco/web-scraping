@@ -29,5 +29,15 @@ public class URLUtility {
 		return context;
 			
 	}
+	
+	public static String conformURL(String url){
+		
+		if(!(url.startsWith("http"))) {
+			url = "http://" + url;
+		}
+		
+		return url;
+		
+	}
 		
 }

@@ -27,7 +27,6 @@ public class AggregatedData {
 	private String author;
 	
 	private String source;
-	private String link;
 	private Date date;
 //	private String topic;
 	private List<String> img_caption;
@@ -41,7 +40,7 @@ public class AggregatedData {
 		this.metadata = new HashMap<String, String>();
 	}
 	
-	public AggregatedData(String title, String heading, String eyelet, String summary,  String text, String author, String source, String link, Date date/*, String topic*/){
+	public AggregatedData(String title, String heading, String eyelet, String summary, String text, String author, String link, Date date){
 		this();
 		
 		this.title = title;
@@ -51,9 +50,7 @@ public class AggregatedData {
 		this.text = text;
 		this.author = author;
 		this.source = source;
-		this.link = link;
 		this.date = date;
-//		this.topic = topic;	
 	}
 	
 	/*
@@ -109,19 +106,11 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce il sorgente nell'articolo
+	 * Metodo che inserisce la fonte (l'indirizzo) nell'articolo
 	 * @param source
 	 */
 	public void putSource(String source){
 		this.source = source;
-	}
-	
-	/**
-	 * Metodo che inserisce il riferimento nell'articolo
-	 * @param link
-	 */
-	public void putLink(String link){
-		this.link = link;
 	}
 	
 	/**
@@ -166,10 +155,6 @@ public class AggregatedData {
 	public void addImgCaption(String value){
 		img_caption.add(value);
 	}
-	
-//	public void putTopic(String topic){
-//		this.topic = topic;
-//	}
 	
 	/*
 	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
@@ -229,14 +214,6 @@ public class AggregatedData {
 	 */
 	public String getSource(){
 		return this.source;
-	}
-	
-	/**
-	 * Metodo che recupera il riferimento dall'oggetto
-	 * @return String
-	 */
-	public String getLink(){
-		return this.link;
 	}
 	
 	/**

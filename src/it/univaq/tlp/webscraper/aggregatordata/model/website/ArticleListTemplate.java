@@ -27,6 +27,7 @@ public class ArticleListTemplate extends Template{
 		return this.article_link_selector;
 	}
 	
+	@Override
 	public Map<String, Object> toMap(){
 		Map<String, Object> map = new HashMap<>();
 		

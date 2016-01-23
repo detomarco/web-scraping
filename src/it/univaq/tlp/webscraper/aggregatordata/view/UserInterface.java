@@ -7,6 +7,7 @@ import java.util.Scanner;
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.database.MySQLDatabase;
 
@@ -19,8 +20,8 @@ public class UserInterface {
 			Storable storage = new MySQLDatabase("root", "root", "localhost", 3306, "web_scraper");
 			run(storage);
 		} catch (StorageException e) {
-			// Se la connessione non è andata a buon fine
-			System.out.println("Problema di connessione con la repository, si prega di riprovare più tardi");
+			// Se la connessione non ï¿½ andata a buon fine
+			System.out.println("Problema di connessione con la repository, si prega di riprovare piï¿½ tardi");
 			System.out.println("Dettagli errore:\n" + e.getMessage());
 		}
 		
@@ -35,7 +36,7 @@ public class UserInterface {
 			System.out.println("Cosa vuoi fare?\n"
 					+ "1)Recupera qualche articolo in giro per il web\n"
 					+ "2)Aggiungi un nuovo sito web\n"
-					+ "3)Aggiungi un nuovo template ad un sito web già  esistente");
+					+ "3)Aggiungi un nuovo template ad un sito web giï¿½ esistente");
 			
 			int choice = getInput(1, 4);
 			
@@ -59,10 +60,10 @@ public class UserInterface {
 			System.out.println("Premi invio per uscire dall'applicazione, qualsiasi altro tasto per eseguire un'altra operazione");
 			if(in.nextLine().equals("")) exit = true;
 			
-		}while(!exit);
-		
-		
+		}while(!exit);	
 	}
+	
+	
 	public static void webScraper(Storable storage){
 		String url;
 		
@@ -94,6 +95,10 @@ public class UserInterface {
 					} catch (MalformedURLException e){
 						System.out.println("Url non valido");
 						error_url = true;
+					
+					} catch (WebsiteNotFoundException e){
+						System.out.println("Sito web non trovato");
+						error_url = true;
 						
 					} catch (TemplateNotFoundException e){
 						System.out.println("Template non trovato");
@@ -105,7 +110,7 @@ public class UserInterface {
 				
 				
 			case 3: 
-				// NOTA: QUESTA E' UNA ZOZZERIA (verrà chiesto piu volte se si vuole uscire dal programma)
+				// NOTA: QUESTA E' UNA ZOZZERIA (verrï¿½ chiesto piu volte se si vuole uscire dal programma)
 				run(storage);
 		
 		}
@@ -131,7 +136,7 @@ public class UserInterface {
 		
 		// Controllo dell'input
 		do{
-			// Se l'input è stato chiesto già una volta
+			// Se l'input ï¿½ stato chiesto giï¿½ una volta
 			if(!flag){
 				// Mostra messaggio di errore
 				System.out.println("Input non valido: riprovare!");
@@ -150,7 +155,7 @@ public class UserInterface {
 			
 			flag = false;
 		
-		// Se l'input è minore di 1 o maggiore di 4, mostra messaggio di errore e richiedi input
+		// Se l'input ï¿½ minore di 1 o maggiore di 4, mostra messaggio di errore e richiedi input
 		}while(input < min || input > max);
 		
 		return input;

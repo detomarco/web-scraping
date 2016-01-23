@@ -7,7 +7,9 @@ import java.util.List;
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
+import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
+import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
 /**
@@ -21,9 +23,11 @@ public class DataAggregator {
 	private Storable storage;
 	private ConnectorInterface connector;
 	private WebsiteManaging website_manager;
+	private ArticleManaging article_manager;
 	
 	public DataAggregator(Storable storage){
 		this.website_manager = new WebsiteManaging(storage);
+		this.article_manager = new ArticleManaging(storage);
 		this.connector = new WebConnector();
 		this.storage = storage;
 	}
@@ -34,17 +38,12 @@ public class DataAggregator {
 	 * @param is_list
 	 * @throws MalformedURLException
 	 */
-	public void crawl(String source, boolean is_list) throws MalformedURLException, TemplateNotFoundException{
+	public void crawl(String source, boolean is_list) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException{
 		
-		//**** CONTROLLO E UNIFORMAZIONE URL ****//
-		if(!(source.startsWith("http"))) {
-			source = "http://" + source;
-		}
-		
-		URL url = new URL(source); // Throws MalformedURLException
-		url.toString();
+		URL url = new URL(URLUtility.conformURL(source)); // Throws MalformedURLException
+
 		// Recupero sito
-		Website website =  website_manager.getWebsite(URLUtility.getHostFromURL(url));
+		Website website =  website_manager.getWebsite(URLUtility.getHostFromURL(url)); // Throws WebsiteNotFoundException
 		
 		System.out.println("Website found on database! + ID:"+website.getId());
 		System.out.println(website);
@@ -54,15 +53,17 @@ public class DataAggregator {
 		List<AggregatedData> data = null;
 
 		data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException
-
 		
-		for(AggregatedData article: data){		
-			System.out.println("*****************************");
-			System.out.println(article.getSource());
-			System.out.println(article.getHeading());
-			System.out.println(article.getText()+"\n");
-		}
+	}
+	
+	/**
+	 * Metodo che aggiorna gli articoli salvati salvando quelli appena recuperati dal web connector 
+	 * @param data
+	 */
+	private void updateCollected(List<AggregatedData> data, Website website){
 		
+		List<Article> articles = article_manager.getWebsiteArticles(website);
+				
 	}
 	
 	

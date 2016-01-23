@@ -1,12 +1,5 @@
 package it.univaq.tlp.webscraper.aggregatordata.view;
 
-import java.net.MalformedURLException;
-
-import it.univaq.tlp.webscraper.aggregatordata.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
-import it.univaq.tlp.webscraper.database.MySQLDatabase;
-
 public class Program {
 
 	public static void main(String[]args){
