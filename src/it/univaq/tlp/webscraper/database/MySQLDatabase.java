@@ -8,12 +8,14 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
 
+import it.univaq.tlp.webscraper.aggregatordata.StorageException;
+
 public class MySQLDatabase extends Database {
 	
 	private Connection db;
 	
 	// Quando la classe viene istanziata, si connette automaticamente
-	public MySQLDatabase(String user, String password, String host, int port, String db_name){
+	public MySQLDatabase(String user, String password, String host, int port, String db_name) throws StorageException{
 		Properties connProps = new Properties();
 		connProps.put("user", user);
 		connProps.put("password", password);
@@ -21,18 +23,15 @@ public class MySQLDatabase extends Database {
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.db = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db_name, connProps);
-			System.out.println("Database connesso!");
 		} catch (SQLException e){
-			System.out.println("Errore conenssione: SQLException");
-			e.printStackTrace();
+			throw new StorageException("SQLException " + e.getMessage());
 		} catch (ClassNotFoundException e){
-			System.out.println("Class Not Found!");
+			throw new StorageException("Class Not Found!");
 		} catch (Exception e){
-			System.out.println("Eccezione generica!");
-		} finally {
-			System.out.println("End connection try");
-		}
+			throw new StorageException("Non definito");
+		} 
 	}
+	
 	
 	
 	@Override

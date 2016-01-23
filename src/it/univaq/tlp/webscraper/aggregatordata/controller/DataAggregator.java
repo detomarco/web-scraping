@@ -42,7 +42,7 @@ public class DataAggregator {
 		}
 		
 		URL url = new URL(source); // Throws MalformedURLException
-		
+		url.toString();
 		// Recupero sito
 		Website website =  website_manager.getWebsite(URLUtility.getHostFromURL(url));
 		
