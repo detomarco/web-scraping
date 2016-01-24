@@ -2,9 +2,11 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
 import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
@@ -20,7 +22,6 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
  */
 public class DataAggregator {
 	
-	private Storable storage;
 	private ConnectorInterface connector;
 	private WebsiteManaging website_manager;
 	private ArticleManaging article_manager;
@@ -29,16 +30,17 @@ public class DataAggregator {
 		this.website_manager = new WebsiteManaging(storage);
 		this.article_manager = new ArticleManaging(storage);
 		this.connector = new WebConnector();
-		this.storage = storage;
 	}
 	
 	/**
 	 * Metodo che recupera informazioni dall'URL e lancia WebConnector.java
 	 * @param source
 	 * @param is_list
+	 * @return int
 	 * @throws MalformedURLException
+	 * @throws StorageException 
 	 */
-	public void crawl(String source, boolean is_list) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException{
+	public int crawl(String source, boolean is_list) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException{
 		
 		URL url = new URL(URLUtility.conformURL(source)); // Throws MalformedURLException
 
@@ -54,16 +56,34 @@ public class DataAggregator {
 
 		data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException
 		
+		return updateCollected(data, website);
+				
 	}
 	
 	/**
 	 * Metodo che aggiorna gli articoli salvati salvando quelli appena recuperati dal web connector 
 	 * @param data
+	 * @return int
+	 * @throws StorageException 
 	 */
-	private void updateCollected(List<AggregatedData> data, Website website){
+	private int updateCollected(List<AggregatedData> just_collected, Website website) throws StorageException{
 		
-		List<Article> articles = article_manager.getWebsiteArticles(website);
-				
+		List<Article> stored_articles = article_manager.getWebsiteArticles(website);
+		
+		Iterator<AggregatedData> it = just_collected.iterator();
+		
+		int saved_counter = 0;
+		
+		while(it.hasNext()){
+			AggregatedData current_article = it.next();
+			if(!(stored_articles.contains(current_article))){
+				article_manager.saveArticle(current_article, website);
+				saved_counter ++;
+			}
+		}
+		
+		return saved_counter;
+		
 	}
 	
 	

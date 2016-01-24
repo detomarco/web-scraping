@@ -40,7 +40,7 @@ public class AggregatedData {
 		this.metadata = new HashMap<String, String>();
 	}
 	
-	public AggregatedData(String title, String heading, String eyelet, String summary, String text, String author, String link, Date date){
+	public AggregatedData(String title, String heading, String eyelet, String summary, String text, String author, String source, Date date){
 		this();
 		
 		this.title = title;
@@ -240,15 +240,21 @@ public class AggregatedData {
 		return metadata.get(key);
 	}
 	
-//	public String getTopic(){
-//		return this.topic;
-//	}
-	
 	@Override
 	public String toString(){
 		return title+": "+text+"\n"+metadata;
 	}
 
+	@Override
+	public boolean equals(Object obj){
+		if ((obj instanceof AggregatedData)) {
+			
+			AggregatedData data = (AggregatedData) obj;
+			
+			if (this.source.equals(data.getSource())) return true;
+		}
+		return false;
+	}
 	
 
 }

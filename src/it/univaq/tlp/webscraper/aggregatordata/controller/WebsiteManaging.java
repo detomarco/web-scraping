@@ -32,40 +32,26 @@ public class WebsiteManaging {
 	 * Metodo che recupera dal database il sito internet corrispondente all'indirizzo fornito
 	 * @param hostname
 	 * @return Website
+	 * @throws StorageException 
 	 */
-	public Website getWebsite(String hostname){
+	public Website getWebsite(String hostname) throws StorageException{
 		
 		List<Map<String, String>> results;
 		
 		// Recupero website
-		try {
-			results = storage.get("websites", "address = '"+hostname+"'");
-		} catch (StorageException e) {
-			e.printStackTrace();
-			return null;
-		}
+		results = storage.get("websites", "address = '"+hostname+"'");
 		
 		Website website = new Website(results.get(0));
 		
 		// Recupero template di articoli
-		try {
-			results = storage.get("article_templates", "fk_website = '"+website.getId()+"'");
-		} catch (StorageException e) {
-			e.printStackTrace();
-			//return null;
-		}
+		results = storage.get("article_templates", "fk_website = '"+website.getId()+"'");
 		
 		for(Map<String, String> current_result: results){
 			website.addTemplate(new ArticleTemplate(current_result));
 		}
 		
 		// Recupero template di elenchi
-		try {
-			results = storage.get("list_templates", "fk_website = '"+website.getId()+"'");
-		} catch (StorageException e) {
-			e.printStackTrace();
-			//return null;
-		}
+		results = storage.get("list_templates", "fk_website = '"+website.getId()+"'");
 		
 		for(Map<String, String> current_result: results){
 			website.addTemplate(new ArticleListTemplate(current_result));
@@ -74,16 +60,11 @@ public class WebsiteManaging {
 		return website;
 	}
 	
-	public int getWebsiteId(Website website){
+	public int getWebsiteId(Website website) throws StorageException{
 		
 		List<Map<String, String>> results;
 		
-		try{
-			results = storage.get("websites", "host = '"+website.getAddress()+"'");
-		} catch (StorageException e){
-			e.printStackTrace();
-			return 0;
-		}
+		results = storage.get("websites", "host = '"+website.getAddress()+"'");
 		
 		return Integer.parseInt(results.get(0).get("id"));
 		
@@ -97,8 +78,9 @@ public class WebsiteManaging {
 	 * @param is_list
 	 * @return Template
 	 * @throws TemplateNotFoundException
+	 * @throws StorageException 
 	 */
-	public Template getTemplate(Website website, String context, boolean is_list) throws TemplateNotFoundException{
+	public Template getTemplate(Website website, String context, boolean is_list) throws TemplateNotFoundException, StorageException{
 		
 		List<Map<String, String>> results = new LinkedList<>();
 		String template_type;
@@ -109,11 +91,7 @@ public class WebsiteManaging {
 			template_type = "article_templates";
 		}
 		
-		try {
-			results = storage.get(template_type, "(fk_website = '"+website.getId()+"' AND context_name ='"+context+"')");
-		} catch (StorageException e) {
-			e.printStackTrace();
-		}
+		results = storage.get(template_type, "(fk_website = '"+website.getId()+"' AND context_name ='"+context+"')");
 		
 		if (results==null || results.isEmpty()){
 			throw new TemplateNotFoundException();

@@ -92,6 +92,7 @@ public class UserInterface {
 					try {
 						url = in.nextLine();
 						aggregator.crawl(url, is_list);
+						
 					} catch (MalformedURLException e){
 						System.out.println("Url non valido");
 						error_url = true;
@@ -102,6 +103,10 @@ public class UserInterface {
 						
 					} catch (TemplateNotFoundException e){
 						System.out.println("Template non trovato");
+						error_url = true;
+						
+					} catch (StorageException e){
+						System.out.println("C'è stato un errore con il database");
 						error_url = true;
 					}
 					
