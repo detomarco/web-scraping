@@ -45,25 +45,24 @@ public class DataAggregator {
 		URL url = new URL(URLUtility.conformURL(source)); // Throws MalformedURLException
 
 		// Recupero sito
-		Website website =  website_manager.getWebsite(URLUtility.getHostFromURL(url)); // Throws WebsiteNotFoundException
+		Website website =  website_manager.getWebsite(URLUtility.getHost(url)); // Throws WebsiteNotFoundException
 		
-		System.out.println("Website found on database! + ID:"+website.getId());
+		System.out.println("Sito web non trovato! + ID:"+website.getId());
 		System.out.println(website);
 		
-		System.out.println("Found "+website.getTemplatesCount()+" templates for this website");
+		System.out.println("Sono stati trovati "+website.getTemplatesCount()+" in questo sito web");
 		
-		List<AggregatedData> data = null;
-
-		data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException
+		List<AggregatedData> data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException;
 		
+		// Inserimento dei dati nella repository
 		return updateCollected(data, website);
 				
 	}
 	
 	/**
-	 * Metodo che aggiorna gli articoli salvati salvando quelli appena recuperati dal web connector 
+	 * Metodo che inserisce i nuovi articoli nella repository
 	 * @param data
-	 * @return int
+	 * @return il numero degli articoli inseriti
 	 * @throws StorageException 
 	 */
 	private int updateCollected(List<AggregatedData> just_collected, Website website) throws StorageException{

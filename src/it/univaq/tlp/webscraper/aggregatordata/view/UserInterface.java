@@ -20,8 +20,8 @@ public class UserInterface {
 			Storable storage = new MySQLDatabase("root", "root", "localhost", 3306, "web_scraper");
 			run(storage);
 		} catch (StorageException e) {
-			// Se la connessione non � andata a buon fine
-			System.out.println("Problema di connessione con la repository, si prega di riprovare pi� tardi");
+			// Se la connessione non è andata a buon fine
+			System.out.println("Problema di connessione con la repository, si prega di riprovare più tardi");
 			System.out.println("Dettagli errore:\n" + e.getMessage());
 		}
 		
@@ -36,7 +36,7 @@ public class UserInterface {
 			System.out.println("Cosa vuoi fare?\n"
 					+ "1)Recupera qualche articolo in giro per il web\n"
 					+ "2)Aggiungi un nuovo sito web\n"
-					+ "3)Aggiungi un nuovo template ad un sito web gi� esistente");
+					+ "3)Aggiungi un nuovo template ad un sito web già esistente");
 			
 			int choice = getInput(1, 4);
 			
@@ -115,7 +115,7 @@ public class UserInterface {
 				
 				
 			case 3: 
-				// NOTA: QUESTA E' UNA ZOZZERIA (verr� chiesto piu volte se si vuole uscire dal programma)
+				// NOTA: QUESTA E' UNA ZOZZERIA (verrà chiesto piu volte se si vuole uscire dal programma)
 				run(storage);
 		
 		}

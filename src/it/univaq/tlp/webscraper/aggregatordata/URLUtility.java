@@ -4,7 +4,7 @@ import java.net.URL;
 
 public class URLUtility {
 
-	public static String getHostFromURL(URL url){
+	public static String getHost(URL url){
 		
 		String host = url.getHost();
 		
@@ -15,7 +15,7 @@ public class URLUtility {
 		return host;
 	}
 	
-	public static String getWebsiteContext(URL url){
+	public static String getContext(URL url){
 		
 		String path = url.getPath();
 		String context;

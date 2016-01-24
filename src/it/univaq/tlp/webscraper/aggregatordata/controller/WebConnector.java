@@ -35,7 +35,143 @@ public class WebConnector implements ConnectorInterface{
 		userAgent.settings.autoRedirect = false;
 	}
 	
+	/**
+	 * Metodo che si occupa di collezionare gli articoli referenziati sul sito web da quell'url
+	 * @param website
+	 * @param url
+	 * @param is_list
+	 * @return List<AggregatedData>
+	 * @throws TemplateNotFoundException
+	 */
+	@Override
+	public List<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException{
+		
+		List <URL> urls = new LinkedList<>();
+		// Se l'url è di un articolo
+		if (!is_list){
+				// Aggiungi direttamente l'articolo
+				urls.add(url);
+				
+		// Altrimenti, cerca nella pagina gli articoli da aggiungere
+		}else {
+			
+			// Recupera il contesto dell'articolo
+			String context = URLUtility.getContext(url);
+						
+			ArticleListTemplate template = null;
+
+			for(ArticleListTemplate current_template: website.getArticleListTemplates()){
+				if(current_template.getContext().equals(context)){
+					template = current_template;
+					break;
+				}
+			}
+			
+			String link_selector = null;
+			try{
+				link_selector = template.getLinkSelector();
+			} catch (NullPointerException e){
+				throw new TemplateNotFoundException();
+			}
+				
+			try{
+				userAgent.visit(url.toString());		    
+			} catch (ResponseException e){
+				e.printStackTrace();
+			}
+			
+			String HTML = "";
+			
+			try{
+				HTML = userAgent.doc.getFirst("<html>").innerHTML();
+			} catch (NotFound e){
+//				e.printStackTrace();	
+			}
+			
+			Jerry doc = Jerry.jerry(HTML);
+
+			doc.$(link_selector).each(new JerryFunction() {
+				@Override
+				public boolean onNode(Jerry $this, int index) {
+					try {
+						urls.add(new URL($this.attr("href")));
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					}
+					return true;
+				}
+			});	
+			
+			System.out.println("Sono stati trovati "+urls.size()+" articoli");
+			
+		} 
+		
+		return getAllArticles(website, urls); // Può rilanciare l'eccezione TemplateNotFound, deve essere gestita dal chiamante
+	}
 	
+	
+	/**
+	 * Metodo che recupera gli aricoli referenziati da una lista di url
+	 * (Nota: gli url devono puntare direttamente ad articoli, e non ad elenchi)
+	 * @param website
+	 * @param urls
+	 * @return List<AggregatedData>
+	 * @throws TemplateNotFoundException
+	 */
+	public List<AggregatedData> getAllArticles(Website website, List<URL> urls) throws TemplateNotFoundException{
+		
+		List<AggregatedData> articles = new LinkedList<>();
+		ArticleTemplate template = null;
+		boolean template_found;
+		
+		// Per ogni url
+		for(URL current_url: urls){
+			template_found = false;
+			
+			// Recupera host e context
+			String host = URLUtility.getHost(current_url);
+			String context = URLUtility.getContext(current_url);
+			
+			
+			// Se l'host dell'url corrente corrisponde all'host del sito
+			if(host.equals(website.getAddress())){
+				
+				String path = current_url.getPath();
+				// Filtro per non recuperare dati non desidarati
+				if(!(path.contains("/foto/") || path.contains("/video/") || path.contains("/gallery/"))){
+					
+					// Verifica se si conosce il template dell'articolo
+					for(ArticleTemplate current_template: website.getArticleTemplates()){
+						if(current_template.getContext().equals(context)){
+							template = current_template;
+							template_found = true;
+							break;
+						}
+					}
+				}
+			}
+			
+			// Se il template è stato trovato
+			if(template_found){
+				// Aggiungi l'articolo
+				articles.add(getArticle(template, current_url));
+			} else {
+				// Se non è stato trovato il template, nel caso in cui si stava cercando un solo articolo
+				if(urls.size()==1){
+					// viene sollevata l'eccezione a collect
+					throw new TemplateNotFoundException("Spiacente, non è stato trovato il template di questo articolo: " + current_url);
+				}
+				
+				// Se gli articoli sono più di uno, non viene sollevata alcuna eccezione per permmetere l'aggiunta degli articoli successivi
+			}
+				
+		}
+		
+		return articles;
+		
+	}
+
+
 	/**
 	 * Metodo che restituisce tutti i dati relativi ad un articolo
 	 * @param template
@@ -110,130 +246,5 @@ public class WebConnector implements ConnectorInterface{
 	    return data;
 	}
 	
-	
 
-	/**
-	 * Metodo che si occupa di collezionare gli articoli referenziati sul sito web da quell'url
-	 * @param website
-	 * @param url
-	 * @param is_list
-	 * @return List<AggregatedData>
-	 * @throws TemplateNotFoundException
-	 */
-	@Override
-	public List<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException{
-		
-		List <URL> urls = new LinkedList<>();
-	
-		if (is_list){
-			
-			String context = URLUtility.getWebsiteContext(url);
-						
-			ArticleListTemplate template = null;
-
-			for(ArticleListTemplate current_template: website.getArticleListTemplates()){
-				if(current_template.getContext().equals(context)){
-					template = current_template;
-					break;
-				}
-			}
-			
-			String link_selector = null;
-			try{
-				link_selector = template.getLinkSelector();
-			} catch (NullPointerException e){
-				throw new TemplateNotFoundException();
-			}
-				
-			try{
-				userAgent.visit(url.toString());		    
-			} catch (ResponseException e){
-				e.printStackTrace();
-			}
-			
-			String HTML = "";
-			
-			try{
-				HTML = userAgent.doc.getFirst("<html>").innerHTML();
-			} catch (NotFound e){
-//				e.printStackTrace();	
-			}
-			
-			Jerry doc = Jerry.jerry(HTML);
-
-			doc.$(link_selector).each(new JerryFunction() {
-				@Override
-				public boolean onNode(Jerry $this, int index) {
-					try {
-						urls.add(new URL($this.attr("href")));
-					} catch (MalformedURLException e) {
-						e.printStackTrace();
-					}
-					return true;
-				}
-			});	
-			
-			System.out.println("Catched "+urls.size()+" links");
-			
-		} else {
-			urls.add(url);
-		}
-		
-		return getAllArticles(website, urls); // Può rilanciare l'eccezione TemplateNotFound, deve essere gestita dal chiamante
-	}
-	
-	
-	/**
-	 * Metodo che recupera gli aricoli referenziati da una lista di url
-	 * (Nota: gli url devono puntare direttamente ad articoli, e non ad elenchi)
-	 * @param website
-	 * @param urls
-	 * @return List<AggregatedData>
-	 * @throws TemplateNotFoundException
-	 */
-	public List<AggregatedData> getAllArticles(Website website, List<URL> urls) throws TemplateNotFoundException{
-		
-		List<AggregatedData> articles = new LinkedList<>();
-		ArticleTemplate template = null;
-		boolean template_found;
-		boolean supposed_to_be_article;
-		
-		for(URL current_url: urls){
-			template_found = false;
-			
-			String context = URLUtility.getHostFromURL(current_url);
-			String host = URLUtility.getHostFromURL(current_url);
-			
-			String path = current_url.getPath();
-			if(path.contains("/foto/") || path.contains("/video/") || path.contains("/gallery/")){
-				supposed_to_be_article = false;
-			} else {
-				supposed_to_be_article = true;
-			}
-			
-			if(host.equals(website.getAddress()) && supposed_to_be_article){
-				for(ArticleTemplate current_template: website.getArticleTemplates()){
-					if(current_template.getContext().equals(context)){
-						template = current_template;
-						template_found = true;
-						break;
-					}
-				}
-			}
-			try{
-				if(template_found){
-					articles.add(getArticle(template, current_url));
-				} else {
-					throw new TemplateNotFoundException();
-				}
-			} catch (TemplateNotFoundException e){
-				// Se non è stato trovato il template, nel caso in cui si stava cercando un solo articolo
-				// viene rilanciata l'eccezione a collect
-				if(urls.size()==1){
-					throw e;
-				}
-			}
-		}
-		return articles;
-	}
 }
