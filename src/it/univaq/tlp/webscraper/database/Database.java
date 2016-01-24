@@ -24,8 +24,20 @@ public abstract class Database implements Storable{
 	
 	@Override
 	public List<Map<String, String>> get(String table, String condition) throws StorageException{
+		return get(table, condition, 0);
+	}
+	
+	@Override
+	public List<Map<String, String>> get(String table, String condition, int count) throws StorageException{
+		
 		try{
-			ResultSet results = this.select(table, condition, "'id' DESC");
+			
+			ResultSet results;
+			if(count == 0){
+				results = this.select(table, condition, "'id' DESC LIMIT all");
+			} else {
+				results = this.select(table, condition, "'id' DESC LIMIT "+count);
+			}
 			
 			List<Map<String, String>> rows = new LinkedList<Map<String, String>>();
 			
@@ -54,6 +66,7 @@ public abstract class Database implements Storable{
 		} catch (Exception e){
 			throw new StorageException(e.getMessage(), e.getCause());
 		}
+		
 	}
 	
 	@Override
