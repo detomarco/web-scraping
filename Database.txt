@@ -1,0 +1,185 @@
+-- phpMyAdmin SQL Dump
+-- version 4.2.5
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost:8889
+-- Generation Time: Gen 24, 2016 alle 21:20
+-- Versione del server: 5.5.38
+-- PHP Version: 5.5.14
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `web_scraper`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `articles`
+--
+
+CREATE TABLE `articles` (
+  `id` int(32) NOT NULL,
+  `title` text NOT NULL,
+  `heading` text NOT NULL,
+  `summary` text NOT NULL,
+  `eyelet` text NOT NULL,
+  `text` text NOT NULL,
+  `date` date NOT NULL,
+  `author` varchar(32) NOT NULL,
+  `url` text NOT NULL,
+  `fk_website` int(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `article_templates`
+--
+
+CREATE TABLE `article_templates` (
+`id` int(11) NOT NULL,
+  `fk_website` int(32) NOT NULL,
+  `context_name` varchar(32) NOT NULL,
+  `heading_selector` varchar(128) NOT NULL,
+  `summary_selector` varchar(128) NOT NULL,
+  `eyelet_selector` varchar(128) NOT NULL,
+  `text_selector` varchar(128) NOT NULL,
+  `date_selector` varchar(128) NOT NULL,
+  `date_format` varchar(32) NOT NULL,
+  `author_selector` varchar(128) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dump dei dati per la tabella `article_templates`
+--
+
+INSERT INTO `article_templates` (`id`, `fk_website`, `context_name`, `heading_selector`, `summary_selector`, `eyelet_selector`, `text_selector`, `date_selector`, `date_format`, `author_selector`) VALUES
+(1, 2, 'economia', '.page-body article header h1', '.page-body article header p.summary', '', '.page-body article .main-content .body-text span', '', '', '.page-body article header em.author span'),
+(2, 2, 'politica', '.inner-container article header h1', '.inner-container article header p.summary', '', '.inner-container article .main-content .body-text span', '', '', '.page-body article header em.author span'),
+(3, 2, 'esteri', '#container article header h1', '#container article header p.summary', '', '#container article .main-content .body-text span', '', '', '#container article header em.author span');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `list_templates`
+--
+
+CREATE TABLE `list_templates` (
+  `fk_website` int(11) NOT NULL,
+  `context_name` varchar(32) NOT NULL,
+  `article_link_selector` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `list_templates`
+--
+
+INSERT INTO `list_templates` (`fk_website`, `context_name`, `article_link_selector`) VALUES
+(1, '', '#web h3 a.td-u'),
+(2, 'politica', 'article header h1 a');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `metadata`
+--
+
+CREATE TABLE `metadata` (
+  `fk_article` int(32) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `websites`
+--
+
+CREATE TABLE `websites` (
+`id` int(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `address` varchar(128) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dump dei dati per la tabella `websites`
+--
+
+INSERT INTO `websites` (`id`, `name`, `address`, `description`) VALUES
+(1, 'Yahoo Italia', 'it.search.yahoo.com', 'Ricerche di Yahoo!'),
+(2, 'Repubblica', 'repubblica.it', 'Repubblica.it, quotidiano online');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `articles`
+--
+ALTER TABLE `articles`
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_website` (`fk_website`), ADD KEY `fk_website_2` (`fk_website`);
+
+--
+-- Indexes for table `article_templates`
+--
+ALTER TABLE `article_templates`
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_website` (`fk_website`), ADD KEY `fk_website_2` (`fk_website`);
+
+--
+-- Indexes for table `list_templates`
+--
+ALTER TABLE `list_templates`
+ ADD PRIMARY KEY (`fk_website`);
+
+--
+-- Indexes for table `metadata`
+--
+ALTER TABLE `metadata`
+ ADD PRIMARY KEY (`fk_article`);
+
+--
+-- Indexes for table `websites`
+--
+ALTER TABLE `websites`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`), ADD UNIQUE KEY `address` (`address`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `article_templates`
+--
+ALTER TABLE `article_templates`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `websites`
+--
+ALTER TABLE `websites`
+MODIFY `id` int(32) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- Limiti per le tabelle scaricate
+--
+
+--
+-- Limiti per la tabella `articles`
+--
+ALTER TABLE `articles`
+ADD CONSTRAINT `belongs to` FOREIGN KEY (`fk_website`) REFERENCES `articles` (`id`);
+
+--
+-- Limiti per la tabella `article_templates`
+--
+ALTER TABLE `article_templates`
+ADD CONSTRAINT `article_templates_ibfk_1` FOREIGN KEY (`fk_website`) REFERENCES `websites` (`id`);
+
+--
+-- Limiti per la tabella `list_templates`
+--
+ALTER TABLE `list_templates`
+ADD CONSTRAINT `belongs` FOREIGN KEY (`fk_website`) REFERENCES `websites` (`id`);
