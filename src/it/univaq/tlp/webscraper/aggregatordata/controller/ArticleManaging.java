@@ -68,12 +68,12 @@ public class ArticleManaging {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		data.put("title", article.getTitle());
-		data.put("heading", article.getHeading());
-		data.put("summary", article.getSummary());
-		data.put("eyelet", article.getEyelet());
-		data.put("text", article.getText());
-		data.put("author", article.getAuthor());
+		data.put("title", article.getTitle().replaceAll("'", "''"));
+		data.put("heading", article.getHeading().replaceAll("'", "''"));
+		data.put("summary", article.getSummary().replaceAll("'", "''"));
+		data.put("eyelet", article.getEyelet().replaceAll("'", "''"));
+		data.put("text", article.getText().replaceAll("'", "''"));
+		data.put("author", article.getAuthor().replaceAll("'", "''"));
 		data.put("date", article.getDate());
 		data.put("url", article.getSource());
 		data.put("fk_website", website.getId());

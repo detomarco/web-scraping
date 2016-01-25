@@ -38,19 +38,29 @@ public class AggregatedData {
 	public AggregatedData(){
 		this.img_caption = new ArrayList<>();
 		this.metadata = new HashMap<String, String>();
+		
+		this.title = "";
+		this.heading = "";
+		this.summary = "";
+		this.eyelet = "";
+		this.text = "";
+		this.author = "";
+		this.source = "";
+		this.date = new Date();
+		
 	}
 	
 	public AggregatedData(String title, String heading, String eyelet, String summary, String text, String author, String source, Date date){
 		this();
 		
-		this.title = title;
-		this.heading = heading;
-		this.eyelet = eyelet;
-		this.summary = summary;
-		this.text = text;
-		this.author = author;
-		this.source = source;
-		this.date = date;
+		putTitle(title);
+		putHeading(heading);
+		putEyelet(eyelet);
+		putSummary(summary);
+		putText(text);
+		putAuthor(author);
+		putSource(source);
+		putDate(date);
 	}
 	
 	/*
@@ -62,7 +72,9 @@ public class AggregatedData {
 	 * @param title
 	 */
 	public void putTitle(String title){
-		this.title = title;
+		if(title!=null){
+			this.title = title;
+		}
 	}
 	
 	/**
@@ -70,7 +82,9 @@ public class AggregatedData {
 	 * @param heading
 	 */
 	public void putHeading(String heading){
-		this.heading = heading;
+		if(heading!=null){
+			this.heading = heading;
+		}
 	}
 	
 	/**
@@ -78,7 +92,9 @@ public class AggregatedData {
 	 * @param eyelet
 	 */
 	public void putEyelet(String eyelet){
-		this.eyelet = eyelet;
+		if(eyelet!=null){
+			this.eyelet = eyelet;
+		}
 	}
 	
 	/**
@@ -86,7 +102,9 @@ public class AggregatedData {
 	 * @param summary
 	 */
 	public void putSummary(String summary){
-		this.summary = summary;
+		if(summary!=null){
+			this.summary = summary;
+		}	
 	}
 	
 	/**
@@ -94,7 +112,9 @@ public class AggregatedData {
 	 * @param text
 	 */
 	public void putText(String text){
-		this.text = text;
+		if(text!=null){
+			this.text = text;
+		}
 	}
 	
 	/**
@@ -102,7 +122,9 @@ public class AggregatedData {
 	 * @param author
 	 */
 	public void putAuthor(String author){
-		this.author = author;
+		if(author!=null){
+			this.author = author;
+		}
 	}
 	
 	/**
@@ -110,7 +132,9 @@ public class AggregatedData {
 	 * @param source
 	 */
 	public void putSource(String source){
-		this.source = source;
+		if(source!=null){
+			this.source = source;
+		}
 	}
 	
 	/**
@@ -118,7 +142,9 @@ public class AggregatedData {
 	 * @param date
 	 */
 	public void putDate(Date date){
-		this.date = date;
+		if(date!=null){
+			this.date = date;
+		}
 	}
 	
 	/**

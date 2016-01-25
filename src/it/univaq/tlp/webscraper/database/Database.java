@@ -34,7 +34,7 @@ public abstract class Database implements Storable{
 			
 			ResultSet results;
 			if(count == 0){
-				results = this.select(table, condition, "'id' DESC LIMIT all");
+				results = this.select(table, condition, "'id' DESC");
 			} else {
 				results = this.select(table, condition, "'id' DESC LIMIT "+count);
 			}

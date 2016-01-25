@@ -95,19 +95,27 @@ public class UserInterface {
 						
 					} catch (MalformedURLException e){
 						System.out.println("Url non valido");
+						e.printStackTrace();
 						error_url = true;
+						return;
 					
 					} catch (WebsiteNotFoundException e){
 						System.out.println("Sito web non trovato");
+						e.printStackTrace();
 						error_url = true;
+						return;
 						
 					} catch (TemplateNotFoundException e){
 						System.out.println("Template non trovato");
+						e.printStackTrace();
 						error_url = true;
+						return;
 						
 					} catch (StorageException e){
 						System.out.println("C'è stato un errore con il database");
+						e.printStackTrace();
 						error_url = true;
+						return;
 					}
 					
 				}while(error_url);

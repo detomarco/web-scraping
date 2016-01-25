@@ -2,6 +2,7 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -204,23 +205,41 @@ public class WebConnector implements ConnectorInterface{
 		// Estrazione informazioni ed inserimento nell'oggetto
 		data.putTitle((doc.$("head title").html()));
 		
-		if(!(template.getHeadingSelector().equals("")) && (template.getHeadingSelector()!=null))
-				data.putHeading((doc.$(template.getHeadingSelector()).html()));
+		if(!(template.getHeadingSelector().equals("")) && (template.getHeadingSelector()!=null)){
+			data.putHeading((doc.$(template.getHeadingSelector()).html()));
+		} else {
+			data.putHeading("");
+		}
 		
-		if(!(template.getEyeletSelector().equals("")) && (template.getEyeletSelector()!=null))
-				data.putEyelet((doc.$(template.getEyeletSelector()).html()));	
+		if(!(template.getEyeletSelector().equals("")) && (template.getEyeletSelector()!=null)){
+			data.putEyelet((doc.$(template.getEyeletSelector()).html()));	
+		} else {
+			data.putEyelet("");
+		}
 		
-		if(!(template.getSummarySelector().equals("")) && (template.getSummarySelector()!=null))
-				data.putSummary((doc.$(template.getSummarySelector()).html()));
+		if(!(template.getSummarySelector().equals("")) && (template.getSummarySelector()!=null)){
+			data.putSummary((doc.$(template.getSummarySelector()).html()));
+		} else {
+			data.putSummary("");
+		}
 		
-		if(!(template.getTextSelector().equals("")) && (template.getTextSelector()!=null))
-				data.putText((doc.$(template.getTextSelector()).text()));
+		if(!(template.getTextSelector().equals("")) && (template.getTextSelector()!=null)){
+			data.putText((doc.$(template.getTextSelector()).text()));
+		} else {
+			data.putText("");
+		}
 		
-		if(!(template.getAuthorSelector().equals("")) && (template.getAuthorSelector()!=null))
-				data.putAuthor((doc.$(template.getAuthorSelector()).html()));
-		
-		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null))
-				data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
+		if(!(template.getAuthorSelector().equals("")) && (template.getAuthorSelector()!=null)){
+			data.putAuthor((doc.$(template.getAuthorSelector()).html()));
+		} else {
+			data.putAuthor("");
+		}
+				
+		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null)){
+			data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
+		} else {
+			data.putDate(new Date());
+		}
 		
 		data.putSource(url.toString());
 		

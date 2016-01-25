@@ -9,6 +9,7 @@ import java.util.Set;
 import it.univaq.tlp.webscraper.aggregatordata.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
@@ -33,13 +34,18 @@ public class WebsiteManaging {
 	 * @param hostname
 	 * @return Website
 	 * @throws StorageException 
+	 * @throws WebsiteNotFoundException
 	 */
-	public Website getWebsite(String hostname) throws StorageException{
+	public Website getWebsite(String hostname) throws StorageException, WebsiteNotFoundException{
 		
 		List<Map<String, String>> results;
 		
 		// Recupero website
 		results = storage.get("websites", "address = '"+hostname+"'");
+		
+		if (results==null || results.isEmpty()){
+			throw new WebsiteNotFoundException();
+		}
 		
 		Website website = new Website(results.get(0));
 		
