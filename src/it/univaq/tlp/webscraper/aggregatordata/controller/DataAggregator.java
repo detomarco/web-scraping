@@ -47,43 +47,26 @@ public class DataAggregator {
 		// Recupero sito
 		Website website =  website_manager.getWebsite(URLUtility.getHost(url)); // Throws WebsiteNotFoundException
 		
-		System.out.println("Sito web trovato! + ID:"+website.getId());
-		System.out.println(website);
-		
-		System.out.println("Sono stati trovati "+website.getTemplatesCount()+" template in questo sito web");
-		
+		// Recupera tutti gli articoli trovati (opportunamente strutturati)
 		List<AggregatedData> data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException;
 		
-		// Inserimento dei dati nella repository
-		return updateCollected(data, website);
-				
-	}
-	
-	/**
-	 * Metodo che inserisce i nuovi articoli nella repository
-	 * @param data
-	 * @return il numero degli articoli inseriti
-	 * @throws StorageException 
-	 */
-	private int updateCollected(List<AggregatedData> just_collected, Website website) throws StorageException{
-		
+		// Recupera tutti gli articoli già inseriti nel website
 		List<Article> stored_articles = article_manager.getWebsiteArticles(website);
 		
-		Iterator<AggregatedData> it = just_collected.iterator();
-		
+		// Salva solo gli articoli che non stono già stati trovati
+		Iterator<AggregatedData> iter = data.iterator();
 		int saved_counter = 0;
-		
-		while(it.hasNext()){
-			AggregatedData current_article = it.next();
+		while(iter.hasNext()){
+			AggregatedData current_article = iter.next();
 			if(!(stored_articles.contains(current_article))){
+				// Salva nuovo articolo
 				article_manager.saveArticle(current_article, website);
 				saved_counter ++;
 			}
 		}
 		
 		return saved_counter;
-		
+				
 	}
-	
-	
+
 }

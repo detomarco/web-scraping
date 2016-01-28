@@ -27,8 +27,9 @@ public class Article extends AggregatedData {
 		super(from_storage.get("title"), from_storage.get("heading"), from_storage.get("eyelet"), from_storage.get("summary"),
 				from_storage.get("text"), from_storage.get("author"), from_storage.get("url"), from_storage.get("date"));
 				
+
 		this.id = Integer.parseInt(from_storage.get("id"));
-		this.website_id = Integer.parseInt(from_storage.get("website_id"));
+		this.website_id = Integer.parseInt(from_storage.get("fk_website"));
 
 	}
 
