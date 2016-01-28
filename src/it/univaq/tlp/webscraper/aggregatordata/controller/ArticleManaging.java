@@ -54,7 +54,7 @@ public class ArticleManaging {
 		List<Article> articles = new LinkedList<>();
 		List<Map<String, String>> results;
 		
-		results = storage.get("articles", "1 = '1'");
+		results = storage.get("articles", "1 = '1'", count);
 		
 		for(Map<String, String> current_result: results){
 			articles.add(new Article(current_result));
