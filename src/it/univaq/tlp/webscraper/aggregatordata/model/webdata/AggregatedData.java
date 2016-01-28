@@ -27,7 +27,7 @@ public class AggregatedData {
 	private String author;
 	
 	private String source;
-	private Date date;
+	private String date;
 //	private String topic;
 	private List<String> img_caption;
 	private Map<String, String> metadata;
@@ -46,11 +46,11 @@ public class AggregatedData {
 		this.text = "";
 		this.author = "";
 		this.source = "";
-		this.date = new Date();
+		this.date = "";
 		
 	}
 	
-	public AggregatedData(String title, String heading, String eyelet, String summary, String text, String author, String source, Date date){
+	public AggregatedData(String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
 		this();
 		
 		putTitle(title);
@@ -141,30 +141,12 @@ public class AggregatedData {
 	 * Metodo che inserisce la data nell'articolo
 	 * @param date
 	 */
-	public void putDate(Date date){
+	public void putDate(String date){
 		if(date!=null){
 			this.date = date;
 		}
 	}
-	
-	/**
-	 * Metodo che inserisce la data nell'articolo
-	 * @param date
-	 * @param format
-	 */
-	public void putDate(String date, String format){
-		DateFormat df = new SimpleDateFormat(format);
-		Date parsedDate;
-		
-		try{
-			parsedDate = df.parse(date);
-		} catch (ParseException e){
-			parsedDate = null;
-		}
-		
-		this.date = parsedDate;
-	}
-	
+
 	/**
 	 * Metodo che inserisce i Metadata nell'articolo
 	 * @param key
@@ -246,7 +228,7 @@ public class AggregatedData {
 	 * Metodo che recupera la data dall'oggetto
 	 * @return Date
 	 */
-	public Date getDate(){
+	public String getDate(){
 		return this.date;
 	}
 	

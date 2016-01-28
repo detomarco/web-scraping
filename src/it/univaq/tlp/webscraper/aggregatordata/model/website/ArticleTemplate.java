@@ -17,7 +17,6 @@ public class ArticleTemplate extends Template{
 	private String text_selector;
 	private String date_selector;
 	private String author_selector;
-	private String date_format;
 	
 	public ArticleTemplate(String context, String heading_selector, String eyelet_selector, String summary_selector, String text_selector, String author_selector, String date_selector, String date_format){
 		super(context);
@@ -27,7 +26,6 @@ public class ArticleTemplate extends Template{
 		this.text_selector = text_selector;
 		this.author_selector = author_selector;
 		this.date_selector = date_selector;
-		this.date_format = date_format;
 	}
 	
 	public ArticleTemplate(Map<String, String> from_storage){
@@ -37,7 +35,6 @@ public class ArticleTemplate extends Template{
 		this.summary_selector = from_storage.get("summary_selector");
 		this.text_selector = from_storage.get("text_selector");
 		this.date_selector = from_storage.get("date_selector");
-		this.date_format = from_storage.get("date_format");
 		this.author_selector = from_storage.get("author_selector");
 	}
 	
@@ -65,10 +62,6 @@ public class ArticleTemplate extends Template{
 		return this.date_selector;
 	}
 	
-	public String getDateFormat(){
-		return this.date_format;
-	}
-	
 	@Override
 	public Map<String, Object> toMap(){
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -79,7 +72,6 @@ public class ArticleTemplate extends Template{
 		map.put("text_selector", this.text_selector);
 		map.put("date_selector", this.date_selector);
 		map.put("author_selector", this.author_selector);
-		map.put("date_format", this.date_format);
 		
 		map.put("context", this.getContext());
 		

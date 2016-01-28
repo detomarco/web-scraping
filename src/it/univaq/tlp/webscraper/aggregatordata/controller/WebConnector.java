@@ -207,39 +207,27 @@ public class WebConnector implements ConnectorInterface{
 		
 		if(!(template.getHeadingSelector().equals("")) && (template.getHeadingSelector()!=null)){
 			data.putHeading((doc.$(template.getHeadingSelector()).html()));
-		} else {
-			data.putHeading("");
-		}
+		}  
 		
 		if(!(template.getEyeletSelector().equals("")) && (template.getEyeletSelector()!=null)){
 			data.putEyelet((doc.$(template.getEyeletSelector()).html()));	
-		} else {
-			data.putEyelet("");
-		}
+		} 
 		
 		if(!(template.getSummarySelector().equals("")) && (template.getSummarySelector()!=null)){
 			data.putSummary((doc.$(template.getSummarySelector()).html()));
-		} else {
-			data.putSummary("");
-		}
+		}  
 		
 		if(!(template.getTextSelector().equals("")) && (template.getTextSelector()!=null)){
 			data.putText((doc.$(template.getTextSelector()).text()));
-		} else {
-			data.putText("");
-		}
+		}  
 		
 		if(!(template.getAuthorSelector().equals("")) && (template.getAuthorSelector()!=null)){
 			data.putAuthor((doc.$(template.getAuthorSelector()).html()));
-		} else {
-			data.putAuthor("");
-		}
+		}  
 				
 		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null)){
-			data.putDate((doc.$(template.getDateSelector()).html()), template.getDateFormat());
-		} else {
-			data.putDate(new Date());
-		}
+			data.putDate((doc.$(template.getDateSelector()).html()));
+		}  
 		
 		data.putSource(url.toString());
 		
