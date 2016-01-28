@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import it.univaq.tlp.webscraper.aggregatordata.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
+import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 
 /**
  * Questa classe contiene metodi per recuperare ed inserire i template dal database

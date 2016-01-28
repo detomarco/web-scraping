@@ -4,15 +4,14 @@ import java.net.MalformedURLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import it.univaq.tlp.webscraper.aggregatordata.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
-import it.univaq.tlp.webscraper.database.MySQLDatabase;
+import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 
 public class UserInterface {
-
 	public static void main(String[] args){
 		
 		try {
@@ -71,14 +70,13 @@ public class UserInterface {
 		Scanner in = new Scanner(System.in);
 		
 		
+
 		DataAggregator aggregator = new DataAggregator(storage);
 		System.out.println("Nello specifico, cosa intendi recuperare?\n"
-				+ "1)Una lista di articoli\n"
-				+ "2)Un singolo articolo\n"
-				+ "3)Torna al menu principale\n");
+							+ "1)Una lista di articoli\n"
+							+ "2)Un singolo articolo");
 		
-		int choice = getInput(1, 3);
-		
+		int choice = getInput(1, 2);
 		
 		switch(choice){
 		
@@ -87,44 +85,35 @@ public class UserInterface {
 			case 2: 
 				
 				do{
-					System.out.println("Inserisci l'url");
+					System.out.print("Inserisci l'url: ");
 	
 					try {
 						url = in.nextLine();
+						// 
 						aggregator.crawl(url, is_list);
 						
 					} catch (MalformedURLException e){
 						System.out.println("Url non valido");
-						e.printStackTrace();
 						error_url = true;
-						return;
+						e.printStackTrace();
 					
 					} catch (WebsiteNotFoundException e){
 						System.out.println("Sito web non trovato");
-						e.printStackTrace();
 						error_url = true;
-						return;
+						e.printStackTrace();
 						
 					} catch (TemplateNotFoundException e){
 						System.out.println("Template non trovato");
-						e.printStackTrace();
 						error_url = true;
-						return;
+						e.printStackTrace();
 						
 					} catch (StorageException e){
-						System.out.println("C'è stato un errore con il database");
+						System.out.println("C'è stato un errore con il database: " + e.getMessage());
 						e.printStackTrace();
-						error_url = true;
-						return;
 					}
 					
 				}while(error_url);
 				break;
-				
-				
-			case 3: 
-				// NOTA: QUESTA E' UNA ZOZZERIA (verrà chiesto piu volte se si vuole uscire dal programma)
-				run(storage);
 		
 		}
 	

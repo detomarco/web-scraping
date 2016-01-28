@@ -5,14 +5,14 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import it.univaq.tlp.webscraper.aggregatordata.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
 import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
+import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 
 /**
  * Questa classe si occupa di salvare gli articoli recuperati dal web.
@@ -47,10 +47,10 @@ public class DataAggregator {
 		// Recupero sito
 		Website website =  website_manager.getWebsite(URLUtility.getHost(url)); // Throws WebsiteNotFoundException
 		
-		System.out.println("Sito web non trovato! + ID:"+website.getId());
+		System.out.println("Sito web trovato! + ID:"+website.getId());
 		System.out.println(website);
 		
-		System.out.println("Sono stati trovati "+website.getTemplatesCount()+" in questo sito web");
+		System.out.println("Sono stati trovati "+website.getTemplatesCount()+" template in questo sito web");
 		
 		List<AggregatedData> data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException;
 		
