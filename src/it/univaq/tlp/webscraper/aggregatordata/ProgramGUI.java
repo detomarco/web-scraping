@@ -19,8 +19,7 @@ public class ProgramGUI extends Thread{
 			
 		} catch (StorageException e) {
 			ErrorDialog dialog = new ErrorDialog(new Shell(), 0);
-			sleep(5000);
-			e.printStackTrace();
+			dialog.open();
 		}
 	
 	}
