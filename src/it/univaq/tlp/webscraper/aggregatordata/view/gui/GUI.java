@@ -22,10 +22,16 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.custom.SashForm;
 
 public class GUI extends UserInterface{
 
 	protected Shell shell;
+	private Text indirizzo;
+	private Text nome;
+	private Text descrizione;
 	
 	
 	/**
@@ -69,36 +75,35 @@ public class GUI extends UserInterface{
 	    shell.setText("SWT Application");
 	    shell.setLayout(null);
 	    
-	    CTabFolder tabFolder = new CTabFolder(shell, SWT.BORDER);
-	    tabFolder.setBounds(0, 0, 600, 258);
-	    tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+	    //BARRA TAB
+	    CTabFolder tabBar = new CTabFolder(shell, SWT.BORDER);
+	    tabBar.setBounds(0, 0, 600, 258);
+	    tabBar.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 	    
-	    CTabItem tabCrawler = new CTabItem(tabFolder, SWT.NONE);
+	    //TAB CRWALER
+	    CTabItem tabCrawler = new CTabItem(tabBar, SWT.NONE);
 	    tabCrawler.setText("Crawler");
 	    
-	    //CRWALER
-	    Group grpCrawler = new Group(tabFolder, SWT.NONE);
-	    grpCrawler.setText("Crawler");
-	    tabCrawler.setControl(grpCrawler);
-		
-	    //URL
-		Text url = new Text(grpCrawler, SWT.BORDER);
-		url.setBounds(71, 22, 437, 24);
-		url.setText("Write url here");
-		
-		
-		
-		Label lblAggiuntiArticoli = new Label(grpCrawler, SWT.NONE);
-		lblAggiuntiArticoli.setBounds(237, 161, 106, 14);
-		lblAggiuntiArticoli.setVisible(false);
-	    
-		
-		//BUTTON INSERISCI ARTICOLO
+		    //GRUPPO CRAWLER
+		    Group grpCrawler = new Group(tabBar, SWT.NONE);
+		    grpCrawler.setText("Crawler");
+		    tabCrawler.setControl(grpCrawler);
+			
+			    //URL
+				Text url = new Text(grpCrawler, SWT.BORDER);
+				url.setBounds(71, 22, 437, 24);
+				url.setText("Write url here");
+				
+				//ARTICOLI AGGIUNTI
+				Label lblAggiuntiArticoli = new Label(grpCrawler, SWT.NONE);
+				lblAggiuntiArticoli.setBounds(237, 161, 106, 25);
+				lblAggiuntiArticoli.setVisible(false);
+			    
+				//BUTTON INSERISCI ARTICOLO
 				Button addArticle = new Button(grpCrawler, SWT.NONE);
 				addArticle.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseDown(MouseEvent arg0) {
-						
 						try {
 							scrap(url.getText());
 						} catch (MalformedURLException | WebsiteNotFoundException | TemplateNotFoundException
@@ -116,79 +121,136 @@ public class GUI extends UserInterface{
 				addArticle.setText("Inserisci articolo");
 		
 		
-		//ARTICOLI
-	    CTabItem tabArticles = new CTabItem(tabFolder, SWT.NONE);
+		//TAB ARTICOLI
+	    CTabItem tabArticles = new CTabItem(tabBar, SWT.NONE);
 	    tabArticles.setText("Articoli");
 	    
-	    Group grpArticoli = new Group(tabFolder, SWT.NONE);
-	    grpArticoli.setText("Articoli");
-	    tabArticles.setControl(grpArticoli);
-	    grpArticoli.setLayout(null);
+		    //GRUPPO ARTICOLI
+		    Group grpArticoli = new Group(tabBar, SWT.NONE);
+		    grpArticoli.setText("Articoli");
+		    tabArticles.setControl(grpArticoli);
+		    grpArticoli.setLayout(null);
+		    
+			    //PRIMA SEZIONE
+			    Composite frame1 = new Composite(grpArticoli, SWT.NONE);
+			    frame1.setBounds(1, 0, 196, 203);
+			    
+				    //SORGENTE
+				    Label lblSorgente = new Label(frame1, SWT.NONE);
+				    lblSorgente.setBounds(16, 32, 59, 18);
+				    lblSorgente.setText("Sorgente");
+				    
+				    //CONTESTO
+				    Label lblContesto = new Label(frame1, SWT.NONE);
+				    lblContesto.setBounds(16, 74, 59, 18);
+				    lblContesto.setText("Contesto");
+				    
+				    //SORGENTE
+				    Combo sorgente = new Combo(frame1, SWT.NONE);
+				    sorgente.setBounds(81, 28, 94, 22);
+				    
+				    //SELECT CONTESTO
+				    Combo contesto = new Combo(frame1, SWT.NONE);
+				    contesto.setBounds(81, 70, 94, 22);
+				    
+				    //BOTTONE CERCA
+				    Button btnSearch = new Button(frame1, SWT.NONE);
+				    btnSearch.setBounds(36, 122, 124, 45);
+				    btnSearch.setText("Cerca");
+				    
+					//SEPARATORE
+					Label label = new Label(frame1, SWT.SEPARATOR | SWT.VERTICAL);
+					label.setBounds(194, 10, 2, 183);
+			    
+					
+			    //SECONDA SEZIONE
+			    Composite frame2 = new Composite(grpArticoli, SWT.NONE);
+			    frame2.setBounds(197, 0, 196, 203);
+			    
+				    //LISTA ARTICOLI
+				    List list = new List(frame2, SWT.BORDER | SWT.V_SCROLL);
+				    list.setBounds(10, 10, 176, 183);
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("jknjcdc");
+				    list.add("rkmrfeed");
+		
+			    //TERZA SEZIONE
+			    Composite frame3 = new Composite(grpArticoli, SWT.NONE);
+			    frame3.setBounds(392, 0, 196, 203);
+			    
+				    //INFO ARTICOLO
+				    Group grpInfoArticle = new Group(frame3, SWT.NONE);
+				    grpInfoArticle.setText("Info Articolo");
+				    grpInfoArticle.setBounds(0, 0, 196, 196);
 	    
+	    //TAB GESTIONE
+	    CTabItem tabGestione = new CTabItem(tabBar, SWT.NONE);
+	    tabGestione.setText("Gestione");
 	    
-	    //PRIMA SEZIONE
-	    Composite frame1 = new Composite(grpArticoli, SWT.NONE);
-	    frame1.setBounds(1, 0, 196, 203);
-	    
-	    Combo sorgente = new Combo(frame1, SWT.NONE);
-	    sorgente.setBounds(81, 28, 94, 22);
-	    
-	    Button btnSearch = new Button(frame1, SWT.NONE);
-	    btnSearch.setBounds(36, 122, 124, 45);
-	    btnSearch.setText("Cerca");
-	    
-	    Label lblSorgente = new Label(frame1, SWT.NONE);
-	    lblSorgente.setBounds(16, 32, 59, 14);
-	    lblSorgente.setText("Sorgente");
-	    
-	    Label lblContesto = new Label(frame1, SWT.NONE);
-	    lblContesto.setBounds(16, 74, 59, 14);
-	    lblContesto.setText("Contesto");
-	    
-	    Combo contesto = new Combo(frame1, SWT.NONE);
-	    contesto.setBounds(81, 70, 94, 22);
-	    
-	    
-	    //SECONDA SEZIONE
-	    Composite frame2 = new Composite(grpArticoli, SWT.NONE);
-	    frame2.setBounds(197, 0, 196, 203);
-	    
-	    List list = new List(frame2, SWT.BORDER | SWT.V_SCROLL);
-	    list.setBounds(10, 10, 176, 183);
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("jknjcdc");
-	    list.add("rkmrfeed");
-	    
-	    Label label = new Label(frame2, SWT.SEPARATOR | SWT.VERTICAL);
-	    label.setBounds(0, 10, 2, 183);
-
-
-	    //TERZA SEZIONE
-	    Composite frame3 = new Composite(grpArticoli, SWT.NONE);
-	    frame3.setBounds(392, 0, 196, 203);
-	    
-	    Group group = new Group(frame3, SWT.NONE);
-	    group.setText("Info Articolo");
-	    group.setBounds(0, 0, 196, 196);
-	    
-	    
-
+		    //FRAME CONTAINER
+		    Composite container = new Composite(tabBar, SWT.NONE);
+		    tabGestione.setControl(container);
+		    
+			    //FRAME 1
+			    Composite frameTemplate = new Composite(container, SWT.NONE);
+			    frameTemplate.setBounds(0, 0, 298, 223);
+		
+				    //GRUPPO INSERIMENTO TEMPLATE
+				    Group grpInserimentoTemplate = new Group(frameTemplate, SWT.NONE);
+				    grpInserimentoTemplate.setText("Inserimento Template");
+				    grpInserimentoTemplate.setBounds(0, 0, 298, 223);
+			    
+			    //FRAME 2
+			    Composite frameWebSite = new Composite(container, SWT.NONE);
+			    frameWebSite.setBounds(298, 0, 296, 223);
+			    
+				    //GRUPPO INSERIMENTO WEBSITE
+				    Group grpInserimentoWebsite = new Group(frameWebSite, SWT.NONE);
+				    grpInserimentoWebsite.setText("Inserimento Website");
+				    grpInserimentoWebsite.setBounds(0, 0, 296, 223);
+				    
+				    //INDIRIZZO
+				    Label lblIndirizzo = new Label(grpInserimentoWebsite, SWT.NONE);
+				    lblIndirizzo.setBounds(10, 13, 59, 14);
+				    lblIndirizzo.setText("Indirizzo:");
+				    indirizzo = new Text(grpInserimentoWebsite, SWT.BORDER);
+				    indirizzo.setBounds(96, 10, 186, 19);
+				    
+				    //NOME
+				    Label lblNome = new Label(grpInserimentoWebsite, SWT.NONE);
+				    lblNome.setBounds(10, 38, 59, 14);
+				    lblNome.setText("Nome:");
+				    nome = new Text(grpInserimentoWebsite, SWT.BORDER);
+				    nome.setBounds(96, 35, 186, 19);
+				    
+				    //DESCRIZIONE
+				    Label lblDescrizione = new Label(grpInserimentoWebsite, SWT.NONE);
+				    lblDescrizione.setBounds(10, 63, 80, 14);
+				    lblDescrizione.setText("Descrizione:");
+				    descrizione = new Text(grpInserimentoWebsite, SWT.BORDER);
+				    descrizione.setBounds(96, 60, 186, 78);
+				    
+				    //BOTTONE AGGIUNGI WEBSITE
+				    Button addWebSite = new Button(grpInserimentoWebsite, SWT.NONE);
+				    addWebSite.setBounds(156, 157, 126, 39);
+				    addWebSite.setText("Aggiungi");
+	   
 	}
 }
