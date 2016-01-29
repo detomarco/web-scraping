@@ -21,7 +21,6 @@ import swing2swt.layout.FlowLayout;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -103,21 +102,6 @@ public class gui {
 		btnAddWebsite_1 = new Button(shell, SWT.NONE);
 		btnAddWebsite_1.setBounds(280, 129, 105, 28);
 		btnAddWebsite_1.setText("Add WebSite");
-		
-		//CREDIT
-		CLabel lblCredit = new CLabel(shell, SWT.NONE);
-		lblCredit.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		lblCredit.setFont(SWTResourceManager.getFont(".SF NS Text", 8, SWT.NORMAL));
-		lblCredit.setBounds(6, 135, 196, 19);
-		lblCredit.setText("WebScraping developed by Jamal");
-		
-		//STATUS
-		Combo combo = new Combo(shell, SWT.NONE);
-		combo.setFont(SWTResourceManager.getFont(".SF NS Text", 10, SWT.NORMAL));
-		combo.setBounds(280, 42, 116, 28);
-		combo.setText("Select");
-		combo.add("scelta 1");
-		combo.add("scelta 2");
 		
 		
 	}
