@@ -96,7 +96,7 @@ public class gui {
 		//BUTTON ADD TEMPLATE
 		btnAddTemplate = new Button(shell, SWT.NONE);
 		btnAddTemplate.setBounds(380, 129, 116, 28);
-		btnAddTemplate.setText("Add Template");
+		btnAddTemplate.setText("Add Templatino");
 		
 		//BUTTON ADD WEBSITE
 		btnAddWebsite_1 = new Button(shell, SWT.NONE);
