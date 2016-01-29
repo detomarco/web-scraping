@@ -1,0 +1,216 @@
+-- phpMyAdmin SQL Dump
+-- version 4.4.14
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Creato il: Gen 28, 2016 alle 17:36
+-- Versione del server: 5.6.26
+-- Versione PHP: 5.6.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `web_scraper`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `articles`
+--
+
+CREATE TABLE IF NOT EXISTS `articles` (
+  `id` int(32) NOT NULL,
+  `title` text NOT NULL,
+  `heading` text NOT NULL,
+  `summary` text NOT NULL,
+  `eyelet` text NOT NULL,
+  `text` text NOT NULL,
+  `date` text NOT NULL,
+  `author` text NOT NULL,
+  `url` text NOT NULL,
+  `fk_website` int(32) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `articles`
+--
+
+INSERT INTO `articles` (`id`, `title`, `heading`, `summary`, `eyelet`, `text`, `date`, `author`, `url`, `fk_website`) VALUES
+(3, 'La Svezia espellerà 80 mila profughi arrivati nel 2015. L''Olanda: treni per rimandare in Turchia i migranti da Grecia - Repubblica.it', 'La Svezia espellerà 80 mila profughi arrivati nel 2015. L''Olanda: treni per rimandare in Turchia i migranti da Grecia', 'Il ministro dell''Interno: "Respinta la loro richiesta d''asilo". Saranno rimpatriati con voli charter appositamente noleggiati. "Un''operazione che durerà a lungo nel tempo, ci vorranno forse anni". Lo scorso anno sono giunti in territorio svedese circa 163 mila migranti. Londra: "Accoglieremo bimbi siriani solo in casi eccezionali concordati dall''Unhcr"', '', 'La Svezia intende espellere fino a 80.000 richiedenti asilo la cui domanda è stata respinta. L''annuncio è stato dato dal ministro degli Interni Anders Ygeman citato dalla Bbc. Si tratta di migranti arrivati sul territorio svedese nel 2015. "Stiamo parlando di circa 60.000 persone, ma possono arrivare fino a 80.000", ha specificato il ministro delle Finanze Dagens alla televisione pubblica SVT, aggiungendo che il governo ha chiesto alla polizia e all''Ufficio della migrazione di avviare le operazioni per il rimpatrio. In tempi normali, vengono effettuati su voli commerciali, ma visti i numeri citati, "dovremo usare più aerei charter appositamente noleggiati e ci vorranno diversi anni" ha aggiunto Ygeman.\n\nCirca 163.000 migranti e rifugiati hanno chiesto asilo in Svezia nel 2015 - ricorda la Bbc -, il numero più alto pro capite in Europa: dei circa 58.800 casi trattati l''anno scorso, il 55% delle richieste sono state accettate.\n\n			Amsterdam, protesta Amnesty: il barcone dei manichini-migranti\n     OAS_RICH(''Bottom'');\nLa Svezia a inizio settimana è diventata l''ultimo di una serie di paesi europei che hanno registrato tensioni sul fronte di episodi di violenza legati ai migranti: un richiedente asilo di 15 anni è stato arrestato vicino Gothenburg dopo aver ucciso a coltellate la dipendente di centro di asilo.\n\nLondra: accogliamo solo singoli casi eccezionali - Sull''emergenza migranti anche la Gran Bretagna si prepara a una stretta. Londra, ha annunciato il ministro degli Interni alla Bbc, intende accogliere bambini non accompagnati dalla Siria e da altre zone di conflitto, ma non quelli già fuggiti in Europa. Il ministero spiega che lavorerà con l''Alto commissariato delle Nazioni Unite per i rifugiati (Unhcr) per identificare "casi eccezionali" di bambini in Siria e nei paesi vicini che necessitino di asilo. Viene quindi confermata la linea dura sul dossier immigrazione tenuta finora dal governo conservatore di David Cameron e vengono smentite le indiscrezioni di stampa secondo le quali, su pressione di varie ong e associazioni umanitarie britanniche, il premier avrebbe pensato a un piano ad hoc per aprire le porte a "3.000 bambini non accompagnati" già sbarcati in altri paesi europei.\n\nIl piano olandese - fronte dei respingimenti si rafforza anche con l''Olanda che ha avanzato una proposta per rimpatriare in Turchia con i treni i migranti e rifugiati arrivati via mare in territorio greco. E'' stato il leader laburista Diederik Samsom ad anticipare i contenuti di un piano che avrebbe il sostegno del premier Mark Rutte e che, secondo la Bbc, sarebbe già in discussione a livello europeo, in particolare con Germania, Austria e Svezia. Secondo la proposta dell''Olanda, che detiene la presidenza di turno europea, l''Ue offrirà ad Ankara di accogliere al massimo 250mila richiedenti asilo che si trovano già in Turchia ogni anno. Il piano "per forzare una soluzione", dice Samson, dovrebbe diventare operativo in primavera, prima della nuova ondata di arrivi. Il piano olandese è vincolato alla definizione di Turchia come paese sicuro da parte dell''Onu. Nel 2015 più di 850mila persone sono approdate sulle coste greche dalla Turchia.\n\nGuai anche per l''Australia.  Il mancato rispetto degli standard internazionali per la protezione dei richiedenti asilo "ha un costo umano devastante" e ne ha danneggiato la reputazione. Lo sostiene Human Rights Watch (Hrw) nel 2016 World Report, presentato ieri a Istanbul. L''organizzazione internazionale per i diritti umani riconosce che l''Australia ha un "solido" sistema di protezione dei diritti civili e politici, robuste istituzioni e libertà di stampa. Descrive tuttavia la politica verso i richiedenti asilo come basata su "abusi". E sostiene la necessità di un suo serio ripensamento e di "misure per ripristinare la reputazione internazionale di paese rispettoso dei diritti".precedentesuccessivo', '', '', 'http://www.repubblica.it/esteri/2016/01/28/news/la_svezia_espellera_80_mila_profughi_arrivati_nel_2015-132190386/', 2),
+(4, 'Rouhani a Parigi, la protesta di 60 deputati:&amp; "&amp;Hollande difenda diritti umani"&amp; - Repubblica.it', 'Rouhani a Parigi, la protesta di 60 deputati: "Hollande difenda diritti umani"', 'Il presidente iraniano firmerà contratti milionari con aziende francesi: "Pronti a voltare pagina con la Francia"', '', 'PARIGI - A poche ore dall''ingresso all''Eliseo del presidente iraniano Hassan Rouhani, più di 60 deputati della maggioranza e dell''opposizione francese hanno chiesto, con una lettera aperta al presidente francese François Hollande, perché mostri fermezza e coerenza di fronte al presidente iraniano in tema di diritti umani.\n\nArrivato mercoledì sera tra le critiche delle associazioni a difesa dei diritti umani, Rouhani è a Parigi, seconda ed ultima tappa del suo tour europeo dopo la ''due giorni'' a Roma, il cui protocollo ha destato enormi polemiche; e ripartirà stasera dopo i colloqui e la firma di numerosi accordi commerciali con il presidente Hollande. Una fonte del governo francese ha assicurato all''Afp che la questione dei diritti umani non sarà dimenticata, ma non sarà oggetto di dichiarazioni pubbliche.\n\n		Rouhani a Parigi: le Femen simulano un''impiccagione\n		\n         \n     \n			#video-132221215 {\n				position:relative;\n			}\n			#video-132221215 .overlay-play {\n				position:absolute;\n				width:100px;\n				height:100px;\n				left:229.0px;\n				top:120.5px;\n				background:transparent url(''http://video.repubblica.it/common/static/player/2014/images/rrtv/player-placeholder-play.png'') center center no-repeat;\n			}	\n	    \n    	\n    			\n    				    	\n    	\n    	\n    		$(''#video-132221215'').click(function(){\n	    		var videoParent = $(this).parent();\n	    		if(videoParent.is(''a'')){\n	    			videoParent.click(function(){return false});\n	    		}\n	    		$(this).replaceWith(''&lt;iframe class="rep-video-embed" width="558" height="341" frameborder="0" scrolling="no" src="http://video.repubblica.it/embed/mondo/rouhani-a-parigi-le-femen-simulano-un-impiccagione/226484/225764?adref=http://www.repubblica.it/esteri/2016/01/28/news/rouhani_iran_francia-132210561/&amp;generation=pageload&amp;autostart=true&amp;width=558&amp;height=314" &gt;&lt;/iframe&gt;'');\n	    	});\n    	\n    \n	     \n        \n	         \n	         	\n	         		Condividi\n	         	&nbsp;\n	         \n        \n        \n    \n    \n OAS_RICH(''Bottom'');\nLA LETTERA. "La teocrazia iraniana è uno dei regimi più draconiani&nbsp; del pianeta", si legge nella lettera-appello. Teheran continua ad eseguire più condanne al morte ''pro capite'' di tutti gli altri Paesi del mondo e "purtroppo l''arrivo di Rouhani alla presidenza iraniana non ha portato ai cambiamenti previsti. Al contrario, il ritmo delle esecuzioni è accelerato" e tra quanti sono stati giustiziati "un numero significativo era minorenne al momento del reato". La situazione è "disastrosa" anche in tema delle libertà fondamentali: "La stampa è imbavagliata, la censura è onnipresente, la versione rivista del codice penale continua a consentire la lapidazione delle donne ritenute colpevoli di adulterio". Per questo, conclude la lettera aperta, "chiediamo a Hollande di approfittare della visita per chiedere a Rohani progressi più tangibili in tema di diritti umani e (di tutela) delle minoranze religiose ed etniche".\n\n			Parigi, attivista Femen appesa con cappio al collo: la protesta contro Rouhani\n    \nNUOVE SANZIONI. E mentre Rouhani, che si è detto pronto " a voltare pagina nei rapporti con la Francia", si sta preparando a firmare contratti con una ventina di aziende francesi, &nbsp;l''agenzia Associated Press (Ap) ha rivelato che la Francia ha appena chiesto ai suoi partner di pensare a nuove sanzioni contro Teheran per i suoi recenti test missilistici, citando due funzionari di paesi europei che sono rimasti anonimi. I due hanno precisato che la richiesta è stata formalizzata la settimana scorsa durante il Consiglio dei ministri degli Esteri dei 28, pochi giorni dopo la revoca delle sanzioni per il programma nucleare. Fonti Ue hanno però successivamente smentito.\n\n			Rouhani, anche la Francia si imbarazza: la satira di Le Monde\n    \nACCORDI CON AIRBUS E PSA. La Francia firmerà accordi con l''Iran nei settori di sanità, agricoltura e ambiente proprio durante questa visita. Tra i vari contratti c''è l''acquisto di 114 aerei passeggeri del colosso europeo Airbus e una nuova joint venture fra PSA Peugeot Citroën e il gruppo industriale automobilistico Iran Khodro, annunciata dal primo ministro francese, Manuel Valls. Il gruppo francese quindi tornerà sul mercato iraniano con un accordo da 400 milioni di euro per rafforzare la produzione, anche nel sito industriale di Teheran. Le prime auto, si legge in un comunicato, è previsto che verranno prodotte nella capitale iraniana nel 2017 e ci si aspetta che il mercato iraniano cresca fino a due milioni di veicoli l''anno entro il 2022.\n\nFERROVIE E ALLUMINIO. Nel corso di un incontro con gli imprenditori a Parigi, al quale era presente con lui anche il premier francese Manuel Valls, sono stati firmati diversi accordi di cooperazione: uno nel settore dei trasporti sostenibili e l''altro tra le ferrovie pubbliche francesi Sncf e la società ferroviaria statale iraniana. È stato inoltre formalizzato un accordo per lo sviluppo di una filiale francese per la produzione dell''alluminio.\n\n\n\n\n\n\n\n\n\n&nbsp;\n	         	\n	         		Condividi\n	         	&nbsp;\n	         \n	         		Condividi\n	         	precedentesuccessivo', '', 'di AGNESE ANANASSO', 'http://www.repubblica.it/esteri/2016/01/28/news/rouhani_iran_francia-132210561/', 2),
+(5, 'Migranti, nuova strage in Grecia: 24 vittime, dieci sono bambini - Repubblica.it', 'Migranti, nuova strage in Grecia: 24 vittime, dieci sono bambini', 'Un barcone naufraga al largo dell''isola di Samo. I corpi recuperati dalla Guardia costiera, i dispersi sarebbero una ventina. I viaggi della disperazione proseguono nonostante il blocchi alle frontiere decisi da diversi paesi europei. L''Oim: dal primo gennaio oltre 40 mila arrivi. La Marina Militare recupera sei corpi al largo della Libia', '', 'ROMA - Sono 24 i corpi recuperati finora dalla Guardia costiera greca dopo il naufragio di un barcone di migranti al largo dell''isola greca di Samo. Lo riferiscono le autorità di Atene, secondo cui tra le vittime ci sono 10 bambini. Proseguono le ricerche in mare dei dispersi che sarebbero una ventina. I militari hanno ripescato i corpi di cinque bambini e tre bambine, ha precisato l''addetto stampa della Guardia costiera.\n\nSecondo i racconti dei sopravvissuti, la barca si è rovesciata vicino alle coste settentrionali di Samo, davanti alle coste occidentali turche, da mesi porta d''ingresso di centinaia di migliaia di profughi che cercano di arrivare sulle coste europee. Una ventina sarebbero i dispersi e la Guardia Costiera è al lavoro per ritrovarli.\n\nIeri un naufragio al largo dell''isola di Kos, sempre nel mar Egeo, aveva causato la morte di 7 persone, tra cui due bambini, mentre venerdì scorso altri 45 migranti sono morti nell''affondamento del loro barcone al largo dell''isola di&nbsp; Kalolimnos. Malgrado le condizioni invernali e le restrizioni imposte in alcuni Paesi europei che hanno rispristinato i controlli alle frontiere per impedire il flusso migratorio, gli arrivi proseguono. Secondo l''Oim, l''Organizzazione internazionale delle migrazioni, dal primo gennaio gli arrivi dal Mediterraneo hanno raggiunto quota 40.240.\n\nE mentre la Svezia ha annunciato che espellerà 80mila profughi arrivati nel Paese nel 2015, la Macedonia ha riaperto a migranti e profughi la frontiera meridionale con la Grecia, rimasta chiusa per alcune ore da ieri pomeriggio. A indurre le autorità di Skopje a chiudere temporaneamente il confine sarebbero state difficoltà a catena nel sistema dei trasporto dei migranti lungo la direttrice della rotta balcanica, e l''eccessivo affollamento dei campi e dei centri di accoglienza nei vari Paesi lungo tale rotta. E'' la terza volta negli ultimi due mesi che la Macedonia chiude temporaneamente ai profughi la sua frontiera con la Grecia.\n\nLa Marina Militare nel corso di un''operazione di soccorso al largo della Libia ha recuperato sei cadaveri. I migranti erano a bordo di un gommoneOAS_RICH(''Bottom''); che, quando sono giunti i soccorsi, stava già affondando. I militari, a bordo della nave Aliseo, sono riusciti a salvare complessivamente 290 persone, 74 delle quali a bordo del gommone che è affondato e le altre su altri due mezzi. Sono in corso le ricerche di eventuali dispersi.', '', '', 'http://www.repubblica.it/esteri/2016/01/28/news/migranti_nuova_strage_in_grecia_12_vittime_otto_sono_bambini-132200467/', 2),
+(6, 'Messico, "&amp;Chapo"&amp; è&amp; un marchio commerciale - Repubblica.it', 'Messico, "Chapo" è un marchio commerciale', 'Autorizzato ufficialmente l''uso del soprannome del boss del narcotraffico per una serie di prodotti', '', 'CITTA'' DEL MESSICO - El Chapo diventa un marchio: l''Istituto messicano per la proprietà industriale (Impi) ha autorizzato l''utilizzo del soprannome del superboss del narcotraffico per etichettare prodotti commerciali. Accolta quindi la richiesta presentata a più riprese nel corso degli anni tra l''altro da due ex mogli di&nbsp;Joaquín Guzmán Loera, Alejandrina Salazar Hernandez e Emma Coronel Aispuro, e da una delle sue figlie, Alejandrina Guzman Salazar. Un''altra dimostrazione, se ce ne fosse bisogno, dell''enorme popolarità del capo del cartello di Sinaloa, arrestato di nuovo poche settimane fa.\n\nIn totale, l''Impi ha autorizzato che il nome del boss, e molte delle sue varianti - El Chapo, El Chapo Guzmán, Joaquín El Chapo Guzmán, El Chapito Guzmán, El Chapito,&nbsp; Joaquín Archivaldo Guzmán Loaera,&nbsp; Don Chapo Guzmán - siano usati per 24 tipi di prodotti,&nbsp; soprattutto di lusso. Fra non molto, dunque, arriveranno nei negozi messicani valigie, borse, ombrelli, gioielli, orologi, scarpe e perfino addobbi natalizi contraddistinti dal brand "El Chapo".\n\nNei mercatini messicani le magliette e i cappellini con il nome del boss - "non ufficiali" - vanno a ruba già da settimane.\n\n		La cella, l''evasione e la cattura: la parabola del Chapo in un video\n		\n         \n     \n			#video-132214433 {\n				position:relative;\n			}\n			#video-132214433 .overlay-play {\n				position:absolute;\n				width:100px;\n				height:100px;\n				left:229.0px;\n				top:120.5px;\n				background:transparent url(''http://video.repubblica.it/common/static/player/2014/images/rrtv/player-placeholder-play.png'') center center no-repeat;\n			}	\n	    \n    	\n    			\n    				    	\n    	\n    	\n    		$(''#video-132214433'').click(function(){\n	    		var videoParent = $(this).parent();\n	    		if(videoParent.is(''a'')){\n	    			videoParent.click(function(){return false});\n	    		}\n	    		$(this).replaceWith(''&lt;iframe class="rep-video-embed" width="558" height="341" frameborder="0" scrolling="no" src="http://video.repubblica.it/embed/mondo/la-cella-l-evasione-e-la-cattura-la-parabola-del-chapo-in-un-video/226453/225733?adref=http://www.repubblica.it/esteri/2016/01/28/news/messico_chapo_marchio-132194933/&amp;generation=pageload&amp;autostart=true&amp;width=558&amp;height=314" &gt;&lt;/iframe&gt;'');\n	    	});\n    	\n    \n	     \n        \n	         \n	         	\n	         		Condividi\n	         	&nbsp;\n	         \n        \n        \n    \n    \n OAS_RICH(''Bottom'');\n	         	\n	         		Condividi\n	         	&nbsp;\n	         \n	         		Condividi\n	         	precedentesuccessivo', '', '', 'http://www.repubblica.it/esteri/2016/01/28/news/messico_chapo_marchio-132194933/', 2),
+(7, 'Murdoch attacca Big G:&amp; "&amp;I migliori a fare lobby"&amp; - Repubblica.it', 'Murdoch attacca Big G: "I migliori a fare lobby"', 'Dopo l''accordo con le autorità inglesi', '', 'LONDRA -&nbsp; Rupert Murdoch contro Google. E nell''insolita veste di nemico delle lobby: ossia il mestiere che viene spesso attribuito al tycoon soprannominato "lo Squalo". Con un cinguettio su Twitter il fondatore della News Corporation, uno degli imperi editoriali più grandi del mondo, lancia un sasso nello stagno dei privilegi fiscali. "Google ha nascosto con furbizia dozzine di suoi uomini alla Casa Bianca, a Downing street e in altri governi, il più bel lavoro di lobby mai realizzato".\n\n   				Google has cleverly planted dozens of their people in White House, Downing St, other governments.\nMost brilliant new lobbying effort yet.— Rupert Murdoch (@rupertmurdoch) 27 Gennaio 2016\n	\n   		 OAS_RICH(''Bottom'');\nIl riferimento è agli accordi raggiunti nei giorni scorsi da vari governi occidentali con il motore di ricerca. Intese presentate, a seconda dei casi, come una tardiva ma esemplare rinuncia di Google alle scappatoie che gli hanno permesso di pagare zero tasse o poco di più, o viceversa come un mea culpa ipocrita, di chi invece di dare il dovuto continua a evadere. Polemiche sono esplose in Gran Bretagna, dove il ministro del Tesoro George Osborne ha presentato la trattativa con Google come una grande vittoria per lo Stato, prima di essere smentito dall''ufficio del primo ministro Cameron, che ha preso le distanze, e dal sindaco di Londra, Boris Johnson, rivale di Osborne nella corsa a diventare l''erede di Cameron alla guida dei Conservatori. Non solo: ieri il Times ha fatto un titolo provocatorio, notando che l''Italia ha ottenuto molto più della Gran Bretagna nella trattativa con Google.\n\nMa il quotidiano londinese, non per nulla, è di Murdoch. Che ha fatto seguito con l''accusa a Google di barare, grazie a un''opera di lobby senza pari. A parte il precedente, commentano i maligni, del lobbismo compiuto in passato dagli uomini di Murdoch per comprare la maggioranza di Sky in Inghilterra: operazione che sarebbe riuscita, non fosse stato per il Tabloidgate, lo scandalo delle intercettazioni illecite. Ride bene chi ride ultimo, sembra dire lo Squalo con il suo tweet.', '', 'dal nostro corrispondente ENRICO FRANCESCHINI', 'http://www.repubblica.it/esteri/2016/01/28/news/murdoch_attacca_big_g_i_migliori_a_fare_lobby_-132190188/', 2),
+(8, 'Libia, l''Europa prepara sanzioni contro chi blocca il governo Onu - Repubblica.it', 'Libia, l''Europa prepara sanzioni contro chi blocca il governo Onu', 'Nel mirino di Bruxelles il premier di Tripoli e i presidenti dei due Parlamenti', '', 'In Libia l''Is corre più veloce dell''Onu. Ma anche della Ue e della stessa Italia, che da mesi si è assunta il compito di guidare le nazioni europee nel processo di pace. Lo dice l''inviato dell''Onu in Libia Martin Kobler. E allora il pericolo di una paralisi nella creazione del nuovo governo è tale che da alcuni giorni è riemersa una possibilità prevista in passato sia dalle Nazioni Unite che dall''Unione europea: infliggere sanzioni ai leader politici e militari che impediscono la nascita del nuovo governo. Si tratterebbe di bloccare i conti economici in Europa, sequestrare gli appartamenti e i beni di loro proprietà, di vietare loro i viaggi e il transito nella Ue.\n&nbsp;\nIeri Kobler ha pronunciato una frase sibillina: "L''Onu non sta ancora guardando alla possibilità di sanzioni". La verità è che le Nazioni Unite hanno già inserito la possibilità di sanzioni in una risoluzione del Consiglio di sicurezza votata mesi fa, ma oggi non potrebbero approvarle perché Cina e Russia sono contrarie in via di principio. Kobler però sta ragionando anche intorno all''idea che se non ce la fa l''Onu, il compito di varare le misure restrittive per il momento potrebbe essere assegnato alla Ue e anche agli Stati Uniti.\n&nbsp;\nI primi tre libici nel mirino delle sanzioni sono i presidenti dei due Parlamenti, di Tobruk e di Tripoli, e il primo ministro autonominato di Tripoli. "Il premier di Tobruk, il mite Al Thinni, è già stato emarginato dai giochi politici della sua parte, e quindi non ostacola nessuno" dice un diplomatico. Gli altri tre invece sono scatenati contro il governo che dovrebbe essere guidato da Fayez Sarraj. Sono Nouri Abusahmin, presidente del Parlamento di Tripoli, commerciante, ex importatore di cibo italiano (fra cui il latte sardo "Arborea") in Libia. Poi il primo ministro di Tripoli Khalifa al Ghweil. E infine il presidente del Parlamento di Tobruk Aguila Saleh che sembrava essersi affrancato dal generale Khalifa Haftar, ma invece sta giocando una partita sotterranea in cui fra l''altro il ruolo dell''Egitto continua ad essere quello del sabotatore occulto.\n&nbsp;\nFonti dell''Unione europea confermano che il tema-sanzioni è sul tavolo della Commissione, che è stato presentato da alcuni Stati membri anche se per il momento non c''è nessuna accelerazione. "Ma la svolta può arrivare rapida se si decide politicamente di farlo", afferma un diplomatico italiano, "il problema è capire se le sanzioni possano essere davvero utili, o se si tratta soltanto di uno scatto di nervi, una ripicca diplomatica incapace di avere una reale influenza".\n\nIeri Kobler ha cercato ancora una volta di infondere ottimismo ("io lavoro con l''idea che il bicchiere è ormai mezzo pieno"), ma la situazione è disastrosa. Il Parlamento di Tobruk oltre ad avere bocciato il governo (e qui il premier Sarraj potrebbe ovviare presentando un nuovo esecutivo) ha votato per cancellare dalla costituzione un articolo che rimette ai politici la scelta dei capi militari. Una mossa fatta su pressione del generale Haftar, l''ex ufficiale gheddafiano che da un anno e mezzo in Cirenaica guidaOAS_RICH(''Bottom''); una milizia appoggiata dall''Egitto. Anche Haftar potrebbe finire chiaramente nella lista delle persone sanzionate, ma per il momento la Ue preferirebbe evitare lo scontro frontale con lui e con Il Cairo. Il problema è che, appunto, l''Is non aspetta e corre più veloce di tutti.', '', 'di VINCENZO NIGRO', 'http://www.repubblica.it/esteri/2016/01/28/news/libia_l_europa_prepara_sanzioni_contro_chi_blocca_il_governo_onu-132220102/', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `article_templates`
+--
+
+CREATE TABLE IF NOT EXISTS `article_templates` (
+  `id` int(11) NOT NULL,
+  `fk_website` int(32) NOT NULL,
+  `context_name` varchar(32) NOT NULL,
+  `heading_selector` varchar(128) NOT NULL,
+  `summary_selector` varchar(128) NOT NULL,
+  `eyelet_selector` varchar(128) NOT NULL,
+  `text_selector` varchar(128) NOT NULL,
+  `date_selector` varchar(128) NOT NULL,
+  `author_selector` varchar(128) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `article_templates`
+--
+
+INSERT INTO `article_templates` (`id`, `fk_website`, `context_name`, `heading_selector`, `summary_selector`, `eyelet_selector`, `text_selector`, `date_selector`, `author_selector`) VALUES
+(1, 2, 'economia', '.page-body article header h1', '.page-body article header p.summary', '', '.page-body article .main-content .body-text span', '', '.page-body article header em.author span'),
+(2, 2, 'politica', '.inner-container article header h1', '.inner-container article header p.summary', '', '.inner-container article .main-content .body-text span', '', '.page-body article header em.author span'),
+(3, 2, 'esteri', '#container article header h1', '#container article header p.summary', '', '#container article .main-content .body-text span', '', '#container article header em.author span');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `list_templates`
+--
+
+CREATE TABLE IF NOT EXISTS `list_templates` (
+  `fk_website` int(11) NOT NULL,
+  `context_name` varchar(32) NOT NULL,
+  `article_link_selector` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `list_templates`
+--
+
+INSERT INTO `list_templates` (`fk_website`, `context_name`, `article_link_selector`) VALUES
+(2, 'politica', 'article header h1 a');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `metadata`
+--
+
+CREATE TABLE IF NOT EXISTS `metadata` (
+  `fk_article` int(32) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `websites`
+--
+
+CREATE TABLE IF NOT EXISTS `websites` (
+  `id` int(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `address` varchar(128) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `websites`
+--
+
+INSERT INTO `websites` (`id`, `name`, `address`, `description`) VALUES
+(1, 'Yahoo Italia', 'it.search.yahoo.com', 'Ricerche di Yahoo!'),
+(2, 'Repubblica', 'repubblica.it', 'Repubblica.it, quotidiano online');
+
+--
+-- Indici per le tabelle scaricate
+--
+
+--
+-- Indici per le tabelle `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_website` (`fk_website`),
+  ADD KEY `fk_website_2` (`fk_website`);
+
+--
+-- Indici per le tabelle `article_templates`
+--
+ALTER TABLE `article_templates`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_website` (`fk_website`),
+  ADD KEY `fk_website_2` (`fk_website`);
+
+--
+-- Indici per le tabelle `list_templates`
+--
+ALTER TABLE `list_templates`
+  ADD PRIMARY KEY (`fk_website`);
+
+--
+-- Indici per le tabelle `metadata`
+--
+ALTER TABLE `metadata`
+  ADD PRIMARY KEY (`fk_article`);
+
+--
+-- Indici per le tabelle `websites`
+--
+ALTER TABLE `websites`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `address` (`address`);
+
+--
+-- AUTO_INCREMENT per le tabelle scaricate
+--
+
+--
+-- AUTO_INCREMENT per la tabella `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT per la tabella `article_templates`
+--
+ALTER TABLE `article_templates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT per la tabella `websites`
+--
+ALTER TABLE `websites`
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- Limiti per le tabelle scaricate
+--
+
+--
+-- Limiti per la tabella `articles`
+--
+ALTER TABLE `articles`
+  ADD CONSTRAINT `belongs to` FOREIGN KEY (`fk_website`) REFERENCES `websites` (`id`);
+
+--
+-- Limiti per la tabella `article_templates`
+--
+ALTER TABLE `article_templates`
+  ADD CONSTRAINT `article_templates_ibfk_1` FOREIGN KEY (`fk_website`) REFERENCES `websites` (`id`);
+
+--
+-- Limiti per la tabella `list_templates`
+--
+ALTER TABLE `list_templates`
+  ADD CONSTRAINT `belongs` FOREIGN KEY (`fk_website`) REFERENCES `websites` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
