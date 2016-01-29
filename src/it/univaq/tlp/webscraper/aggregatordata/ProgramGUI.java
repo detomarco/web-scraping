@@ -18,7 +18,7 @@ public class ProgramGUI extends Thread{
 			console.run();
 			
 		} catch (StorageException e) {
-			ErrorDialog dialog = new ErrorDialog(new Shell(), 0);
+			ErrorDialog dialog = new ErrorDialog();
 			dialog.open();
 		}
 	
