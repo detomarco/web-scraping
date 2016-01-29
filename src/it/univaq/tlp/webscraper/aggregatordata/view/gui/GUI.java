@@ -11,7 +11,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.view.UserInterface;
@@ -22,9 +24,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.custom.SashForm;
 
 public class GUI extends UserInterface{
 
@@ -249,6 +248,22 @@ public class GUI extends UserInterface{
 				    
 				    //BOTTONE AGGIUNGI WEBSITE
 				    Button addWebSite = new Button(grpInserimentoWebsite, SWT.NONE);
+				    addWebSite.addMouseListener(new MouseAdapter() {
+				    	@Override
+				    	public void mouseDown(MouseEvent arg0) {
+				    		
+				    		Website website = new Website(nome.getText(), indirizzo.getText(), descrizione.getText());
+				    		
+				    		try {
+								insertWebsite(website);
+								//da implementare un dialog di avvenuto inserimento
+							} catch (MalformedURLException | StorageException | WebsiteAlreadyExistsException e) {
+								ErrorDialog dialog = new ErrorDialog();
+								dialog.open();
+								e.printStackTrace();
+							}
+				    	}
+				    });
 				    addWebSite.setBounds(156, 157, 126, 39);
 				    addWebSite.setText("Aggiungi");
 	   
