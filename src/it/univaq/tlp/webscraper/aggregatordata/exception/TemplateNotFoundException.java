@@ -1,4 +1,4 @@
-package it.univaq.tlp.webscraper.aggregatordata;
+package it.univaq.tlp.webscraper.aggregatordata.exception;
 
 public class TemplateNotFoundException extends Exception{
 

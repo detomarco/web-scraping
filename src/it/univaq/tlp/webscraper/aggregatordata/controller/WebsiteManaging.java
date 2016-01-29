@@ -1,13 +1,15 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
@@ -121,28 +123,35 @@ public class WebsiteManaging {
 	 * Metodo che memorizza un nuovo sito web e, se ne contiene, i suoi template
 	 * @param website
 	 * @throws StorageException
+	 * @throws MalformedURLException 
+	 * @throws WebsiteAlreadyExistsException 
 	 */
-	public void saveWebsite(Website website) throws StorageException {
+	public void saveWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
+		String url = website.getAddress();
+		URL check_url = new URL(url);
 		
-		Map<String, Object> data = website.toMap();
-		
-		data.remove("id");
-		
-		@SuppressWarnings("unchecked")
-		Set<ArticleTemplate> article_templates = (Set<ArticleTemplate>)data.remove("article.templates");
-		
-		@SuppressWarnings("unchecked")
-		Set<ArticleListTemplate> list_templates = (Set<ArticleListTemplate>)data.remove("list_templates");
-		
-		storage.save("websites", data);
-		
-		for(ArticleTemplate template: article_templates){
-			saveTemplate(template, website);
+		try {
+			
+			getWebsite(url);
+			// Se il website è già esistente, solleva l'eccezione
+			throw new WebsiteAlreadyExistsException();
+			
+		// Se non è stato trovato nessun sito con lo stesso url
+		} catch (WebsiteNotFoundException e) {
+			
+			Map<String, Object> data = new HashMap<String, Object>();
+			
+			data.put("name", website.getName());
+			data.put("address", website.getAddress());
+			data.put("description", website.getDescription());
+			
+			storage.save("websites", data);
 		}
 		
-		for(ArticleListTemplate template: list_templates){
-			saveTemplate(template, website);
-		}	}
+		
+		
+		
+	}
 	
 	/**
 	 * Metodo che memorizza un template relativo ad un dato sito web

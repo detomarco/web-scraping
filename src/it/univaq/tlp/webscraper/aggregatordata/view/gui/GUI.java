@@ -10,8 +10,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.view.UserInterface;

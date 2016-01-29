@@ -3,11 +3,12 @@ package it.univaq.tlp.webscraper.aggregatordata.view;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
+import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
@@ -38,7 +39,7 @@ public abstract class UserInterface {
 		this.last_insert = aggregator.crawl(source);
 	}
 	
-	public void insertWebsite(Website website) throws StorageException {
+	public void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
 		websiteManager.saveWebsite(website);
 	}
 	

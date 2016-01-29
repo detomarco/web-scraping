@@ -10,16 +10,15 @@ public class Website {
 	private Integer id;
 	private String name;
 	private String address;
-	
 	private String description;
 		
 	private Set<ArticleTemplate> article_templates;
 	private Set<ArticleListTemplate> list_templates;
 	
-	public Website(String name, String address){
+	public Website(String name, String address, String description){
 		this.name = name;
 		this.address = address;
-		this.description = "";
+		this.description = description;
 		this.article_templates = new HashSet<ArticleTemplate>();
 		this.list_templates = new HashSet<ArticleListTemplate>();
 	}

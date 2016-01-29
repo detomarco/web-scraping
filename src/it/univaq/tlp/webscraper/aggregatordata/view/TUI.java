@@ -1,13 +1,13 @@
 package it.univaq.tlp.webscraper.aggregatordata.view;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
-import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 
@@ -18,6 +18,7 @@ public class TUI extends UserInterface{
 		super(storage);
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public void run() {
 		Scanner in = new Scanner(System.in);
@@ -29,7 +30,7 @@ public class TUI extends UserInterface{
 					+ "2)Aggiungi un nuovo sito web\n"
 					+ "3)Aggiungi un nuovo template ad un sito web già esistente");
 			
-			int choice = getInput(1, 4);
+			int choice = getInput(1, 3);
 			
 			switch (choice){		
 			
@@ -57,8 +58,7 @@ public class TUI extends UserInterface{
 			
 	}
 
-	
-	
+	@SuppressWarnings("resource")
 	public void webScraper(Storable storage){
 		
 		boolean error_url;
@@ -107,6 +107,41 @@ public class TUI extends UserInterface{
 	}
 	
 	public void websiteManagement(Storable storage){
+		Scanner in = new Scanner(System.in);
+		String url, name, description;
+		Website website;
+		boolean error_url;
+		
+		do{
+			
+			System.out.print("Inserisci url: ");
+			url = in.nextLine();
+			System.out.print("Inserisci nome: ");
+			name = in.nextLine();
+			System.out.print("Inserisci descrizione: ");
+			description = in.nextLine();
+			
+			website = new Website(name, url, description);
+			
+			try {
+				this.insertWebsite(website);
+				System.out.print("Nuovo sito web inserito");
+				error_url = false;
+			} catch (MalformedURLException e) {
+				System.out.print("Sito web non valido");
+				error_url = true;
+			
+			} catch (WebsiteAlreadyExistsException e) {
+				System.out.print("Il sito web è già stato inserito");
+				error_url = true;
+			
+			} catch (StorageException e) {
+				System.out.println("Si è verificato un errore con la repository: " + e.getMessage());
+				error_url = false;
+			}
+			
+		}while(error_url);
+		
 		
 	}
 	
