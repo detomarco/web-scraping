@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.URL;
+import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
@@ -99,7 +101,7 @@ public class WebsiteManaging {
 			template_type = "article_templates";
 		}
 		
-		results = storage.get(template_type, "(fk_website = '"+website.getId()+"' AND context_name ='"+context+"')");
+		results = storage.get(template_type, "(fk_website = '"+website.getId()+"' AND context ='"+context+"')");
 		
 		if (results==null || results.isEmpty()){
 			throw new TemplateNotFoundException();
@@ -149,9 +151,6 @@ public class WebsiteManaging {
 			storage.save("websites", data);
 		}
 		
-		
-		
-		
 	}
 	
 	/**
@@ -159,19 +158,33 @@ public class WebsiteManaging {
 	 * @param template
 	 * @param website
 	 * @throws StorageException
+	 * @throws WebsiteNotFoundException 
+	 * @throws MalformedURLException 
+	 * @throws ContextAlreadyExistsException 
 	 */
-	public void saveTemplate(Template template, Website website) throws StorageException {
+	public void saveTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextAlreadyExistsException {
+		URL url = new URL(website_url);
+		Website website = this.getWebsite(website_url);
 		
-		Map<String, Object> data = new HashMap<>();
-		
-		data = template.toMap();
-		
-		data.put("fk_website", getWebsiteId(website));
-		
-		if (template instanceof ArticleTemplate){
-			storage.save("article_templates", data);
-		} else {
-			storage.save("list_templates", data);
+		Set<ArticleListTemplate> list_templates = website.getArticleListTemplates();
+		for(ArticleListTemplate list_template: list_templates){
+			if(list_template.getContext().equals(article_list.getContext())) throw new ContextAlreadyExistsException();
+			
 		}
+		
+		
+		
+		// Inserimento del template list
+		Map<String, Object> data_list = article_list.toMap();
+		data_list.put("fk_website", website.getId());
+		storage.save("list_templates", data_list);
+		
+		// Inserimento del template dell'articolo
+		Map<String, Object> data_article = article.toMap();
+		data_article.put("fk_website", website.getId());
+		storage.save("article_templates", data_article);
+		
+		website.addTemplate(article);
+		website.addTemplate(article_list);
 	}
 }

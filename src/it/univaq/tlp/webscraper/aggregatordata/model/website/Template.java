@@ -4,7 +4,7 @@ import java.util.Map;
 
 public abstract class Template {
 	
-	private String context;
+	protected String context;
 	
 	public Template (String context){
 		this.context = context;

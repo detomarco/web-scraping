@@ -20,7 +20,7 @@ public class ArticleListTemplate extends Template{
 	}
 	
 	public ArticleListTemplate(Map<String, String> from_storage){
-		this(from_storage.get("context_name"), from_storage.get("article_link_selector"));
+		this(from_storage.get("context"), from_storage.get("article_link_selector"));
 	}
 	
 	public String getLinkSelector(){
@@ -32,7 +32,7 @@ public class ArticleListTemplate extends Template{
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("article_link_selector", this.article_link_selector);
-		map.put("context", this.getContext());
+		map.put("context", this.context);
 		
 		return map;
 	}

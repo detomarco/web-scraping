@@ -6,10 +6,13 @@ import java.util.List;
 import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
+import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
@@ -43,8 +46,8 @@ public abstract class UserInterface {
 		websiteManager.saveWebsite(website);
 	}
 	
-	public void insertTemplate(Template template, Website website) throws StorageException {
-		websiteManager.saveTemplate(template, website);
+	public void insertTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextAlreadyExistsException {
+		websiteManager.saveTemplate(article, article_list, website_url);
 	}
 	
 	public List<Article> viewLastAddedArticles() throws StorageException {
