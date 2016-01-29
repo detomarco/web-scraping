@@ -1,26 +1,21 @@
 package it.univaq.tlp.webscraper.aggregatordata.view.gui;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 import it.univaq.tlp.webscraper.aggregatordata.view.UserInterface;
-import it.univaq.tlp.webscraper.aggregatordata.view.gui.ErrorDialog;
 
-
-
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.events.MouseAdapter;
-
-public class GUI {
+public class GUI extends UserInterface{
 
 	protected Shell shell;
 	private Text url;
@@ -32,30 +27,18 @@ public class GUI {
 
 	private static UserInterface user;
 	
-
+	public GUI(Storable storage) {
+		super(storage);
+	}
 
 
 	/**
 	 * Launch the application.
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		GUI window = new GUI();
-		try {
-			
-		user = new UserInterface(new MySQLDatabase("root", "root", "localhost", 3306, "web_scraper"));
-	} catch (StorageException e) {
-		ErrorDialog dialog = new ErrorDialog(parent, style);
-		e.printStackTrace();
-
-		return;
-	}
-		
-		try {
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	@Override
+	public void run() {
+		this.open();
 	}
 
 	/**

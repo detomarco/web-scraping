@@ -9,16 +9,16 @@ import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 
 public class TUI extends UserInterface{
-	
-	
+			
+
 	public TUI(Storable storage) {
 		super(storage);
-		// TODO Auto-generated constructor stub
 	}
 
-
+	
 
 	@Override
 	public void run() {

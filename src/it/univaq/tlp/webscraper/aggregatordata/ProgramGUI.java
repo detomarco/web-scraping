@@ -14,9 +14,8 @@ public class ProgramGUI {
 			console.run();
 			
 		} catch (StorageException e) {
-			// Se la connessione non è andata a buon fine
-			System.out.println("Problema di connessione con la repository, si prega di riprovare più tardi");
-			System.out.println("Dettagli errore:\n" + e.getMessage());
+			//ErrorDialog dialog = new ErrorDialog(parent, style);
+			e.printStackTrace();
 		}
 	
 	}
