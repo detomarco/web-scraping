@@ -9,25 +9,20 @@ import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
-import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 
-public class Old {
-	public static void main(String[] args){
-		
-		try {
-			// Connessione al databse
-			Storable storage = new MySQLDatabase("root", "root", "localhost", 3306, "web_scraper");
-			run(storage);
-		} catch (StorageException e) {
-			// Se la connessione non è andata a buon fine
-			System.out.println("Problema di connessione con la repository, si prega di riprovare più tardi");
-			System.out.println("Dettagli errore:\n" + e.getMessage());
-		}
-		
-	}
+public class TUI extends UserInterface{
 	
-	public static void run(Storable storage){
-		Scanner in = new Scanner(System.in);
+	
+	public TUI(Storable storage) {
+		super(storage);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	@Override
+	public void run() {
+	
 		boolean exit = false;
 	
 		do{
@@ -42,15 +37,15 @@ public class Old {
 			switch (choice){		
 			
 				case 1:
-					webScraper(storage);
+					this.webScraper(storage);
 					break;
 					
 				case 2:
-					websiteManagement(storage);
+					this.websiteManagement(storage);
 					break;
 				
 				case 3:
-					templateManagement(storage);
+					this.templateManagement(storage);
 					break;
 				
 			}
@@ -58,21 +53,18 @@ public class Old {
 			// Controlla se si vuole eseguire un'altra operazione
 			System.out.println("Premi invio per uscire dall'applicazione, qualsiasi altro tasto per eseguire un'altra operazione");
 			
-			
 		}while(!exit);	
 		
 	}
+
 	
 	
-	public static void webScraper(Storable storage){
+	public void webScraper(Storable storage){
 		String url;
 		
 		boolean is_list = false, error_url = false;
 		Scanner in = new Scanner(System.in);
 		
-		
-
-		DataAggregator aggregator = new DataAggregator(storage);
 		System.out.println("Nello specifico, cosa intendi recuperare?\n"
 							+ "1)Una lista di articoli\n"
 							+ "2)Un singolo articolo");
@@ -90,8 +82,8 @@ public class Old {
 	
 					try {
 						url = in.nextLine();
-						// 
-						aggregator.crawl(url, is_list);
+						// Scraping dell'URL
+						this.scrap(url, is_list);
 						
 					} catch (MalformedURLException e){
 						System.out.println("Url non valido");
@@ -120,14 +112,13 @@ public class Old {
 	
 		in.close();
 		
+	}
+	
+	public void websiteManagement(Storable storage){
 		
 	}
 	
-	public static void websiteManagement(Storable storage){
-		
-	}
-	
-	public static void templateManagement(Storable storage){
+	public void templateManagement(Storable storage){
 		
 	}
 
@@ -163,4 +154,9 @@ public class Old {
 		
 		return input;
 	}
+
+
+
+
+	
 }
