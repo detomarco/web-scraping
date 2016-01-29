@@ -32,12 +32,34 @@ public class URLUtility {
 	
 	public static String conformURL(String url){
 		
+		// L'url deve iniziare con 'http://'
 		if(!(url.startsWith("http"))) {
 			url = "http://" + url;
+		}
+		
+		// Elimina tutto ciò che c'è dopo '?'
+		if(url.contains("?")){
+			url = url.substring(0, url.indexOf("?"));
+		}
+		
+		// Nel caso l'url finisce per '/', eliminalo
+		if(url.charAt(url.length()-1) == '/'){
+			url = url.substring(0, url.length()-1);
 		}
 		
 		return url;
 		
 	}
+	
+	public static boolean isList(URL url){
+		System.out.println(url.toString());
+		if(URLUtility.getContext(url).equals("")) return true;
 		
+		if(url.toString().equals("http://www." + URLUtility.getHost(url) + "/" + URLUtility.getContext(url))) return true;
+		
+		return false;
+		
+	}
+		
+	
 }

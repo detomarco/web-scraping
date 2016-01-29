@@ -40,7 +40,7 @@ public class DataAggregator {
 	 * @throws MalformedURLException
 	 * @throws StorageException 
 	 */
-	public int crawl(String source, boolean is_list) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException{
+	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException{
 		
 		URL url = new URL(URLUtility.conformURL(source)); // Throws MalformedURLException
 
@@ -48,7 +48,7 @@ public class DataAggregator {
 		Website website =  website_manager.getWebsite(URLUtility.getHost(url)); // Throws WebsiteNotFoundException
 		
 		// Recupera tutti gli articoli trovati (opportunamente strutturati)
-		List<AggregatedData> data = connector.collect(website, url, is_list); // Throws TemplateNotFoundException;
+		List<AggregatedData> data = connector.collect(website, url, URLUtility.isList(url)); // Throws TemplateNotFoundException;
 		
 		// Recupera tutti gli articoli già inseriti nel website
 		List<Article> stored_articles = article_manager.getWebsiteArticles(website);
@@ -58,7 +58,7 @@ public class DataAggregator {
 		int saved_counter = 0;
 		while(iter.hasNext()){
 			AggregatedData current_article = iter.next();
-			if(!(stored_articles.contains(current_article))){
+			if(!(stored_articles.contains(current_article)) && !current_article.getHeading().equals("") && !current_article.getText().equals("")){
 				// Salva nuovo articolo
 				article_manager.saveArticle(current_article, website);
 				saved_counter ++;

@@ -1,15 +1,15 @@
 package it.univaq.tlp.webscraper.aggregatordata.view;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import it.univaq.tlp.webscraper.aggregatordata.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
 import it.univaq.tlp.webscraper.aggregatordata.WebsiteNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
-import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 
 public class TUI extends UserInterface{
 			
@@ -18,13 +18,10 @@ public class TUI extends UserInterface{
 		super(storage);
 	}
 
-	
-
 	@Override
 	public void run() {
-	
-		boolean exit = false;
-	
+		Scanner in = new Scanner(System.in);
+		
 		do{
 			
 			System.out.println("Cosa vuoi fare?\n"
@@ -52,66 +49,61 @@ public class TUI extends UserInterface{
 			
 			// Controlla se si vuole eseguire un'altra operazione
 			System.out.println("Premi invio per uscire dall'applicazione, qualsiasi altro tasto per eseguire un'altra operazione");
-			
-		}while(!exit);	
+	
+		}while(!in.nextLine().equals(""));	
 		
+		// Controlla se si vuole eseguire un'altra operazione
+		System.out.println("Fine programma");
+			
 	}
 
 	
 	
 	public void webScraper(Storable storage){
+		
+		boolean error_url;
 		String url;
+		Scanner in;
 		
-		boolean is_list = false, error_url = false;
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Nello specifico, cosa intendi recuperare?\n"
-							+ "1)Una lista di articoli\n"
-							+ "2)Un singolo articolo");
-		
-		int choice = getInput(1, 2);
-		
-		switch(choice){
-		
-			// Se si inserisce 1, l'url viene interpretato come lista di articoli, altrimenti come articolo singolo (default) 
-			case 1: is_list = true;
-			case 2: 
+		do{
+			in = new Scanner(System.in);
+			System.out.print("Inserisci l'url: ");
+			url = in.nextLine();
+			
+			try {						
+				// Scraping dell'URL
+				this.scrap(url);
+				System.out.println("Sono stati aggiunti " + this.last_insert + " articoli");
+				error_url = false;
 				
-				do{
-					System.out.print("Inserisci l'url: ");
-	
-					try {
-						url = in.nextLine();
-						// Scraping dell'URL
-						this.scrap(url, is_list);
-						
-					} catch (MalformedURLException e){
-						System.out.println("Url non valido");
-						error_url = true;
-						e.printStackTrace();
-					
-					} catch (WebsiteNotFoundException e){
-						System.out.println("Sito web non trovato");
-						error_url = true;
-						e.printStackTrace();
-						
-					} catch (TemplateNotFoundException e){
-						System.out.println("Template non trovato");
-						error_url = true;
-						e.printStackTrace();
-						
-					} catch (StorageException e){
-						System.out.println("C'è stato un errore con il database: " + e.getMessage());
-						e.printStackTrace();
-					}
-					
-				}while(error_url);
-				break;
+			// URL non valido
+			} catch (MalformedURLException e){
+				System.out.println("Url non valido");
+				error_url = true;
+				e.printStackTrace();
+			
+			// Sito web non trovato
+			} catch (WebsiteNotFoundException e){
+				System.out.println("Sito web non trovato");
+				error_url = true;
+				e.printStackTrace();
+				
+			// Template non trovato
+			} catch (TemplateNotFoundException e){
+				System.out.println("Template non trovato");
+				error_url = true;
+				e.printStackTrace();
+			
+			// Errore con il database
+			} catch (StorageException e){
+				System.out.println("Si è verificato un errore con la repository: " + e.getMessage());
+				error_url = false;
+				e.printStackTrace();
+			}
+			
+		}while(error_url);
 		
-		}
-	
-		in.close();
-		
+
 	}
 	
 	public void websiteManagement(Storable storage){

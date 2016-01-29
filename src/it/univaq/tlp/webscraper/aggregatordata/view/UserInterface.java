@@ -13,7 +13,6 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
-import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 
 public abstract class UserInterface {
 	
@@ -35,8 +34,8 @@ public abstract class UserInterface {
 			
 	} 
 	
-	public void scrap(String source, boolean is_list) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException {
-		this.last_insert = aggregator.crawl(source, is_list);
+	public void scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException {
+		this.last_insert = aggregator.crawl(source);
 	}
 	
 	public void insertWebsite(Website website) throws StorageException {

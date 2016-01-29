@@ -101,9 +101,7 @@ public class WebConnector implements ConnectorInterface{
 					return true;
 				}
 			});	
-			
-			System.out.println("Sono stati trovati "+urls.size()+" articoli");
-			
+						
 		} 
 		
 		return getAllArticles(website, urls); // Può rilanciare l'eccezione TemplateNotFound, deve essere gestita dal chiamante
