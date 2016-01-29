@@ -89,7 +89,7 @@ public class GUI extends UserInterface{
 		
 		
 		Label lblAggiuntiArticoli = new Label(grpCrawler, SWT.NONE);
-		lblAggiuntiArticoli.setBounds(237, 161, 106, 14);
+		lblAggiuntiArticoli.setBounds(237, 161, 106, 25);
 		lblAggiuntiArticoli.setVisible(false);
 	    
 		
@@ -138,11 +138,11 @@ public class GUI extends UserInterface{
 	    btnSearch.setText("Cerca");
 	    
 	    Label lblSorgente = new Label(frame1, SWT.NONE);
-	    lblSorgente.setBounds(16, 32, 59, 14);
+	    lblSorgente.setBounds(16, 32, 59, 18);
 	    lblSorgente.setText("Sorgente");
 	    
 	    Label lblContesto = new Label(frame1, SWT.NONE);
-	    lblContesto.setBounds(16, 74, 59, 14);
+	    lblContesto.setBounds(16, 74, 59, 18);
 	    lblContesto.setText("Contesto");
 	    
 	    Combo contesto = new Combo(frame1, SWT.NONE);
