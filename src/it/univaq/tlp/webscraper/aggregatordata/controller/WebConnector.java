@@ -2,7 +2,6 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 

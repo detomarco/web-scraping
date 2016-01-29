@@ -1,6 +1,5 @@
 package it.univaq.tlp.webscraper.aggregatordata.model.webdata;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
