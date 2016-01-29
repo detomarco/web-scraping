@@ -1,5 +1,4 @@
 package it.univaq.tlp.webscraper.aggregatordata;
-import org.eclipse.swt.widgets.Shell;
 
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
@@ -9,7 +8,7 @@ import it.univaq.tlp.webscraper.aggregatordata.view.gui.GUI;
 import it.univaq.tlp.webscraper.aggregatordata.view.gui.ErrorDialog;;
 
 
-public class ProgramGUI extends Thread{
+public class ProgramGUI {
 
 	public static void main(String[] args) throws Exception {
 		try {

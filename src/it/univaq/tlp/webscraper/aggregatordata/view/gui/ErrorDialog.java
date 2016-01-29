@@ -20,6 +20,7 @@ public class ErrorDialog {
 		try {
 			ErrorDialog window = new ErrorDialog();
 			window.open();
+			System.out.println("Main");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -29,6 +30,7 @@ public class ErrorDialog {
 	 * Open the window.
 	 */
 	public void open() {
+		System.out.println("Open");
 		Display display = Display.getDefault();
 		createContents();
 		shell.open();
