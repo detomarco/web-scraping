@@ -28,13 +28,13 @@ public class gui {
 
 	protected Shell shell;
 	private Text text;
-	private Button btnAddWebsite;
 	private Text url;
 	private Button btnSearch;
 	private Button btnReadArticles;
 	private Label lblSeparator;
 	private Button btnAddTemplate;
-	private Button btnAddWebsite_1;
+	private Button btnAddWebsite;
+
 
 	/**
 	 * Launch the application.
@@ -96,12 +96,23 @@ public class gui {
 		//BUTTON ADD TEMPLATE
 		btnAddTemplate = new Button(shell, SWT.NONE);
 		btnAddTemplate.setBounds(380, 129, 116, 28);
-		btnAddTemplate.setText("Add Templatino");
+		btnAddTemplate.setText("Add Template");
 		
 		//BUTTON ADD WEBSITE
-		btnAddWebsite_1 = new Button(shell, SWT.NONE);
-		btnAddWebsite_1.setBounds(280, 129, 105, 28);
-		btnAddWebsite_1.setText("Add WebSite");
+		btnAddWebsite = new Button(shell, SWT.NONE);
+		btnAddWebsite.setBounds(280, 129, 105, 28);
+		btnAddWebsite.setText("Add WebSite");
+		
+		//CREDIT
+		Label lblWebscrapingDevelopedBy = new Label(shell, SWT.NONE);
+		lblWebscrapingDevelopedBy.setBounds(8, 136, 229, 14);
+		lblWebscrapingDevelopedBy.setText("WebScraping Developed By Jamal");
+		
+		//OPTION
+		Combo combo = new Combo(shell, SWT.NONE);
+		combo.setBounds(296, 40, 95, 22);
+		combo.add("Opzione 1");
+		combo.add("Opzione 2");
 		
 		
 	}
