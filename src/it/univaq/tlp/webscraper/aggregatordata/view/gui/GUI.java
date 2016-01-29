@@ -1,14 +1,24 @@
 package it.univaq.tlp.webscraper.aggregatordata.view.gui;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
+import it.univaq.tlp.webscraper.aggregatordata.view.UserInterface;
+
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.events.MouseAdapter;
 
-public class gui {
+public class GUI {
 
 	protected Shell shell;
 	private Text url;
@@ -25,7 +35,7 @@ public class gui {
 	 */
 	public static void main(String[] args) {
 		try {
-			gui window = new gui();
+			GUI window = new GUI();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,6 +73,21 @@ public class gui {
 		
 		//BUTTON SEARCH
 		btnSearch = new Button(shell, SWT.NONE);
+		btnSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent arg0) {
+				
+				try {
+					UserInterface user = new UserInterface(new MySQLDatabase("root", "root", "localhost", 3306, "web_scraper"));
+				} catch (StorageException e) {
+	
+					JOptionPane.showMessageDialog(null, "Si è verificato un errore.");
+
+					
+					}
+				
+			}
+		});
 		btnSearch.setBounds(396, 6, 95, 60);
 		btnSearch.setText("Search");
 		

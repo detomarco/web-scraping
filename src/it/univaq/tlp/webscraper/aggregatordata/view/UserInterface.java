@@ -22,33 +22,33 @@ public class UserInterface {
 	
 	protected int last_insert;
 	
-	protected UserInterface(Storable storage){
+	public UserInterface(Storable storage){
 		this.aggregator = new DataAggregator(storage);
 		this.websiteManager = new WebsiteManaging(storage);
 		this.articleManager = new ArticleManaging(storage);	
 	} 
 	
-	protected void scrap(String source, boolean is_list) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException {
+	public void scrap(String source, boolean is_list) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException {
 		this.last_insert = aggregator.crawl(source, is_list);
 	}
 	
-	protected void insertWebsite(Website website) throws StorageException {
+	public void insertWebsite(Website website) throws StorageException {
 		websiteManager.saveWebsite(website);
 	}
 	
-	protected void insertTemplate(Template template, Website website) throws StorageException {
+	public void insertTemplate(Template template, Website website) throws StorageException {
 		websiteManager.saveTemplate(template, website);
 	}
 	
-	protected List<Article> viewLastAddedArticles() throws StorageException {
+	public List<Article> viewLastAddedArticles() throws StorageException {
 		return articleManager.getTopArticles(last_insert);
 	}
 	
-	protected List<Article> viewWebsiteArticles(Website website) throws StorageException {
+	public List<Article> viewWebsiteArticles(Website website) throws StorageException {
 		return articleManager.getWebsiteArticles(website);
 	}
 	
-	protected List<Article> viewArticles() throws StorageException {
+	public List<Article> viewArticles() throws StorageException {
 		return articleManager.getArticles();
 	}
 }
