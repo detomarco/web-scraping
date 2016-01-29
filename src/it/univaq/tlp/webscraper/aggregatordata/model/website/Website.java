@@ -37,7 +37,7 @@ public class Website {
 	}
 	
 	public String getName(){
-		return this.description;
+		return this.name;
 	}
 	
 	public String getAddress(){

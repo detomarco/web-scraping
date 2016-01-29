@@ -27,11 +27,12 @@ public class TUI extends UserInterface{
 		do{
 			
 			System.out.println("Cosa vuoi fare?\n"
-					+ "1)Recupera qualche articolo in giro per il web\n"
-					+ "2)Aggiungi un nuovo sito web\n"
-					+ "3)Aggiungi un nuovo template ad un sito web già esistente");
+						+ "1. Recupera qualche articolo in giro per il web\n"
+						+ "2. Aggiungi un nuovo sito web\n"
+						+ "3. Aggiungi un nuovo template ad un sito web già esistente"
+						+ "4. Mostra articoli");
 			
-			int choice = getInput(1, 3);
+			int choice = getInput(1, 4);
 			
 			switch (choice){		
 			
@@ -45,6 +46,10 @@ public class TUI extends UserInterface{
 				
 				case 3:
 					this.templateManagement(storage);
+					break;
+				
+				case 4:
+					this.showArticles(storage);
 					break;
 				
 			}
@@ -143,6 +148,10 @@ public class TUI extends UserInterface{
 	}
 	
 	public void templateManagement(Storable storage){
+		
+	}
+	
+	public void showArticles(Storable storage){
 		
 	}
 

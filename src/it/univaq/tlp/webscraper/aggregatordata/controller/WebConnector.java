@@ -177,8 +177,6 @@ public class WebConnector implements ConnectorInterface{
 	 */
 	public AggregatedData getArticle(ArticleTemplate template, URL url){
 		
-		System.out.println(template.getEyeletSelector());
-		
 		AggregatedData data = new AggregatedData();
 		
 		try{
