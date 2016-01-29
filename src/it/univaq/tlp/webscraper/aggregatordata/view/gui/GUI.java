@@ -100,7 +100,7 @@ public class GUI extends UserInterface{
 					public void mouseDown(MouseEvent arg0) {
 						
 						try {
-							scrap(url.getText(), true);
+							scrap(url.getText());
 						} catch (MalformedURLException | WebsiteNotFoundException | TemplateNotFoundException
 								| StorageException e) {
 							// TODO Auto-generated catch block
