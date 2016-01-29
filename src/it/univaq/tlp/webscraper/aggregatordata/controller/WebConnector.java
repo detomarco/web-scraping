@@ -1,7 +1,6 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
-import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
+import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
@@ -56,7 +55,7 @@ public class WebConnector implements ConnectorInterface{
 		}else {
 			
 			// Recupera il contesto dell'articolo
-			String context = URLUtility.getContext(url);
+			String context = url.getContext();
 						
 			ArticleListTemplate template = null;
 
@@ -75,7 +74,7 @@ public class WebConnector implements ConnectorInterface{
 			}
 				
 			try{
-				userAgent.visit(url.toString());		    
+				userAgent.visit(url.getSource());		    
 			} catch (ResponseException e){
 				e.printStackTrace();
 			}
@@ -94,6 +93,7 @@ public class WebConnector implements ConnectorInterface{
 				@Override
 				public boolean onNode(Jerry $this, int index) {
 					try {
+						
 						urls.add(new URL($this.attr("href")));
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
@@ -127,13 +127,12 @@ public class WebConnector implements ConnectorInterface{
 			template_found = false;
 			
 			// Recupera host e context
-			String host = URLUtility.getHost(current_url);
-			String context = URLUtility.getContext(current_url);
+			String host = current_url.getHost();
+			String context = current_url.getContext();
 			
 			
 			// Se l'host dell'url corrente corrisponde all'host del sito
 			if(host.equals(website.getAddress())){
-				
 				String path = current_url.getPath();
 				// Filtro per non recuperare dati non desidarati
 				if(!(path.contains("/foto/") || path.contains("/video/") || path.contains("/gallery/"))){
@@ -183,7 +182,7 @@ public class WebConnector implements ConnectorInterface{
 		AggregatedData data = new AggregatedData();
 		
 		try{
-			userAgent.visit(url.toString());		    
+			userAgent.visit(url.getSource());		    
 		} catch (ResponseException e){
 			e.printStackTrace();
 		}
@@ -226,7 +225,7 @@ public class WebConnector implements ConnectorInterface{
 			data.putDate((doc.$(template.getDateSelector()).html()));
 		}  
 		
-		data.putSource(url.toString());
+		data.putSource(url.getSource());
 		
 		// Inserimento metadati		
 		try{

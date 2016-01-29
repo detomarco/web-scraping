@@ -1,12 +1,12 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
@@ -127,12 +127,13 @@ public class WebsiteManaging {
 	 * @throws WebsiteAlreadyExistsException 
 	 */
 	public void saveWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
-		String url = website.getAddress();
-		URL check_url = new URL(url);
+		
+		URL url = new URL(website.getAddress());
 		
 		try {
 			
-			getWebsite(url);
+			getWebsite(url.getHost());
+			
 			// Se il website è già esistente, solleva l'eccezione
 			throw new WebsiteAlreadyExistsException();
 			

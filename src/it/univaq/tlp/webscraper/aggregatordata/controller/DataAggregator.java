@@ -1,11 +1,10 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import it.univaq.tlp.webscraper.aggregatordata.URLUtility;
+import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
@@ -42,13 +41,14 @@ public class DataAggregator {
 	 */
 	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException{
 		
-		URL url = new URL(URLUtility.conformURL(source)); // Throws MalformedURLException
-
+		URL url = new URL(source); // Throws MalformedURLException
+		//repubblica.it/politica
+		System.out.println(url.getSource());
 		// Recupero sito
-		Website website =  website_manager.getWebsite(URLUtility.getHost(url)); // Throws WebsiteNotFoundException
+		Website website =  website_manager.getWebsite(url.getHost()); // Throws WebsiteNotFoundException
 		
 		// Recupera tutti gli articoli trovati (opportunamente strutturati)
-		List<AggregatedData> data = connector.collect(website, url, URLUtility.isList(url)); // Throws TemplateNotFoundException;
+		List<AggregatedData> data = connector.collect(website, url, url.isList()); // Throws TemplateNotFoundException;
 		
 		// Recupera tutti gli articoli già inseriti nel website
 		List<Article> stored_articles = article_manager.getWebsiteArticles(website);

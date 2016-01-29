@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
@@ -22,7 +23,7 @@ public class TUI extends UserInterface{
 	@Override
 	public void run() {
 		Scanner in = new Scanner(System.in);
-		
+			
 		do{
 			
 			System.out.println("Cosa vuoi fare?\n"
@@ -80,25 +81,21 @@ public class TUI extends UserInterface{
 			} catch (MalformedURLException e){
 				System.out.println("Url non valido");
 				error_url = true;
-				e.printStackTrace();
 			
 			// Sito web non trovato
 			} catch (WebsiteNotFoundException e){
 				System.out.println("Sito web non trovato");
 				error_url = true;
-				e.printStackTrace();
 				
 			// Template non trovato
 			} catch (TemplateNotFoundException e){
 				System.out.println("Template non trovato");
 				error_url = true;
-				e.printStackTrace();
 			
 			// Errore con il database
 			} catch (StorageException e){
 				System.out.println("Si è verificato un errore con la repository: " + e.getMessage());
 				error_url = false;
-				e.printStackTrace();
 			}
 			
 		}while(error_url);
@@ -125,14 +122,14 @@ public class TUI extends UserInterface{
 			
 			try {
 				this.insertWebsite(website);
-				System.out.print("Nuovo sito web inserito");
+				System.out.println("Nuovo sito web inserito");
 				error_url = false;
 			} catch (MalformedURLException e) {
-				System.out.print("Sito web non valido");
+				System.out.println("Sito web non valido");
 				error_url = true;
 			
 			} catch (WebsiteAlreadyExistsException e) {
-				System.out.print("Il sito web è già stato inserito");
+				System.out.println("Il sito web è già stato inserito");
 				error_url = true;
 			
 			} catch (StorageException e) {
