@@ -5,7 +5,7 @@ import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 import it.univaq.tlp.webscraper.aggregatordata.view.UserInterface;
 import it.univaq.tlp.webscraper.aggregatordata.view.gui.GUI;
-import it.univaq.tlp.webscraper.aggregatordata.view.gui.ErrorDialog;;
+import it.univaq.tlp.webscraper.aggregatordata.view.gui.Dialog;;
 
 
 public class ProgramGUI {
@@ -17,7 +17,7 @@ public class ProgramGUI {
 			console.run();
 			
 		} catch (StorageException e) {
-			ErrorDialog dialog = new ErrorDialog();
+			Dialog dialog = new Dialog(Dialog.ERROR_DATABASE);
 			dialog.open();
 		}
 	
