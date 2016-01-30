@@ -41,9 +41,10 @@ public class WebConnector implements ConnectorInterface{
 	 * @param is_list
 	 * @return List<AggregatedData>
 	 * @throws TemplateNotFoundException
+	 * @throws ResponseException 
 	 */
 	@Override
-	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException{
+	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException{
 		
 		Set <URL> urls = new LinkedHashSet<>();
 		// Se l'url è di un articolo
@@ -113,8 +114,9 @@ public class WebConnector implements ConnectorInterface{
 	 * @param urls
 	 * @return List<AggregatedData>
 	 * @throws TemplateNotFoundException
+	 * @throws ResponseException 
 	 */
-	public Set<AggregatedData> getAllArticles(Website website, Set<URL> urls) throws TemplateNotFoundException{
+	public Set<AggregatedData> getAllArticles(Website website, Set<URL> urls) throws TemplateNotFoundException, ResponseException{
 		
 		Set<AggregatedData> articles = new LinkedHashSet<>();
 		ArticleTemplate template = null;
@@ -172,16 +174,13 @@ public class WebConnector implements ConnectorInterface{
 	 * @param template
 	 * @param url
 	 * @return AggregatedData
+	 * @throws ResponseException 
 	 */
-	public AggregatedData getArticle(ArticleTemplate template, URL url){
+	public AggregatedData getArticle(ArticleTemplate template, URL url) throws ResponseException{
 		
-		AggregatedData data = new AggregatedData();
+		AggregatedData article = new AggregatedData();
 		
-		try{
-			userAgent.visit(url.getSource());		    
-		} catch (ResponseException e){
-			e.printStackTrace();
-		}
+		userAgent.visit(url.getSource());		    
 		
 		String HTML = "";
 		
@@ -195,42 +194,43 @@ public class WebConnector implements ConnectorInterface{
 		Jerry doc = Jerry.jerry(HTML);
 		
 		// Estrazione informazioni ed inserimento nell'oggetto
-		data.putTitle((doc.$("head title").html()));
+		article.putTitle((doc.$("head title").html()));
 		
 		if(!(template.getHeadingSelector().equals("")) && (template.getHeadingSelector()!=null)){
-			data.putHeading((doc.$(template.getHeadingSelector()).html()));
+			article.putHeading((doc.$(template.getHeadingSelector()).html()));
 		}  
 		
 		if(!(template.getEyeletSelector().equals("")) && (template.getEyeletSelector()!=null)){
-			data.putEyelet((doc.$(template.getEyeletSelector()).html()));	
+			article.putEyelet((doc.$(template.getEyeletSelector()).html()));	
 		} 
 		
 		if(!(template.getSummarySelector().equals("")) && (template.getSummarySelector()!=null)){
-			data.putSummary((doc.$(template.getSummarySelector()).html()));
+			article.putSummary((doc.$(template.getSummarySelector()).html()));
 		}  
 		
 		if(!(template.getTextSelector().equals("")) && (template.getTextSelector()!=null)){
-			data.putText((doc.$(template.getTextSelector()).text()));
+			article.putText((doc.$(template.getTextSelector()).text()));
 		}  
 		
 		if(!(template.getAuthorSelector().equals("")) && (template.getAuthorSelector()!=null)){
-			data.putAuthor((doc.$(template.getAuthorSelector()).html()));
+			article.putAuthor((doc.$(template.getAuthorSelector()).html()));
 		}  
 				
 		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null)){
-			data.putDate((doc.$(template.getDateSelector()).html()));
+			article.putDate((doc.$(template.getDateSelector()).html()));
 		}  
 		
-		data.putContext(url.getContext());
+		article.putContext(url.getContext());
 		
-		data.putSource(url.getSource());
+		article.putSource(url.getSource());
 		
 		// Inserimento metadati		
 		try{
 		    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
-		    	// Se � presente un contenuto (verificare che questo sia il controllo giusto)
-		    	if(!node.getAttx("content").equals("")){
-		    		data.addMetadata(node.getAttx("name"), node.getAttx("content"));
+		    	
+		    	// Se è presente un contenuto
+		    	if(!node.getAttx("content").equals("") && !node.getAttx("name").equals("")){
+		    		article.addMetadata(node.getAttx("name"), node.getAttx("content"));
 		    	}
 		    }
 	    } catch (NotFound e){ }
@@ -239,12 +239,12 @@ public class WebConnector implements ConnectorInterface{
 	    for(Element node: userAgent.doc.findEvery("<img>")){
 	    	// Se � presente una didascalia (verificare che questo sia il controllo giusto)
 	    	if(!node.getAttx("alt").equals("")){
-	    		data.addImgCaption(node.getAttx("alt"));
+	    		article.addImgCaption(node.getAttx("alt"));
 	    	}
 	    	
 	    }
 	    
-	    return data;
+	    return article;
 	}
 	
 

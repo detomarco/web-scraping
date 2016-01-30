@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.jaunt.ResponseException;
+
 import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
@@ -40,32 +42,31 @@ public class DataAggregator {
 	 * @return int
 	 * @throws MalformedURLException
 	 * @throws StorageException 
+	 * @throws ResponseException 
 	 */
-	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException{
+	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException{
 		
 		URL url = new URL(source); // Throws MalformedURLException
 		
-		System.out.println("Attendere...");
+		
 		// Recupero sito
 		Website website =  website_manager.getWebsite(url.getHost()); // Throws WebsiteNotFoundException
 		
 		// Recupera tutti gli articoli trovati (opportunamente strutturati)
-		Set<AggregatedData> data = connector.collect(website, url, url.isList()); // Throws TemplateNotFoundException;
+		Set<AggregatedData> new_articles = connector.collect(website, url, url.isList()); // Throws TemplateNotFoundException;
 		
 		// Recupera tutti gli articoli già inseriti nel website
 		Set<Article> stored_articles = new LinkedHashSet<>();
 		try {
-			stored_articles = article_manager.getWebsiteArticles(website, url.getContext());
+			stored_articles = article_manager.getWebsiteArticles(website, "");
 		} catch (ContextNotFoundException e) { }
 		
 		// Salva solo gli articoli che non stono già stati trovati
-		Iterator<AggregatedData> iter = data.iterator();
 		int saved_counter = 0;
-		while(iter.hasNext()){
-			AggregatedData current_article = iter.next();
-			if(!(stored_articles.contains(current_article)) && !current_article.getHeading().equals("") && !current_article.getText().equals("")){
+		for(AggregatedData new_article : new_articles){
+			if(!(stored_articles.contains(new_article)) && !new_article.getHeading().equals("") && !new_article.getText().equals("")){
 				// Salva nuovo articolo
-				article_manager.saveArticle(current_article, website);
+				article_manager.saveArticle(new_article, website);
 				saved_counter ++;
 			}
 		}

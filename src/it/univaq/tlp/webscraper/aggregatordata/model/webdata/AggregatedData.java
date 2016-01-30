@@ -27,14 +27,14 @@ public class AggregatedData {
 	private String date;
 	private String context;
 	private List<String> img_caption;
-	private Map<String, String> metadata;
+	private Map<String, Object> metadata;
 	
 	/*
 	 * Default constructor
 	 */
 	public AggregatedData(){
 		this.img_caption = new ArrayList<>();
-		this.metadata = new HashMap<String, String>();
+		this.metadata = new HashMap<String, Object>();
 		this.context = "";
 		this.title = "";
 		this.heading = "";
@@ -175,7 +175,7 @@ public class AggregatedData {
 	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
 	 */
 	
-	public String getContetx(){
+	public String getContext(){
 		return this.context;
 	}
 	
@@ -247,7 +247,7 @@ public class AggregatedData {
 	 * Metodo che recupera i Metadata dall'oggetto
 	 * @return Map<String, String>
 	 */
-	public Map<String, String> getMetadata(){
+	public Map<String, Object> getMetadata(){
 		return this.metadata;
 	}
 	
@@ -255,7 +255,7 @@ public class AggregatedData {
 	 * Metodo che recupera i Metadata dall'oggetto
 	 * @return String
 	 */
-	public String getMetadata(String key){
+	public Object getMetadata(String key){
 		return metadata.get(key);
 	}
 	

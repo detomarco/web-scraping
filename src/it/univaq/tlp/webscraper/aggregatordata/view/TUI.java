@@ -5,6 +5,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.jaunt.ResponseException;
+
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
@@ -33,7 +35,7 @@ public class TUI extends UserInterface{
 	@SuppressWarnings("resource")
 	@Override
 	public void run() {
-	
+
 		Scanner in = new Scanner(System.in);
 			
 		do{
@@ -92,6 +94,7 @@ public class TUI extends UserInterface{
 			url = in.nextLine();
 			
 			try {						
+				System.out.println("Attendere...");
 				// Scraping dell'URL
 				this.scrap(url);
 				System.out.println("Sono stati aggiunti " + this.last_insert + " articoli");
@@ -101,7 +104,10 @@ public class TUI extends UserInterface{
 			} catch (MalformedURLException e){
 				System.out.println("Url non valido");
 				error_url = true;
-			
+			}catch (ResponseException e) {
+				System.out.println("Errore di connessione");
+				error_url = false;
+				
 			// Sito web non trovato
 			} catch (WebsiteNotFoundException e){
 				System.out.println("Sito web non trovato");
@@ -115,9 +121,10 @@ public class TUI extends UserInterface{
 			
 			// Errore con il database
 			} catch (StorageException e){
-				System.out.println("Si è verificato un errore con la repository: " + e.getMessage());
+				System.out.println("Si è verificato un errore con la repository");
+				e.printStackTrace();
 				error_url = false;
-			}
+			} 
 			
 		}while(error_url);
 		

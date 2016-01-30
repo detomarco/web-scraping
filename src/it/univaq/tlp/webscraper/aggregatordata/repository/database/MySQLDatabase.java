@@ -51,7 +51,8 @@ public class MySQLDatabase extends Database {
 		Statement s = this.db.createStatement();
 		String query = "INSERT INTO "+table+" SET ";
 		for (Map.Entry<String, Object> entry: data.entrySet()){
-			query = query + entry.getKey()+ " = '" +entry.getValue()+ "', ";
+			
+			query = query + entry.getKey().replaceAll("'", "''") + " = '" +entry.getValue().toString().replaceAll("'", "''")+ "', ";
 		}
         query = query.substring(0, query.length() - 2);       
         s.executeUpdate(query);  

@@ -3,6 +3,8 @@ package it.univaq.tlp.webscraper.aggregatordata.view;
 import java.net.MalformedURLException;
 import java.util.Set;
 
+import com.jaunt.ResponseException;
+
 import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
@@ -55,8 +57,9 @@ public abstract class UserInterface {
 	/**
 	* Esegue il web-scraping su un determinato url
 	* @param url, indirizzo web da analizzare
+	 * @throws ResponseException 
 	*/
-	public void scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException {
+	public void scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException {
 		this.last_insert = aggregator.crawl(source);
 	}
 	
@@ -88,7 +91,7 @@ public abstract class UserInterface {
 	}
 	
 	/**
-	* Visualizza l'articolo del sito web
+	* Visualizza tutti gli articoli di un sito web
 	* @param url, indirizzo del sito web
 	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
 	* @return lista di articoli trovati

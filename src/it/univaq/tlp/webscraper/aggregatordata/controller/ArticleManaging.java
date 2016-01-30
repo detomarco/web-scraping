@@ -2,6 +2,7 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,12 @@ public class ArticleManaging {
 		website_manager = new WebsiteManaging(storage);
 	}
 	
+	/**
+	* Visualizza tutti gli articoli di un sito web
+	* @param url, indirizzo del sito web
+	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
+	* @return lista di articoli trovati
+	*/
 	public Set<Article> getWebsiteArticles(Website website, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextNotFoundException{
 
 		if(!context.trim().equals("")){
@@ -103,16 +110,29 @@ public class ArticleManaging {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		data.put("title", article.getTitle().replaceAll("'", "''"));
-		data.put("heading", article.getHeading().replaceAll("'", "''"));
-		data.put("summary", article.getSummary().replaceAll("'", "''"));
-		data.put("eyelet", article.getEyelet().replaceAll("'", "''"));
-		data.put("text", article.getText().replaceAll("'", "''"));
-		data.put("author", article.getAuthor().replaceAll("'", "''"));
+		data.put("title", article.getTitle());
+		data.put("heading", article.getHeading());
+		data.put("summary", article.getSummary());
+		data.put("eyelet", article.getEyelet());
+		data.put("text", article.getText());
+		data.put("author", article.getAuthor());
 		data.put("date", article.getDate());
 		data.put("url", article.getSource());
 		data.put("fk_website", website.getId());
-		
+		data.put("context_name", article.getContext());
 		storage.save("articles", data);
+		
+		// Recupera id dell'articolo appena inserito
+		Iterator iter = this.getTopArticles(1).iterator();
+		int id_art = ((Article) iter.next()).getId();
+		
+		Map<String, Object> metadata = new HashMap<>();
+		metadata.put("fk_article", id_art);
+		for(Map.Entry<String, Object> entry:  article.getMetadata().entrySet()){
+			metadata.put("name",entry.getKey());
+			metadata.put("content", entry.getValue());
+			storage.save("metadata", metadata);
+		}
+		
 	}
 }
