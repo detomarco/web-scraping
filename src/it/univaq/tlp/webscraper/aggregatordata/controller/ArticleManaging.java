@@ -8,11 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.URL;
-import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
-import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;

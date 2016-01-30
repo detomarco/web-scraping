@@ -1,14 +1,12 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.aggregatordata.URL;
-import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;

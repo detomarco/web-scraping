@@ -70,7 +70,7 @@ public class AggregatedData {
 	 */
 	public void putContext(String context){
 		if(context!=null){
-			this.context = context;
+			this.context = context.replaceAll("\\s+", " ").trim();
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class AggregatedData {
 	 */
 	public void putTitle(String title){
 		if(title!=null){
-			this.title = title;
+			this.title = title.replaceAll("\\s+", " ").trim();
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class AggregatedData {
 	 */
 	public void putHeading(String heading){
 		if(heading!=null){
-			this.heading = heading;
+			this.heading = heading.replaceAll("\\s+", " ").trim();
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class AggregatedData {
 	 */
 	public void putEyelet(String eyelet){
 		if(eyelet!=null){
-			this.eyelet = eyelet;
+			this.eyelet = eyelet.replaceAll("\\s+", " ").trim();
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class AggregatedData {
 	 */
 	public void putSummary(String summary){
 		if(summary!=null){
-			this.summary = summary;
+			this.summary = summary.replaceAll("\\s+", " ").trim();
 		}	
 	}
 	
@@ -120,7 +120,7 @@ public class AggregatedData {
 	 */
 	public void putText(String text){
 		if(text!=null){
-			this.text = text;
+			this.text = text.replaceAll("\\s+", " ").trim();
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class AggregatedData {
 	 */
 	public void putAuthor(String author){
 		if(author!=null){
-			this.author = author;
+			this.author = author.replaceAll("\\s+", " ").trim();
 		}
 	}
 	
@@ -140,7 +140,7 @@ public class AggregatedData {
 	 */
 	public void putSource(String source){
 		if(source!=null){
-			this.source = source;
+			this.source = source.replaceAll("\\s+", " ").trim();
 		}
 	}
 	
@@ -150,7 +150,7 @@ public class AggregatedData {
 	 */
 	public void putDate(String date){
 		if(date!=null){
-			this.date = date;
+			this.date = date.replaceAll("\\s+", " ").trim();
 		}
 	}
 
@@ -160,7 +160,7 @@ public class AggregatedData {
 	 * @param value
 	 */
 	public void addMetadata(String key, String value){
-		metadata.put(key, value);
+		metadata.put(key.replaceAll("\\s+", " ").trim(), value.replaceAll("\\s+", " ").trim());
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public class AggregatedData {
 	 * @param value
 	 */
 	public void addImgCaption(String value){
-		img_caption.add(value);
+		img_caption.add(value.replaceAll("\\s+", " ").trim());
 	}
 	
 	/*
@@ -280,12 +280,6 @@ public class AggregatedData {
         int hash = 7;
         hash = 59 * hash + Objects.hashCode(this.source);
         return hash;
-    }
-
-    public static String sanitize(String str){
-
-//    	str = str.replaceAll("\\s+", " ").trim();
-    	return str;
     }
    
 

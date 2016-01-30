@@ -10,7 +10,6 @@ import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
