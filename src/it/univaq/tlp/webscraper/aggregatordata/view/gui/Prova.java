@@ -49,20 +49,20 @@ public class Prova {
 		shell.setText("Database Error");
 		
 		//BUTTON CLOSE
-		Button close_error_insert = new Button(shell, SWT.NONE);
-		close_error_insert.addMouseListener(new MouseAdapter() {
+		Button close_unknown = new Button(shell, SWT.NONE);
+		close_unknown.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
 				shell.close();
 			}
 		});
-		close_error_insert.setBounds(155, 51, 94, 28);
-		close_error_insert.setText("Close");
+		close_unknown.setBounds(155, 51, 94, 28);
+		close_unknown.setText("Close");
 		
 		//LABEL MESSAGE
-		Label message_error_insert = new Label(shell, SWT.NONE);
-		message_error_insert.setBounds(148, 24, 109, 14);
-		message_error_insert.setText("Inserimento fallito.");
+		Label message_unknown = new Label(shell, SWT.NONE);
+		message_unknown.setBounds(125, 25, 154, 14);
+		message_unknown.setText("Si è verificato sconosciuto.");
 	}
 
 }

@@ -1,6 +1,8 @@
 package it.univaq.tlp.webscraper.aggregatordata.view.gui;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -11,6 +13,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import com.jaunt.ResponseException;
+
+import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
@@ -32,6 +37,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class GUI extends UserInterface{
 
@@ -48,8 +55,9 @@ public class GUI extends UserInterface{
 	private Text date;
 	private Text text;
 	private List list;
-	private Combo sorgente;
-	private Text contesto;
+	private Combo sorgente, contesto;
+	
+	private Map<String, Website> mMap = new HashMap<>();
 	
 	
 	/**
@@ -126,7 +134,12 @@ public class GUI extends UserInterface{
 							scrap(url.getText());
 						} catch (MalformedURLException | WebsiteNotFoundException | TemplateNotFoundException
 								| StorageException e) {
-							// TODO Auto-generated catch block
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
+							dialog.open();
+							e.printStackTrace();
+						} catch (ResponseException e) {
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
+							dialog.open();
 							e.printStackTrace();
 						} finally {
 							lblAggiuntiArticoli.setText("Aggiunti: "+last_insert+" articoli");
@@ -166,25 +179,56 @@ public class GUI extends UserInterface{
 				    
 				    //SORGENTE
 				    sorgente = new Combo(frame1, SWT.NONE);
+				    sorgente.addSelectionListener(new SelectionAdapter() {
+				    	@Override
+				    	public void widgetSelected(SelectionEvent arg0) {
+				    		
+				    		String name = sorgente.getText();
+				    		if(name == null) return;
+				    		
+				    		Website website = mMap.get(name);
+				    		if(website == null) return;
+				    		
+				    		System.out.println(website.getName() + " | " + website.getAddress());
+				    		ArticleManaging article = new ArticleManaging(storage);
+				    		try {
+				    			contesto.removeAll();
+								Set<String> contesti = article.getWebsiteContexts(website);
+								if(contesti != null){
+									for(String context : contesti){
+										System.out.println(context);
+										contesto.add(context);
+									}
+								}
+								
+							} catch (StorageException e) {
+								e.printStackTrace();
+							}
+				    		System.out.println("-------------");
+				    	}
+				    });
 				    sorgente.setBounds(75, 108, 113, 24);
 				    WebsiteManaging website = new WebsiteManaging(storage);
 				    try {
-						Set<String> hostlist = website.getAllWebsiteHost();
-						for(String host:hostlist){
-					    	sorgente.add(host);
+						Set<Website> hostlist = website.getAllWebsite();
+						for(Website host:hostlist){
+							mMap.put(host.getName(), host);
+							sorgente.add(host.getName());
 					    }
-						
 					} catch (StorageException e2) {
-						// TODO Auto-generated catch block
+						Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
 						e2.printStackTrace();
 					}
 				    
+				    String source = ("");
 				    
-					contesto = new Text(frame1, SWT.BORDER);
-					contesto.setBounds(75, 147, 111, 22);
+				    //CONTESTO
+					contesto = new Combo(frame1, SWT.NONE);
+					contesto.setBounds(75, 146, 113, 22);
+					
 				    
 				    
-				  //BOTTONE CERCA
+					//BOTTONE CERCA
 				    Button btnSearch = new Button(frame1, SWT.NONE);
 				    btnSearch.addMouseListener(new MouseAdapter() {
 				    	@Override
@@ -193,7 +237,17 @@ public class GUI extends UserInterface{
 				    		list.removeAll();
 								Set<Article> articles;
 								try {
-									articles = viewWebsiteArticles(sorgente.getText(), contesto.getText());
+									String source = "";
+									Set<Website> hostlist = website.getAllWebsite();
+									for(Website host:hostlist){
+								    	if(sorgente.getText().equals(host.getName())){
+								    		
+								    		source = host.getAddress();
+								    		break;
+								    	};
+								    }
+									
+									articles = viewWebsiteArticles(source, contesto.getText());
 									for(Article article:articles){
 								    	list.add(article.getHeading());
 								    }
@@ -213,8 +267,6 @@ public class GUI extends UserInterface{
 					//SEPARATORE
 					Label label = new Label(frame1, SWT.SEPARATOR | SWT.VERTICAL);
 					label.setBounds(194, 10, 2, 361);
-					
-
 			    
 					
 			    //SECONDA SEZIONE
@@ -355,7 +407,7 @@ public class GUI extends UserInterface{
 									dialog.open();
 									e.printStackTrace();
 								} catch (DataOmittedException e) {
-									// TODO Auto-generated catch block
+									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
 									e.printStackTrace();
 								}
 

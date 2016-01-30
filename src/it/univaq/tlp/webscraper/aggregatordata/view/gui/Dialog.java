@@ -102,8 +102,8 @@ public class Dialog {
 			
 			//LABEL MESSAGE
 			Label message_unknown = new Label(shell, SWT.NONE);
-			message_unknown.setBounds(132, 25, 140, 14);
-			message_unknown.setText("Si è verificato sconosciuto");
+			message_unknown.setBounds(125, 25, 154, 14);
+			message_unknown.setText("Si è verificato sconosciuto.");
 			break;
 			
 		case SUCCESSFUL_INSERT:
