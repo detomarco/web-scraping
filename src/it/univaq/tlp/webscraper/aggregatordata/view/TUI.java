@@ -258,6 +258,7 @@ public class TUI extends UserInterface{
 			context = in.nextLine();
 			try {
 				articles = this.viewWebsiteArticles(host, context);
+				
 				if(articles.isEmpty()){
 					System.out.println("Nessun articolo trovato");
 				}else{
@@ -288,10 +289,6 @@ public class TUI extends UserInterface{
 				
 			} catch (WebsiteNotFoundException e) {
 				System.out.println("Sito web non trovato");
-				error = true;
-				
-			} catch (ContextNotFoundException e) {
-				System.out.println("Contesto non trovato");
 				error = true;
 				
 			} catch (StorageException e) {

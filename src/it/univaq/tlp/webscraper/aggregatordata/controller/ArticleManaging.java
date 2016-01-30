@@ -32,17 +32,8 @@ public class ArticleManaging {
 	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
 	* @return lista di articoli trovati
 	*/
-	public Set<Article> getWebsiteArticles(Website website, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextNotFoundException{
+	public Set<Article> getWebsiteArticles(Website website, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException{
 
-		if(!context.trim().equals("")){
-			boolean context_found = false;
-			Set<String> contexts = this.getWebsiteContexts(website);
-			for(String ctx: contexts){
-				if(ctx.equals(context)) context_found = true;
-			}
-			if(!context_found) throw new ContextNotFoundException();
-		}
-		
 		Set<Article> articles = new LinkedHashSet<>();
 		Set<Map<String, String>> results;
 		

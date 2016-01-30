@@ -96,7 +96,7 @@ public abstract class UserInterface {
 	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
 	* @return lista di articoli trovati
 	*/
-	public Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextNotFoundException {
+	public Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException {
 		
 		URL url = new URL(address);
 		Website website = website_manager.getWebsite(url.getHost());

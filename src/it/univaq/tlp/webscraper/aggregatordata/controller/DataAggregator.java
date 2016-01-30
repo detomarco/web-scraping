@@ -57,9 +57,7 @@ public class DataAggregator {
 		
 		// Recupera tutti gli articoli già inseriti nel website
 		Set<Article> stored_articles = new LinkedHashSet<>();
-		try {
-			stored_articles = article_manager.getWebsiteArticles(website, "");
-		} catch (ContextNotFoundException e) { }
+		stored_articles = article_manager.getWebsiteArticles(website, "");
 		
 		// Salva solo gli articoli che non stono già stati trovati
 		int saved_counter = 0;
