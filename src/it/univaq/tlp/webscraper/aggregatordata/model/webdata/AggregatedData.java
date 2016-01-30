@@ -7,13 +7,12 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Questa classe si occupa di recuperare gli elementi dall'articolo e inserirli nell'oggetto
+ * Classe per la gestione di un nuovo articoli recuperato dal web
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico
  */
 public class AggregatedData {
-	private String context;
 	
 	private String title;
 	
@@ -36,7 +35,6 @@ public class AggregatedData {
 	public AggregatedData(){
 		this.img_caption = new ArrayList<>();
 		this.metadata = new HashMap<String, String>();
-		this.context = "";
 		this.title = "";
 		this.heading = "";
 		this.summary = "";
@@ -50,7 +48,6 @@ public class AggregatedData {
 	
 	public AggregatedData(String context, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
 		this();
-		putContext(context);
 		putTitle(title);
 		putHeading(heading);
 		putEyelet(eyelet);
@@ -69,16 +66,6 @@ public class AggregatedData {
 	 * Metodo che inserisce il titolo nell'articolo
 	 * @param title
 	 */
-	public void putContext(String context){
-		if(context!=null){
-			this.context = context;
-		}
-	}
-	
-	/**
-	 * Metodo che inserisce il titolo nell'articolo
-	 * @param title
-	 */
 	public void putTitle(String title){
 		if(title!=null){
 			this.title = title;
@@ -86,7 +73,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce nell'articolo
+	 * Metodo che inserisce l'intestazione
 	 * @param heading
 	 */
 	public void putHeading(String heading){
@@ -96,7 +83,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce l'occhiello nell'articolo
+	 * Metodo che inserisce l'occhiello
 	 * @param eyelet
 	 */
 	public void putEyelet(String eyelet){
@@ -106,7 +93,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce il sommario nell'articolo
+	 * Metodo che inserisce il sommario
 	 * @param summary
 	 */
 	public void putSummary(String summary){
@@ -116,7 +103,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce il testo nell'articolo
+	 * Metodo che inserisce il testo
 	 * @param text
 	 */
 	public void putText(String text){
@@ -126,7 +113,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce l'autore nell'articolo
+	 * Metodo che inserisce l'autore
 	 * @param author
 	 */
 	public void putAuthor(String author){
@@ -136,7 +123,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce la fonte (l'indirizzo) nell'articolo
+	 * Metodo che inserisce la fonte (l'indirizzo)
 	 * @param source
 	 */
 	public void putSource(String source){
@@ -146,7 +133,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce la data nell'articolo
+	 * Metodo che inserisce la data
 	 * @param date
 	 */
 	public void putDate(String date){
@@ -156,7 +143,7 @@ public class AggregatedData {
 	}
 
 	/**
-	 * Metodo che inserisce i Metadata nell'articolo
+	 * Metodo che inserisce i Metadata
 	 * @param key
 	 * @param value
 	 */
@@ -165,7 +152,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce l'immagine nell'articolo
+	 * Metodo che inserisce le descrizioni delle immagini
 	 * @param value
 	 */
 	public void addImgCaption(String value){
@@ -175,14 +162,6 @@ public class AggregatedData {
 	/*
 	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
 	 */
-	 
-	/**
-	 * Metodo che recupera il contesto
-	 * @return String
-	 */
-	public String getContext(){
-		return this.context;
-	}
 	
 	/**
 	 * Metodo che recupera il titolo dall'oggetto

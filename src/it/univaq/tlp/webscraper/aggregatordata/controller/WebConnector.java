@@ -2,8 +2,6 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import com.jaunt.Element;
@@ -222,8 +220,6 @@ public class WebConnector implements ConnectorInterface{
 		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null)){
 			data.putDate((doc.$(template.getDateSelector()).html()));
 		}  
-		
-		data.putContext(url.getContext());
 		
 		data.putSource(url.getSource());
 		

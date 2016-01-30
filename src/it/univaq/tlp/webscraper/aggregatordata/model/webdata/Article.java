@@ -3,7 +3,7 @@ package it.univaq.tlp.webscraper.aggregatordata.model.webdata;
 import java.util.Map;
 
 /**
- * Questa classe &egrave un estensione di AggregatedData e rappresenta l'articolo recuperato dal database
+ * Classe per la gestione di un articolo recuperato dal database
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico

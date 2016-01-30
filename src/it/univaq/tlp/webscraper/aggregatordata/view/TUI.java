@@ -5,7 +5,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
-import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
@@ -20,7 +19,12 @@ import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 
 public class TUI extends UserInterface{
-			
+	/**
+	* Classe per la gestione della Text-based Graphic User dell'applicazione
+	* @author Marco De Toma
+	* @author Alessandro D'Errico
+	* @author Gianluca Filippone
+	*/	
 
 	public TUI(Storable storage) {
 		super(storage);
@@ -52,11 +56,11 @@ public class TUI extends UserInterface{
 					break;
 				
 				case 3:
-					this.templateManagement(storage);
+					this.templateManagement();
 					break;
 				
 				case 4:
-					this.showArticles(storage);
+					this.showArticles();
 					break;
 				
 			}
@@ -71,7 +75,10 @@ public class TUI extends UserInterface{
 			
 	}
 
-	@SuppressWarnings("resource")
+	/**
+	* Modulo per recuperare nuovi articoli dal web
+	* 
+	*/
 	public void webScraper(){
 		
 		boolean error_url;
@@ -116,6 +123,10 @@ public class TUI extends UserInterface{
 
 	}
 	
+	/**
+	* Modulo per inserire un nuovo sito web
+	* 
+	*/
 	public void websiteManagement(){
 		Scanner in = new Scanner(System.in);
 		String url, name, description;
@@ -155,7 +166,11 @@ public class TUI extends UserInterface{
 		
 	}
 	
-	public void templateManagement(Storable storage){
+	/**
+	* Modulo per inserire un nuovo template
+	* 
+	*/
+	public void templateManagement(){
 		Scanner in = new Scanner(System.in);
 		boolean error;
 		String list, url, context, heading, summary, eyelet, author, date, text;
@@ -214,8 +229,12 @@ public class TUI extends UserInterface{
 		}while(error);
 		
 }
-		
-	public void showArticles(Storable storage){
+	
+	/**
+	* Modulo per mostrare tutti i gli articoligià inseriti di un determinato sito web
+	* 
+	*/
+	public void showArticles(){
 		boolean error;
 		Scanner in = new Scanner(System.in);
 		String host, context;
@@ -257,7 +276,7 @@ public class TUI extends UserInterface{
 		
 	}
 
-	public static int getInput(int min, int max){
+	private static int getInput(int min, int max){
 		
 		boolean flag = true;
 		int input;

@@ -3,8 +3,6 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,15 +41,15 @@ public class ArticleManaging {
 		
 		Set<Article> articles = new LinkedHashSet<>();
 		Set<Map<String, String>> results;
-		if(!context.trim().equals("")){
-			results = storage.get("articles", "fk_website = '" + website.getId()+"' AND context = '" + context + "'");
-		}else{
-			results = storage.get("articles", "fk_website = '" + website.getId()+"'");
-		}
 		
+		results = storage.get("articles", "fk_website = '" + website.getId()+"'");
 		
 		for(Map<String, String> current_result: results){
-			articles.add(new Article(current_result));
+			url = new URL(current_result.get("url"));
+			if(url.getContext().equals(context)){
+				articles.add(new Article(current_result));
+			}
+			
 		}
 		
 		return articles;
@@ -92,7 +90,6 @@ public class ArticleManaging {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		data.put("context", article.getContext().replaceAll("'", "''"));
 		data.put("title", article.getTitle().replaceAll("'", "''"));
 		data.put("heading", article.getHeading().replaceAll("'", "''"));
 		data.put("summary", article.getSummary().replaceAll("'", "''"));
