@@ -69,6 +69,15 @@ public abstract class Database implements Storable{
 	}
 	
 	@Override
+	public Set<Map<String, String>> getGrouped(String kind, String condition, String to_group) throws StorageException{
+		try{
+			return this.get(kind, condition+" GROUP BY "+to_group);
+		} catch (Exception e){
+			throw new StorageException(e.getMessage(), e.getCause());
+		}
+	}
+	
+	@Override
 	public void updateStored(String table, Map<String,Object> data, String condition) throws StorageException{
 		try{
 			this.update(table, data, "");

@@ -84,6 +84,21 @@ public class ArticleManaging {
 		
 	}
 	
+	public Set<String> getWebsiteContexts(Website website) throws StorageException{
+		
+		Set<String> contexts = new LinkedHashSet<>();
+		Set<Map<String, String>> results;
+		
+		results = storage.getGrouped("articles", "1 = '1'", "context_name");
+		
+		for(Map<String, String> current_result: results){
+			contexts.add(current_result.get("context_name"));
+		}
+		
+		return contexts;
+		
+	}
+	
 	public void saveArticle(AggregatedData article, Website website) throws StorageException{
 		
 		Map<String, Object> data = new HashMap<>();

@@ -25,7 +25,7 @@ public class AggregatedData {
 	
 	private String source;
 	private String date;
-//	private String topic;
+	private String context;
 	private List<String> img_caption;
 	private Map<String, String> metadata;
 	
@@ -35,6 +35,7 @@ public class AggregatedData {
 	public AggregatedData(){
 		this.img_caption = new ArrayList<>();
 		this.metadata = new HashMap<String, String>();
+		this.context = "";
 		this.title = "";
 		this.heading = "";
 		this.summary = "";
@@ -48,6 +49,7 @@ public class AggregatedData {
 	
 	public AggregatedData(String context, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
 		this();
+		putContext(context);
 		putTitle(title);
 		putHeading(heading);
 		putEyelet(eyelet);
@@ -61,6 +63,16 @@ public class AggregatedData {
 	/*
 	 * METODI PER INSERIMENTO ELEMENTI NELL'OGGETTO
 	 */
+	
+	/**
+	 * Metodo che inserisce il contesto dell'articolo
+	 * @param context
+	 */
+	public void putContext(String context){
+		if(context!=null){
+			this.context = context;
+		}
+	}
 	
 	/**
 	 * Metodo che inserisce il titolo nell'articolo
@@ -162,6 +174,10 @@ public class AggregatedData {
 	/*
 	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
 	 */
+	
+	public String getContetx(){
+		return this.context;
+	}
 	
 	/**
 	 * Metodo che recupera il titolo dall'oggetto

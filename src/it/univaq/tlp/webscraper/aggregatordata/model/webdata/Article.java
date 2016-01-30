@@ -23,7 +23,7 @@ public class Article extends AggregatedData {
 	public Article(AggregatedData data){ }
 	
 	public Article(Map<String, String> from_storage){
-		super(from_storage.get("context"), from_storage.get("title"), from_storage.get("heading"), from_storage.get("eyelet"), from_storage.get("summary"),
+		super(from_storage.get("context_name"), from_storage.get("title"), from_storage.get("heading"), from_storage.get("eyelet"), from_storage.get("summary"),
 				from_storage.get("text"), from_storage.get("author"), from_storage.get("url"), from_storage.get("date"));
 				
 

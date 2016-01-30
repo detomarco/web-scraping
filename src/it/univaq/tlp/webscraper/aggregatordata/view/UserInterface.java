@@ -78,7 +78,11 @@ public abstract class UserInterface {
 		website_manager.saveTemplate(article, article_list, website_url);
 	}
 	
-	
+	/**
+	 * Visualizza gli articoli aggiunti dopo l'ultima ricerca
+	 * @return
+	 * @throws StorageException
+	 */
 	public Set<Article> viewLastAddedArticles() throws StorageException {
 		return article_manager.getTopArticles(last_insert);
 	}
@@ -95,6 +99,21 @@ public abstract class UserInterface {
 		Website website = website_manager.getWebsite(url.getHost());
 		
 		return article_manager.getWebsiteArticles(website, context);
+	}
+	
+	/**
+	 * Visualizza tutti i contesti relativi agli articoli salvati per quel sito web
+	 * @param address
+	 * @return
+	 * @throws StorageException
+	 * @throws MalformedURLException
+	 * @throws WebsiteNotFoundException
+	 */
+	public Set<String> viewContexts(String address) throws StorageException, MalformedURLException, WebsiteNotFoundException{
+		URL url = new URL(address);
+		Website website = website_manager.getWebsite(url.getHost());
+		
+		return article_manager.getWebsiteContexts(website);
 	}
 
 	

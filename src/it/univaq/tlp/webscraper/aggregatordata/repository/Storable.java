@@ -13,4 +13,6 @@ public interface Storable {
 	
 	public void updateStored(String kind, Map<String,Object> data, String condition) throws StorageException;
 
+	public Set<Map<String, String>> getGrouped(String kind, String condition, String to_group) throws StorageException;
+
 }
