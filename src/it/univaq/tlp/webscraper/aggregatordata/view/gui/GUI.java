@@ -1,8 +1,5 @@
 package it.univaq.tlp.webscraper.aggregatordata.view.gui;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.net.MalformedURLException;
 
 import org.eclipse.swt.SWT;
@@ -13,9 +10,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
@@ -314,6 +315,27 @@ public class GUI extends UserInterface{
 					   
 					    //BUTTON ADDTEMPLATE
 					    Button addTemplate = new Button(grpInserimentoTemplate, SWT.NONE);
+					    addTemplate.addMouseListener(new MouseAdapter() {
+					    	@Override
+					    	public void mouseDown(MouseEvent arg0) {
+					    		ArticleListTemplate listTemplate = new ArticleListTemplate(context.getText(), home_list.getText());
+					    		ArticleTemplate template = ArticleTemplate(context.getText(), header.getText(), eyelet.getText(), summary.getText(), text.getText(), author.getText(), date.getText());
+					    		try {
+									insertTemplate(template, listTemplate, web_site.getText());
+									Dialog dialog = new Dialog(Dialog.SUCCESSFUL_INSERT);
+									dialog.open();
+								} catch (MalformedURLException | StorageException | WebsiteNotFoundException
+										| ContextAlreadyExistsException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
+									dialog.open();
+									e.printStackTrace();
+								} catch (DataOmittedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+					    	}
+					    });
 					    addTemplate.setBounds(259, 327, 115, 39);
 					    addTemplate.setText("Aggiungi");
 					    
@@ -405,5 +427,12 @@ public class GUI extends UserInterface{
 				    reset_website.setBounds(10, 332, 71, 28);
 				    reset_website.setText("Reset");
 	   
+	}
+
+
+	protected ArticleTemplate ArticleTemplate(String text2, String text3, String text4, String text5, String text6,
+			String text7, String text8) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
