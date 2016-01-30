@@ -5,12 +5,24 @@ import java.net.MalformedURLException;
 import org.apache.commons.validator.routines.UrlValidator;
 
 public class URL {
+	
+	/**
+	* Classe per la gestione di un URL
+	* @author Marco De Toma
+	* @author Alessandro D'Errico
+	* @author Gianluca Filippone
+	*/	
+
 	private java.net.URL url;
 	private String source;
 	private String host;
 	private String context;
 	private String path;
 	
+	/**
+	* Metodo costruttore
+	* @param source, url da gestire
+	*/
 	public URL(String source) throws MalformedURLException{
 		this.source = source;
 		this.setSource();
@@ -21,22 +33,42 @@ public class URL {
 		this.path = this.url.getPath();
 	}
 	
+	/**
+	* Recupera l'host
+	* 
+	*/
 	public String getHost(){
 		return this.host;
 	}
 	
+	/**
+	* Recupera il contesto
+	* 
+	*/
 	public String getContext(){
 		return this.context;
 	}
 	
+	/**
+	* Recupera i parametri
+	* 
+	*/
 	public String getPath(){
 		return this.path;
 	}
 	
+	/**
+	* Recupera l'indirizzo sorgente
+	* 
+	*/
 	public String getSource(){
 		return this.source;
 	}
 	
+	/**
+	* Verifica se l'url indentifica una lista di articoli o un aricolo singolo
+	* 
+	*/
 	public boolean isList(){
 
 		if(this.context.equals("")) return true;

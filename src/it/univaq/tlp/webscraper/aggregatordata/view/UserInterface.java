@@ -1,7 +1,6 @@
 package it.univaq.tlp.webscraper.aggregatordata.view;
 
 import java.net.MalformedURLException;
-import java.util.List;
 import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
@@ -22,42 +21,75 @@ import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 
 public abstract class UserInterface {
 	
+	/**
+	* Interfaccia per la gestione della UI
+	* @author Marco De Toma
+	* @author Alessandro D'Errico
+	* @author Gianluca Filippone
+	*/	
+
 	private DataAggregator aggregator;
 	
-	protected WebsiteManaging websiteManager;
-	protected ArticleManaging articleManager;
+	protected WebsiteManaging website_manager;
+	protected ArticleManaging article_manager;
 	
 	protected int last_insert;
 	protected Storable storage;
 	
+	/**
+	* Metodo costruttore
+	* @param storage, repository utilizzata nell'applicazione
+	*/
+
 	public UserInterface(Storable storage){
 		
 		// Connessione al databse
 		this.storage = storage;
 		this.aggregator = new DataAggregator(storage);
-		this.websiteManager = new WebsiteManaging(storage);
-		this.articleManager = new ArticleManaging(storage);
+		this.website_manager = new WebsiteManaging(storage);
+		this.article_manager = new ArticleManaging(storage);
 			
 	} 
 	
+	/**
+	* Esegue il web-scraping su un determinato url
+	* @param url, indirizzo web da analizzare
+	*/
 	public void scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException {
 		this.last_insert = aggregator.crawl(source);
 	}
 	
+	/**
+	* Inserisce un nuovo sito web
+	* @param website, sito web da inserire
+	*/
 	public void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
-		websiteManager.saveWebsite(website);
+		website_manager.saveWebsite(website);
 	}
 	
+	/**
+	* Inserisce un nuovo template
+	* @param article, template dell'articolo
+	* @param arcible_list, template per la lista delgli articoli
+	* @param website_url, indirizzo del sito web a cui inserire il nuovo template
+	*/
 	public void insertTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextAlreadyExistsException, DataOmittedException {
-		websiteManager.saveTemplate(article, article_list, website_url);
+		website_manager.saveTemplate(article, article_list, website_url);
 	}
+	
 	
 	public Set<Article> viewLastAddedArticles() throws StorageException {
-		return articleManager.getTopArticles(last_insert);
+		return article_manager.getTopArticles(last_insert);
 	}
 	
-	public Set<Article> viewWebsiteArticles(String host, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextNotFoundException {
-		return articleManager.getWebsiteArticles(host, context);
+	/**
+	* Visualizza l'articolo del sito web
+	* @param url, indirizzo del sito web
+	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
+	* @return lista di articoli trovati
+	*/
+	public Set<Article> viewWebsiteArticles(String url, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextNotFoundException {
+		return article_manager.getWebsiteArticles(url, context);
 	}
 
 	
