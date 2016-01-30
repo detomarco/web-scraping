@@ -52,17 +52,14 @@ public abstract class UserInterface {
 		websiteManager.saveTemplate(article, article_list, website_url);
 	}
 	
-	public List<Article> viewLastAddedArticles() throws StorageException {
+	public Set<Article> viewLastAddedArticles() throws StorageException {
 		return articleManager.getTopArticles(last_insert);
 	}
 	
 	public Set<Article> viewWebsiteArticles(String host, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextNotFoundException {
 		return articleManager.getWebsiteArticles(host, context);
 	}
-	
-	public List<Article> viewArticles() throws StorageException {
-		return articleManager.getArticles();
-	}
+
 	
 	public abstract void run();
 }
