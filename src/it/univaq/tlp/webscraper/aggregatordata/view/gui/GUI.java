@@ -1,6 +1,7 @@
 package it.univaq.tlp.webscraper.aggregatordata.view.gui;
 
 import java.net.MalformedURLException;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -10,11 +11,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
@@ -43,6 +47,9 @@ public class GUI extends UserInterface{
 	private Text context;
 	private Text date;
 	private Text text;
+	private List list;
+	private Combo sorgente;
+	private Text contesto;
 	
 	
 	/**
@@ -149,7 +156,7 @@ public class GUI extends UserInterface{
 			    
 				    //SORGENTE
 				    Label lblSorgente = new Label(frame1, SWT.NONE);
-				    lblSorgente.setBounds(10, 108, 59, 18);
+				    lblSorgente.setBounds(10, 112, 59, 18);
 				    lblSorgente.setText("Sorgente");
 				    
 				    //CONTESTO
@@ -158,21 +165,56 @@ public class GUI extends UserInterface{
 				    lblContesto.setText("Contesto");
 				    
 				    //SORGENTE
-				    Combo sorgente = new Combo(frame1, SWT.NONE);
-				    sorgente.setBounds(75, 104, 113, 22);
+				    sorgente = new Combo(frame1, SWT.NONE);
+				    sorgente.setBounds(75, 108, 113, 24);
+				    WebsiteManaging website = new WebsiteManaging(storage);
+				    try {
+						Set<String> hostlist = website.getAllWebsiteHost();
+						for(String host:hostlist){
+					    	sorgente.add(host);
+					    }
+						
+					} catch (StorageException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 				    
-				    //SELECT CONTESTO
-				    Combo contesto = new Combo(frame1, SWT.NONE);
-				    contesto.setBounds(75, 146, 111, 22);
 				    
-				    //BOTTONE CERCA
+					contesto = new Text(frame1, SWT.BORDER);
+					contesto.setBounds(75, 147, 111, 22);
+				    
+				    
+				  //BOTTONE CERCA
 				    Button btnSearch = new Button(frame1, SWT.NONE);
+				    btnSearch.addMouseListener(new MouseAdapter() {
+				    	@Override
+				    	public void mouseDown(MouseEvent arg0) {
+						    	
+				    		list.removeAll();
+								Set<Article> articles;
+								try {
+									articles = viewWebsiteArticles(sorgente.getText(), contesto.getText());
+									for(Article article:articles){
+								    	list.add(article.getHeading());
+								    }
+								} catch (MalformedURLException | StorageException | WebsiteNotFoundException
+										| ContextNotFoundException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+									dialog.open();
+									e.printStackTrace();
+								}   
+				    	}
+				    });
+							    
 				    btnSearch.setBounds(36, 244, 124, 45);
 				    btnSearch.setText("Cerca");
+
 				    
 					//SEPARATORE
 					Label label = new Label(frame1, SWT.SEPARATOR | SWT.VERTICAL);
 					label.setBounds(194, 10, 2, 361);
+					
+
 			    
 					
 			    //SECONDA SEZIONE
@@ -180,28 +222,11 @@ public class GUI extends UserInterface{
 			    frame2.setBounds(197, 0, 196, 381);
 			    
 				    //LISTA ARTICOLI
-				    List list = new List(frame2, SWT.BORDER | SWT.V_SCROLL);
+				    list = new List(frame2, SWT.BORDER | SWT.V_SCROLL);
 				    list.setBounds(10, 10, 176, 361);
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("jknjcdc");
-				    list.add("rkmrfeed");
+				    
+				    
+
 		
 			    //TERZA SEZIONE
 			    Composite frame3 = new Composite(grpArticoli, SWT.NONE);
@@ -236,82 +261,82 @@ public class GUI extends UserInterface{
 					    
 					    //LABEL HOMELIST
 					    Label lblSelettoreHomeList = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblSelettoreHomeList.setBounds(10, 42, 124, 14);
+					    lblSelettoreHomeList.setBounds(10, 44, 124, 14);
 					    lblSelettoreHomeList.setText("Selettore home list");
 					    
 					    //LABEL INTESTAZIONE
 					    Label lblSelettoreIntestazione = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblSelettoreIntestazione.setBounds(10, 70, 136, 14);
+					    lblSelettoreIntestazione.setBounds(10, 74, 136, 14);
 					    lblSelettoreIntestazione.setText("Selettore intestazione");
 					    
 					    //LABEL SOMMARIO
 					    Label lblSelettoreSommario = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblSelettoreSommario.setBounds(10, 98, 124, 14);
+					    lblSelettoreSommario.setBounds(10, 104, 124, 14);
 					    lblSelettoreSommario.setText("Selettore sommario");
 					    
 					    //LABEL EYELET
 					    Label lblocchiello = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblocchiello.setBounds(10, 126, 124, 14);
+					    lblocchiello.setBounds(10, 134, 124, 14);
 					    lblocchiello.setText("Selettore occhiello");
 					    
 					    //LABEL TESTO
 					    Label lblSelettoreTesto = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblSelettoreTesto.setBounds(10, 154, 100, 14);
+					    lblSelettoreTesto.setBounds(10, 164, 100, 14);
 					    lblSelettoreTesto.setText("Selettore testo");
 					    
 					    //LABEL AUTORE
 					    Label lblSelettoreAutore = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblSelettoreAutore.setBounds(10, 182, 111, 14);
+					    lblSelettoreAutore.setBounds(10, 194, 111, 14);
 					    lblSelettoreAutore.setText("Selettore autore");
 					    
 					    //LABEL DATA
 					    Label lblSelettoreData = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblSelettoreData.setBounds(10, 210, 111, 14);
+					    lblSelettoreData.setBounds(10, 224, 111, 14);
 					    lblSelettoreData.setText("Selettore data");
 					    
 					    //LABEL CONTESTO
 					    Label lblNomeContesto = new Label(grpInserimentoTemplate, SWT.NONE);
-					    lblNomeContesto.setBounds(10, 238, 100, 14);
+					    lblNomeContesto.setBounds(10, 254, 100, 14);
 					    lblNomeContesto.setText("Nome contesto");
 					    
 					    //SELECT WEBSITE
 					    Combo web_site = new Combo(grpInserimentoTemplate, SWT.NONE);
-					    web_site.setBounds(188, 10, 186, 22);
+					    web_site.setBounds(188, 10, 186, 24);
 					    web_site.add("opzione 1");
 					    web_site.add("opzione 2");
 					    web_site.add("opzione 3");
 					    
 					    //TEXTBOX HOMELIST
 					    home_list = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    home_list.setBounds(188, 39, 186, 19);
+					    home_list.setBounds(188, 40, 186, 22);
 					    
 					    //TEXTBOX INTESTAZIONE
 					    header = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    header.setBounds(188, 67, 186, 19);
+					    header.setBounds(188, 70, 186, 22);
 					    
 					    //TEXTBOX SOMMARIO
 					    summary = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    summary.setBounds(188, 95, 186, 19);
+					    summary.setBounds(188, 100, 186, 22);
 					    
 					    //TEXTBOX OCCHIELLO
 					    eyelet = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    eyelet.setBounds(188, 123, 186, 19);
+					    eyelet.setBounds(188, 130, 186, 22);
 					    
 					    //TEXTBOX TESTO
 					    text = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    text.setBounds(188, 149, 186, 19);
+					    text.setBounds(188, 160, 186, 22);
 					    
 					    //TEXTBOX AUTORE
 					    author = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    author.setBounds(188, 177, 186, 19);
+					    author.setBounds(188, 190, 186, 22);
 					    
 					    //TEXTBOX DATA
 					    date = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    date.setBounds(188, 205, 186, 19);
+					    date.setBounds(188, 220, 186, 22);
 					    
 					    //TEXTBOX CONTESTO
 					    context = new Text(grpInserimentoTemplate, SWT.BORDER);
-					    context.setBounds(188, 233, 186, 19);
+					    context.setBounds(188, 250, 186, 22);
 					   
 					    //BUTTON ADDTEMPLATE
 					    Button addTemplate = new Button(grpInserimentoTemplate, SWT.NONE);
@@ -375,21 +400,21 @@ public class GUI extends UserInterface{
 				    lblIndirizzo.setBounds(10, 14, 59, 14);
 				    lblIndirizzo.setText("Indirizzo:");
 				    indirizzo = new Text(grpInserimentoWebsite, SWT.BORDER);
-				    indirizzo.setBounds(101, 10, 273, 19);
+				    indirizzo.setBounds(101, 10, 273, 22);
 				    
 				    //NOME
 				    Label lblNome = new Label(grpInserimentoWebsite, SWT.NONE);
-				    lblNome.setBounds(10, 42, 59, 14);
+				    lblNome.setBounds(10, 44, 59, 14);
 				    lblNome.setText("Nome:");
 				    nome = new Text(grpInserimentoWebsite, SWT.BORDER);
-				    nome.setBounds(101, 39, 273, 19);
+				    nome.setBounds(101, 40, 273, 22);
 				    
 				    //DESCRIZIONE
 				    Label lblDescrizione = new Label(grpInserimentoWebsite, SWT.NONE);
-				    lblDescrizione.setBounds(10, 70, 80, 14);
+				    lblDescrizione.setBounds(10, 74, 80, 14);
 				    lblDescrizione.setText("Descrizione:");
 				    descrizione = new Text(grpInserimentoWebsite, SWT.BORDER);
-				    descrizione.setBounds(101, 67, 273, 78);
+				    descrizione.setBounds(101, 70, 273, 78);
 				    
 				    //BUTTON ADD_WEBSITE
 				    Button addWebSite = new Button(grpInserimentoWebsite, SWT.NONE);
