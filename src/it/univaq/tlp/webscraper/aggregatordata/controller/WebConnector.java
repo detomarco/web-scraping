@@ -221,6 +221,8 @@ public class WebConnector implements ConnectorInterface{
 			data.putDate((doc.$(template.getDateSelector()).html()));
 		}  
 		
+		data.putContext(url.getContext());
+		
 		data.putSource(url.getSource());
 		
 		// Inserimento metadati		
