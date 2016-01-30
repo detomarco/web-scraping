@@ -13,7 +13,6 @@ import java.util.Objects;
  * @author Alessandro D'Errico
  */
 public class AggregatedData {
-	private String context;
 	
 	private String title;
 	
@@ -36,7 +35,6 @@ public class AggregatedData {
 	public AggregatedData(){
 		this.img_caption = new ArrayList<>();
 		this.metadata = new HashMap<String, String>();
-		this.context = "";
 		this.title = "";
 		this.heading = "";
 		this.summary = "";
@@ -50,7 +48,6 @@ public class AggregatedData {
 	
 	public AggregatedData(String context, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
 		this();
-		putContext(context);
 		putTitle(title);
 		putHeading(heading);
 		putEyelet(eyelet);
@@ -64,16 +61,6 @@ public class AggregatedData {
 	/*
 	 * METODI PER INSERIMENTO ELEMENTI NELL'OGGETTO
 	 */
-	
-	/**
-	 * Metodo che inserisce il titolo nell'articolo
-	 * @param title
-	 */
-	public void putContext(String context){
-		if(context!=null){
-			this.context = context;
-		}
-	}
 	
 	/**
 	 * Metodo che inserisce il titolo nell'articolo
@@ -175,14 +162,6 @@ public class AggregatedData {
 	/*
 	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
 	 */
-	 
-	/**
-	 * Metodo che recupera il contesto
-	 * @return String
-	 */
-	public String getContext(){
-		return this.context;
-	}
 	
 	/**
 	 * Metodo che recupera il titolo dall'oggetto

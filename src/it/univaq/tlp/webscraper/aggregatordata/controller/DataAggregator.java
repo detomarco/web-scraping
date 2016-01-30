@@ -3,7 +3,6 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.URL;

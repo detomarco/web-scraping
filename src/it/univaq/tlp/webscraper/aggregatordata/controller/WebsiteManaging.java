@@ -52,7 +52,7 @@ public class WebsiteManaging {
 			throw new WebsiteNotFoundException();
 		}
 		
-		Iterator iter = results.iterator();
+		Iterator<Map<String, String>> iter = results.iterator();
 		Website website = new Website((Map<String, String>) iter.next());
 		
 		// Recupero template di articoli
@@ -77,7 +77,7 @@ public class WebsiteManaging {
 		Set<Map<String, String>> results;
 		
 		results = storage.get("websites", "host = '"+website.getAddress()+"'");
-		Iterator iter = results.iterator();
+		Iterator<Map<String, String>> iter = results.iterator();
 		return Integer.parseInt(((Map<String, String>) iter.next()).get("id"));
 		
 	}
@@ -121,7 +121,7 @@ public class WebsiteManaging {
 		}
 		
 		Template template;
-		Iterator iter = results.iterator();
+		Iterator<Map<String, String>> iter = results.iterator();
 		if(is_list) {
 			template = new ArticleListTemplate((Map<String, String>) iter.next());
 		} else {
