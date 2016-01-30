@@ -282,7 +282,11 @@ public class AggregatedData {
         return hash;
     }
 
-    
+    public static String sanitize(String str){
+
+//    	str = str.replaceAll("\\s+", " ").trim();
+    	return str;
+    }
    
 
 }

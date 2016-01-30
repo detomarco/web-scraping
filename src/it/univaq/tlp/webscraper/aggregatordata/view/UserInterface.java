@@ -87,7 +87,7 @@ public abstract class UserInterface {
 	 * @throws StorageException
 	 */
 	public Set<Article> viewLastAddedArticles() throws StorageException {
-		return article_manager.getTopArticles(last_insert);
+		return article_manager.getLastArticles(last_insert);
 	}
 	
 	/**

@@ -66,7 +66,7 @@ public class ArticleManaging {
 		return articles;
 	}
 	
-	public Set<Article> getTopArticles(int count) throws StorageException{
+	public Set<Article> getLastArticles(int count) throws StorageException{
 		
 		Set<Article> articles = new LinkedHashSet<>();
 		Set<Map<String, String>> results;
@@ -84,9 +84,7 @@ public class ArticleManaging {
 	public Set<String> getWebsiteContexts(Website website) throws StorageException{
 		
 		Set<String> contexts = new LinkedHashSet<>();
-		Set<Map<String, String>> results;
-		
-		results = storage.getGrouped("articles", "fk_website = '"+ website.getId() + "'", "context_name");
+		Set<Map<String, String>> results = storage.getGrouped("articles", "fk_website = '"+ website.getId() + "'", "context_name");
 		
 		for(Map<String, String> current_result: results){
 			contexts.add(current_result.get("context_name"));
@@ -96,6 +94,12 @@ public class ArticleManaging {
 		
 	}
 	
+	public Article getArticleByUrl(String url) throws StorageException{
+		
+		return new Article(storage.get("articles", "url = '" + url + "'").iterator().next());
+		
+		
+	}
 	public void saveArticle(AggregatedData article, Website website) throws StorageException{
 		
 		Map<String, Object> data = new HashMap<>();
@@ -113,15 +117,15 @@ public class ArticleManaging {
 		storage.save("articles", data);
 		
 		// Recupera id dell'articolo appena inserito
-		Iterator iter = this.getTopArticles(1).iterator();
-		int id_art = ((Article) iter.next()).getId();
+		Iterator iter = this.getLastArticles(1).iterator();
+		int id_art = this.getArticleByUrl(article.getSource()).getId();
 		
 		Map<String, Object> metadata = new HashMap<>();
 		metadata.put("fk_article", id_art);
 		for(Map.Entry<String, Object> entry:  article.getMetadata().entrySet()){
 			metadata.put("name",entry.getKey());
 			metadata.put("content", entry.getValue());
-//			storage.save("metadata", metadata);
+			storage.save("metadata", metadata);
 		}
 		
 	}

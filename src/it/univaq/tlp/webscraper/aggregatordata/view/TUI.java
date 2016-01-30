@@ -3,6 +3,7 @@ package it.univaq.tlp.webscraper.aggregatordata.view;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -10,11 +11,11 @@ import java.util.Set;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
@@ -37,7 +38,19 @@ public class TUI extends UserInterface{
 	@SuppressWarnings("resource")
 	@Override
 	public void run() {
-				
+		
+//		
+//		Iterator iter;
+//		try {
+//			iter = this.viewWebsiteArticles("repubblica.it", "").iterator();
+//			Article art =(Article) iter.next();
+//			System.out.println("Test : " + AggregatedData.sanitize(art.getText()));
+//		} catch (MalformedURLException | StorageException | WebsiteNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
 		Scanner in = new Scanner(System.in);
 			
 		do{
@@ -250,7 +263,6 @@ public class TUI extends UserInterface{
 		String host, context;
 		Set<Article> articles;
 		
-		
 		do{
 			System.out.print("Inserisci il sito web: ");
 			host = in.nextLine();
@@ -273,14 +285,14 @@ public class TUI extends UserInterface{
 					
 					int choice = getInput(1, cont);
 					
-					System.out.println("Fonte:" + map_articles.get(choice).getSource());
-					System.out.println("Context:" + map_articles.get(choice).getContext());
-					System.out.println("Intestazione:" + map_articles.get(choice).getHeading());
-					System.out.println("Sommario:" + map_articles.get(choice).getSummary());
-					System.out.println("Occhiello:" + map_articles.get(choice).getEyelet());
-					System.out.println("Author:" + map_articles.get(choice).getAuthor());
-					System.out.println("Date:" + map_articles.get(choice).getDate());
-					System.out.println("Testo:" + map_articles.get(choice).getText());
+					System.out.println("Fonte: " + map_articles.get(choice).getSource());
+					System.out.println("Context: " + map_articles.get(choice).getContext());
+					System.out.println("Intestazione: " + map_articles.get(choice).getHeading());
+					System.out.println("Sommario: " + map_articles.get(choice).getSummary());
+					System.out.println("Occhiello: " + map_articles.get(choice).getEyelet());
+					System.out.println("Author: " + map_articles.get(choice).getAuthor());
+					System.out.println("Date: " + map_articles.get(choice).getDate());
+					System.out.println("Testo: " + map_articles.get(choice).getText());
 				}
 				error = false;
 			} catch (MalformedURLException e) {

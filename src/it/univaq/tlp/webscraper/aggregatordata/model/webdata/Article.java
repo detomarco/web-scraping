@@ -12,7 +12,7 @@ public class Article extends AggregatedData {
 	private int id;
 	private int website_id;
 	
-	public Article(){ }
+	
 	
 	public Article(int id, int website_id, String context, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
 		super(context, title, heading, eyelet, summary, text, author, source, date);

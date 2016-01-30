@@ -64,7 +64,6 @@ public class DataAggregator {
 		for(AggregatedData new_article : new_articles){
 			if(!(stored_articles.contains(new_article)) && !new_article.getHeading().equals("") && !new_article.getText().equals("")){
 				// Salva nuovo articolo
-				System.out.println(new_article.getHeading());
 				article_manager.saveArticle(new_article, website);
 				saved_counter ++;
 			}
