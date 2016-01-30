@@ -29,7 +29,7 @@ public class ArticleTemplate extends Template{
 	}
 	
 	public ArticleTemplate(Map<String, String> from_storage){
-		super(from_storage.get("context"));
+		super(from_storage.get("context_name"));
 		this.heading_selector = from_storage.get("heading_selector");
 		this.eyelet_selector = from_storage.get("eyelet_selector");
 		this.summary_selector = from_storage.get("summary_selector");

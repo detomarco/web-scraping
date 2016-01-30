@@ -20,7 +20,7 @@ public class ArticleListTemplate extends Template{
 	}
 	
 	public ArticleListTemplate(Map<String, String> from_storage){
-		this(from_storage.get("context"), from_storage.get("article_link_selector"));
+		this(from_storage.get("context_name"), from_storage.get("article_link_selector"));
 	}
 	
 	public String getLinkSelector(){
