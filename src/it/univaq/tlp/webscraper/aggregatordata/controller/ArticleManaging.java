@@ -35,11 +35,10 @@ public class ArticleManaging {
 	public Set<Article> getWebsiteArticles(Website website, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextNotFoundException{
 
 		if(!context.trim().equals("")){
-			// Controlla se il contesto esiste
-			Set<ArticleListTemplate> list_templates = website.getArticleListTemplates();
 			boolean context_found = false;
-			for(ArticleListTemplate list_template: list_templates){
-				if(list_template.getContext().equals(context)) context_found = true;
+			Set<String> contexts = this.getWebsiteContexts(website);
+			for(String ctx: contexts){
+				if(ctx.equals(context)) context_found = true;
 			}
 			if(!context_found) throw new ContextNotFoundException();
 		}
@@ -51,7 +50,7 @@ public class ArticleManaging {
 		
 		for(Map<String, String> current_result: results){
 			URL url = new URL(current_result.get("url"));
-			if(url.getContext().equals(context)){
+			if(context.trim().equals("") || url.getContext().equals(context)){
 				articles.add(new Article(current_result));
 			}
 			
@@ -96,7 +95,7 @@ public class ArticleManaging {
 		Set<String> contexts = new LinkedHashSet<>();
 		Set<Map<String, String>> results;
 		
-		results = storage.getGrouped("articles", "1 = '1'", "context_name");
+		results = storage.getGrouped("articles", "fk_website = '"+ website.getId() + "'", "context_name");
 		
 		for(Map<String, String> current_result: results){
 			contexts.add(current_result.get("context_name"));
@@ -131,7 +130,7 @@ public class ArticleManaging {
 		for(Map.Entry<String, Object> entry:  article.getMetadata().entrySet()){
 			metadata.put("name",entry.getKey());
 			metadata.put("content", entry.getValue());
-			storage.save("metadata", metadata);
+//			storage.save("metadata", metadata);
 		}
 		
 	}

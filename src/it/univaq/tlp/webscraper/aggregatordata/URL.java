@@ -120,6 +120,11 @@ public class URL {
 			this.source = this.source.substring(0, this.source.indexOf("?"));
 		}
 		
+		// Elimina tutto ciò che c'è dopo '#'
+		if(this.source.contains("#")){
+			this.source = this.source.substring(0, this.source.indexOf("#"));
+		}
+		
 		// Nel caso l'url finisce per '/', eliminalo
 		if(this.source.charAt(this.source.length()-1) == '/'){
 			this.source = this.source.substring(0, this.source.length()-1);

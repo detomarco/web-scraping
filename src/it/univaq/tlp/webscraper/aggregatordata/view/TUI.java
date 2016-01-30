@@ -1,7 +1,9 @@
 package it.univaq.tlp.webscraper.aggregatordata.view;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -35,7 +37,7 @@ public class TUI extends UserInterface{
 	@SuppressWarnings("resource")
 	@Override
 	public void run() {
-
+				
 		Scanner in = new Scanner(System.in);
 			
 		do{
@@ -256,11 +258,29 @@ public class TUI extends UserInterface{
 			context = in.nextLine();
 			try {
 				articles = this.viewWebsiteArticles(host, context);
-				System.out.println("================================");
-				for(Article article: articles){
-					System.out.println(article.getHeading());
+				if(articles.isEmpty()){
+					System.out.println("Nessun articolo trovato");
+				}else{
+					Map<Integer, Article> map_articles = new HashMap<>();
+					int cont = 0;
+					System.out.println("");
+					for(Article article: articles){
+						map_articles.put(++cont, article);
+						System.out.println(cont + ". " + article.getHeading());
+					}
+					System.out.print("\nSeleziona un articolo per visualizzare le relativa informazioni: ");
+					
+					int choice = getInput(1, cont);
+					
+					System.out.println("Fonte:" + map_articles.get(choice).getSource());
+					System.out.println("Context:" + map_articles.get(choice).getContext());
+					System.out.println("Intestazione:" + map_articles.get(choice).getHeading());
+					System.out.println("Sommario:" + map_articles.get(choice).getSummary());
+					System.out.println("Occhiello:" + map_articles.get(choice).getEyelet());
+					System.out.println("Author:" + map_articles.get(choice).getAuthor());
+					System.out.println("Date:" + map_articles.get(choice).getDate());
+					System.out.println("Testo:" + map_articles.get(choice).getText());
 				}
-				System.out.println("================================");
 				error = false;
 			} catch (MalformedURLException e) {
 				System.out.println("Sito web non valido");
