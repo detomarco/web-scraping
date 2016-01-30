@@ -108,7 +108,7 @@ public class URL {
 		
 		// L'url deve iniziare con 'http://www.'
 		if(!(this.source.startsWith("http")) && !(this.source.startsWith("https"))) {
-			if(!(this.source.startsWith("wwww"))){
+			if(!(this.source.startsWith("www."))){
 				this.source = "www." + this.source;
 			}
 			this.source = "http://" + this.source;
