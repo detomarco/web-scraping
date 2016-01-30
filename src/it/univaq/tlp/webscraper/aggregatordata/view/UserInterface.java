@@ -3,6 +3,7 @@ package it.univaq.tlp.webscraper.aggregatordata.view;
 import java.net.MalformedURLException;
 import java.util.Set;
 
+import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
 import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
@@ -88,8 +89,12 @@ public abstract class UserInterface {
 	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
 	* @return lista di articoli trovati
 	*/
-	public Set<Article> viewWebsiteArticles(String url, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextNotFoundException {
-		return article_manager.getWebsiteArticles(url, context);
+	public Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextNotFoundException {
+		
+		URL url = new URL(address);
+		Website website = website_manager.getWebsite(url.getHost());
+		
+		return article_manager.getWebsiteArticles(website, context);
 	}
 
 	

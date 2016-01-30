@@ -25,10 +25,8 @@ public class ArticleManaging {
 		website_manager = new WebsiteManaging(storage);
 	}
 	
-	public Set<Article> getWebsiteArticles(String host, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextNotFoundException{
-		
-		URL url = new URL(host);
-		Website website = website_manager.getWebsite(url.getHost());
+	public Set<Article> getWebsiteArticles(Website website, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextNotFoundException{
+
 		if(!context.trim().equals("")){
 			// Controlla se il contesto esiste
 			Set<ArticleListTemplate> list_templates = website.getArticleListTemplates();
@@ -45,7 +43,7 @@ public class ArticleManaging {
 		results = storage.get("articles", "fk_website = '" + website.getId()+"'");
 		
 		for(Map<String, String> current_result: results){
-			url = new URL(current_result.get("url"));
+			URL url = new URL(current_result.get("url"));
 			if(url.getContext().equals(context)){
 				articles.add(new Article(current_result));
 			}
