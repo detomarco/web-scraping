@@ -33,6 +33,7 @@ public class TUI extends UserInterface{
 	@SuppressWarnings("resource")
 	@Override
 	public void run() {
+	
 		Scanner in = new Scanner(System.in);
 			
 		do{

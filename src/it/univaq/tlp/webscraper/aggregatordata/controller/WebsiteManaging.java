@@ -82,12 +82,12 @@ public class WebsiteManaging {
 		
 	}
 	
-	public Set<String> getAllWebsiteHost() throws StorageException{
+	public Set<Website> getAllWebsite() throws StorageException{
 		Set<Map<String, String>> results = storage.get("websites", " 1=1");
-		Set<String> data = new LinkedHashSet<>();
+		Set<Website> data = new LinkedHashSet<>();
 		
 		for(Map<String, String> element: results){
-			data.add(element.get("address"));
+			data.add(new Website(element.get("name"), element.get("address"), element.get("description")));
 		}
 		
 		return data;
