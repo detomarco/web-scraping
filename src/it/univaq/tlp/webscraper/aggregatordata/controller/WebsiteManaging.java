@@ -82,6 +82,17 @@ public class WebsiteManaging {
 		
 	}
 	
+	public Set<String> getAllWebsiteHost() throws StorageException{
+		Set<Map<String, String>> results = storage.get("websites", " 1=1");
+		Set<String> data = new LinkedHashSet<>();
+		
+		for(Map<String, String> element: results){
+			data.add(element.get("address"));
+		}
+		
+		return data;
+		
+	}
 	
 	/**
 	 * Metodo che recupera il template dal database
