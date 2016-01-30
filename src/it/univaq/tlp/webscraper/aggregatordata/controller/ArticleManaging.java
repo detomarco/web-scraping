@@ -1,12 +1,19 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import it.univaq.tlp.webscraper.aggregatordata.URL;
+import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
+import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
@@ -14,17 +21,34 @@ import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 public class ArticleManaging {
 
 	private Storable storage;
-	
+	private WebsiteManaging website_manager;
 	public ArticleManaging(Storable storage){
 		this.storage = storage;
+		website_manager = new WebsiteManaging(storage);
 	}
 	
-	public List<Article> getWebsiteArticles(Website website) throws StorageException{
+	public Set<Article> getWebsiteArticles(String host, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextNotFoundException{
 		
-		List<Article> articles = new LinkedList<>();
+		URL url = new URL(host);
+		Website website = website_manager.getWebsite(url.getHost());
+		if(!context.trim().equals("")){
+			// Controlla se il contesto esiste
+			Set<ArticleListTemplate> list_templates = website.getArticleListTemplates();
+			boolean context_found = false;
+			for(ArticleListTemplate list_template: list_templates){
+				if(list_template.getContext().equals(context)) context_found = true;
+			}
+			if(!context_found) throw new ContextNotFoundException();
+		}
+		
+		Set<Article> articles = new LinkedHashSet<>();
 		List<Map<String, String>> results;
+		if(!context.trim().equals("")){
+			results = storage.get("articles", "fk_website = '" + website.getId()+"' AND context = '" + context + "'");
+		}else{
+			results = storage.get("articles", "fk_website = '" + website.getId()+"'");
+		}
 		
-		results = storage.get("articles", "fk_website = '"+website.getId()+"'");
 		
 		for(Map<String, String> current_result: results){
 			articles.add(new Article(current_result));
@@ -68,6 +92,7 @@ public class ArticleManaging {
 		
 		Map<String, Object> data = new HashMap<>();
 		
+		data.put("context", article.getContext().replaceAll("'", "''"));
 		data.put("title", article.getTitle().replaceAll("'", "''"));
 		data.put("heading", article.getHeading().replaceAll("'", "''"));
 		data.put("summary", article.getSummary().replaceAll("'", "''"));

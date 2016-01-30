@@ -3,12 +3,16 @@ package it.univaq.tlp.webscraper.aggregatordata.view;
 import java.net.MalformedURLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
@@ -94,6 +98,7 @@ public class TUI extends UserInterface{
 			} catch (WebsiteNotFoundException e){
 				System.out.println("Sito web non trovato");
 				error_url = true;
+				e.printStackTrace();
 				
 			// Template non trovato
 			} catch (TemplateNotFoundException e){
@@ -152,7 +157,7 @@ public class TUI extends UserInterface{
 	
 	public void templateManagement(Storable storage){
 		Scanner in = new Scanner(System.in);
-		boolean error, error_db = false;
+		boolean error;
 		String list, url, context, heading, summary, eyelet, author, date, text;
 		Website website;
 		ArticleListTemplate article_list; ArticleTemplate article;
@@ -195,8 +200,11 @@ public class TUI extends UserInterface{
 			} catch (ContextAlreadyExistsException e) {
 				System.out.println("Il contesto è già stato inserito");
 				error = true;
-			}catch (StorageException e) {
-				System.out.println("Si è verificato un errore con la repository" + e.getMessage());
+			}catch (DataOmittedException e) {
+				System.out.println("Il selettore dell'intestazione e del testo sono obbligatori");
+				error = true;
+			} catch (StorageException e) {
+				System.out.println("Si è verificato un errore con la repository");
 				e.printStackTrace();
 				error = false;
 			
@@ -207,9 +215,45 @@ public class TUI extends UserInterface{
 		
 }
 		
-	
-	
 	public void showArticles(Storable storage){
+		boolean error;
+		Scanner in = new Scanner(System.in);
+		String host, context;
+		Set<Article> articles;
+		
+		
+		do{
+			System.out.print("Inserisci il sito web: ");
+			host = in.nextLine();
+			System.out.print("Inserisci il contesto (lasciare vuoto per mostrare tutti gli articoli del sito): ");
+			context = in.nextLine();
+			try {
+				articles = this.viewWebsiteArticles(host, context);
+				System.out.println("================================");
+				for(Article article: articles){
+					System.out.println(article.getHeading());
+				}
+				System.out.println("================================");
+				error = false;
+			} catch (MalformedURLException e) {
+				System.out.println("Sito web non valido");
+				error = true;
+				
+			} catch (WebsiteNotFoundException e) {
+				System.out.println("Sito web non trovato");
+				error = true;
+				
+			} catch (ContextNotFoundException e) {
+				System.out.println("Contesto non trovato");
+				error = true;
+				
+			} catch (StorageException e) {
+				System.out.println("Problema con la repository");
+				error = false;
+				e.printStackTrace();
+			} 
+			
+		}while(error);
 		
 	}
 

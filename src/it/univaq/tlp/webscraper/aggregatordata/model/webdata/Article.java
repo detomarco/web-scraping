@@ -14,8 +14,8 @@ public class Article extends AggregatedData {
 	
 	public Article(){ }
 	
-	public Article(int id, int website_id, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
-		super(title, heading, eyelet, summary, text, author, source, date);
+	public Article(int id, int website_id, String context, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
+		super(context, title, heading, eyelet, summary, text, author, source, date);
 		this.id = id;
 		this.website_id = website_id;
 	}
@@ -23,7 +23,7 @@ public class Article extends AggregatedData {
 	public Article(AggregatedData data){ }
 	
 	public Article(Map<String, String> from_storage){
-		super(from_storage.get("title"), from_storage.get("heading"), from_storage.get("eyelet"), from_storage.get("summary"),
+		super(from_storage.get("context"), from_storage.get("title"), from_storage.get("heading"), from_storage.get("eyelet"), from_storage.get("summary"),
 				from_storage.get("text"), from_storage.get("author"), from_storage.get("url"), from_storage.get("date"));
 				
 

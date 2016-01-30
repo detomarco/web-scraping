@@ -1,8 +1,10 @@
 package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import com.jaunt.Element;
 import com.jaunt.NotFound;
@@ -43,9 +45,9 @@ public class WebConnector implements ConnectorInterface{
 	 * @throws TemplateNotFoundException
 	 */
 	@Override
-	public List<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException{
+	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException{
 		
-		List <URL> urls = new LinkedList<>();
+		Set <URL> urls = new LinkedHashSet<>();
 		// Se l'url è di un articolo
 		if (!is_list){
 				// Aggiungi direttamente l'articolo
@@ -95,9 +97,7 @@ public class WebConnector implements ConnectorInterface{
 					try {
 						
 						urls.add(new URL($this.attr("href")));
-					} catch (MalformedURLException e) {
-						e.printStackTrace();
-					}
+					} catch (MalformedURLException e) { }
 					return true;
 				}
 			});	
@@ -116,9 +116,9 @@ public class WebConnector implements ConnectorInterface{
 	 * @return List<AggregatedData>
 	 * @throws TemplateNotFoundException
 	 */
-	public List<AggregatedData> getAllArticles(Website website, List<URL> urls) throws TemplateNotFoundException{
+	public Set<AggregatedData> getAllArticles(Website website, Set<URL> urls) throws TemplateNotFoundException{
 		
-		List<AggregatedData> articles = new LinkedList<>();
+		Set<AggregatedData> articles = new LinkedHashSet<>();
 		ArticleTemplate template = null;
 		boolean template_found;
 		
@@ -222,6 +222,8 @@ public class WebConnector implements ConnectorInterface{
 		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null)){
 			data.putDate((doc.$(template.getDateSelector()).html()));
 		}  
+		
+		data.putContext(url.getContext());
 		
 		data.putSource(url.getSource());
 		

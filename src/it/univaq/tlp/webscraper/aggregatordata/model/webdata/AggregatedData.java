@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Questa classe si occupa di recuperare gli elementi dall'articolo e inserirli nell'oggetto
@@ -12,6 +13,7 @@ import java.util.Map;
  * @author Alessandro D'Errico
  */
 public class AggregatedData {
+	private String context;
 	
 	private String title;
 	
@@ -34,7 +36,7 @@ public class AggregatedData {
 	public AggregatedData(){
 		this.img_caption = new ArrayList<>();
 		this.metadata = new HashMap<String, String>();
-		
+		this.context = "";
 		this.title = "";
 		this.heading = "";
 		this.summary = "";
@@ -46,9 +48,9 @@ public class AggregatedData {
 		
 	}
 	
-	public AggregatedData(String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
+	public AggregatedData(String context, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
 		this();
-		
+		putContext(context);
 		putTitle(title);
 		putHeading(heading);
 		putEyelet(eyelet);
@@ -62,6 +64,16 @@ public class AggregatedData {
 	/*
 	 * METODI PER INSERIMENTO ELEMENTI NELL'OGGETTO
 	 */
+	
+	/**
+	 * Metodo che inserisce il titolo nell'articolo
+	 * @param title
+	 */
+	public void putContext(String context){
+		if(context!=null){
+			this.context = context;
+		}
+	}
 	
 	/**
 	 * Metodo che inserisce il titolo nell'articolo
@@ -163,6 +175,14 @@ public class AggregatedData {
 	/*
 	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
 	 */
+	 
+	/**
+	 * Metodo che recupera il contesto
+	 * @return String
+	 */
+	public String getContext(){
+		return this.context;
+	}
 	
 	/**
 	 * Metodo che recupera il titolo dall'oggetto
@@ -260,5 +280,14 @@ public class AggregatedData {
 		return false;
 	}
 	
+	@Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.source);
+        return hash;
+    }
+
+    
+   
 
 }

@@ -2,9 +2,12 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.URL;
+import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
@@ -42,16 +45,19 @@ public class DataAggregator {
 	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException{
 		
 		URL url = new URL(source); // Throws MalformedURLException
-		//repubblica.it/politica
-		System.out.println(url.getSource());
+		
+		System.out.println("Attendere...");
 		// Recupero sito
 		Website website =  website_manager.getWebsite(url.getHost()); // Throws WebsiteNotFoundException
 		
 		// Recupera tutti gli articoli trovati (opportunamente strutturati)
-		List<AggregatedData> data = connector.collect(website, url, url.isList()); // Throws TemplateNotFoundException;
+		Set<AggregatedData> data = connector.collect(website, url, url.isList()); // Throws TemplateNotFoundException;
 		
 		// Recupera tutti gli articoli già inseriti nel website
-		List<Article> stored_articles = article_manager.getWebsiteArticles(website);
+		Set<Article> stored_articles = new LinkedHashSet<>();
+		try {
+			stored_articles = article_manager.getWebsiteArticles(url.getSource(), url.getContext());
+		} catch (ContextNotFoundException e) { }
 		
 		// Salva solo gli articoli che non stono già stati trovati
 		Iterator<AggregatedData> iter = data.iterator();

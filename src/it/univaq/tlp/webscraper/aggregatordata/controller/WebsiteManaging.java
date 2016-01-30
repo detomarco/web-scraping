@@ -9,6 +9,7 @@ import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.URL;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
@@ -161,18 +162,20 @@ public class WebsiteManaging {
 	 * @throws WebsiteNotFoundException 
 	 * @throws MalformedURLException 
 	 * @throws ContextAlreadyExistsException 
+	 * @throws DataOmittedException 
 	 */
-	public void saveTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextAlreadyExistsException {
+	public void saveTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextAlreadyExistsException, DataOmittedException {
 		URL url = new URL(website_url);
 		Website website = this.getWebsite(website_url);
 		
+		// Controlla se il contesto è già stato inserito
 		Set<ArticleListTemplate> list_templates = website.getArticleListTemplates();
 		for(ArticleListTemplate list_template: list_templates){
 			if(list_template.getContext().equals(article_list.getContext())) throw new ContextAlreadyExistsException();
 			
 		}
 		
-		
+		if(article.getHeadingSelector().equals("") || article.getTextSelector().equals("")) throw new DataOmittedException();
 		
 		// Inserimento del template list
 		Map<String, Object> data_list = article_list.toMap();
