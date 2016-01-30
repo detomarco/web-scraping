@@ -2,8 +2,8 @@ package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,7 +43,7 @@ public class WebsiteManaging {
 	 */
 	public Website getWebsite(String hostname) throws StorageException, WebsiteNotFoundException{
 		
-		List<Map<String, String>> results;
+		Set<Map<String, String>> results;
 		
 		// Recupero website
 		results = storage.get("websites", "address = '"+hostname+"'");
@@ -52,7 +52,8 @@ public class WebsiteManaging {
 			throw new WebsiteNotFoundException();
 		}
 		
-		Website website = new Website(results.get(0));
+		Iterator iter = results.iterator();
+		Website website = new Website((Map<String, String>) iter.next());
 		
 		// Recupero template di articoli
 		results = storage.get("article_templates", "fk_website = '"+website.getId()+"'");
@@ -73,14 +74,25 @@ public class WebsiteManaging {
 	
 	public int getWebsiteId(Website website) throws StorageException{
 		
-		List<Map<String, String>> results;
+		Set<Map<String, String>> results;
 		
 		results = storage.get("websites", "host = '"+website.getAddress()+"'");
-		
-		return Integer.parseInt(results.get(0).get("id"));
+		Iterator iter = results.iterator();
+		return Integer.parseInt(((Map<String, String>) iter.next()).get("id"));
 		
 	}
 	
+	public Set<String> getAllWebsiteHost() throws StorageException{
+		Set<Map<String, String>> results = storage.get("websites", " 1=1");
+		Set<String> data = new LinkedHashSet<>();
+		
+		for(Map<String, String> element: results){
+			data.add(element.get("address"));
+		}
+		
+		return data;
+		
+	}
 	
 	/**
 	 * Metodo che recupera il template dal database
@@ -93,7 +105,7 @@ public class WebsiteManaging {
 	 */
 	public Template getTemplate(Website website, String context, boolean is_list) throws TemplateNotFoundException, StorageException{
 		
-		List<Map<String, String>> results = new LinkedList<>();
+		Set<Map<String, String>> results = new LinkedHashSet<>();
 		String template_type;
 		
 		if(is_list) {
@@ -109,11 +121,11 @@ public class WebsiteManaging {
 		}
 		
 		Template template;
-		
+		Iterator iter = results.iterator();
 		if(is_list) {
-			template = new ArticleListTemplate(results.get(0));
+			template = new ArticleListTemplate((Map<String, String>) iter.next());
 		} else {
-			template = new ArticleTemplate(results.get(0));
+			template = new ArticleTemplate((Map<String, String>) iter.next());
 		}
 		
 		System.out.println("Template found on database!");

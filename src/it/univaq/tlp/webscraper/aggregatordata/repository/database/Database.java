@@ -3,9 +3,9 @@ package it.univaq.tlp.webscraper.aggregatordata.repository.database;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
@@ -22,12 +22,12 @@ public abstract class Database implements Storable{
 	}
 	
 	@Override
-	public List<Map<String, String>> get(String table, String condition) throws StorageException{
+	public Set<Map<String, String>> get(String table, String condition) throws StorageException{
 		return get(table, condition, 0);
 	}
 	
 	@Override
-	public List<Map<String, String>> get(String table, String condition, int count) throws StorageException{
+	public Set<Map<String, String>> get(String table, String condition, int count) throws StorageException{
 		
 		try{
 			
@@ -38,7 +38,7 @@ public abstract class Database implements Storable{
 				results = this.select(table, condition, "'id' DESC LIMIT "+count);
 			}
 			
-			List<Map<String, String>> rows = new LinkedList<Map<String, String>>();
+			Set<Map<String, String>> rows = new LinkedHashSet<Map<String, String>>();
 			
 			// Recupero nomi colonne (in array)
 			ResultSetMetaData metadata = results.getMetaData();

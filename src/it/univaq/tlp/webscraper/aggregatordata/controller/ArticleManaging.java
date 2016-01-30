@@ -42,7 +42,7 @@ public class ArticleManaging {
 		}
 		
 		Set<Article> articles = new LinkedHashSet<>();
-		List<Map<String, String>> results;
+		Set<Map<String, String>> results;
 		if(!context.trim().equals("")){
 			results = storage.get("articles", "fk_website = '" + website.getId()+"' AND context = '" + context + "'");
 		}else{
@@ -59,10 +59,10 @@ public class ArticleManaging {
 	}
 	
 	
-	public List<Article> getArticles() throws StorageException{
+	public Set<Article> getArticles() throws StorageException{
 		
-		List<Article> articles = new LinkedList<>();
-		List<Map<String, String>> results;
+		Set<Article> articles = new LinkedHashSet<>();
+		Set<Map<String, String>> results;
 		
 		results = storage.get("articles", "1 = '1'");
 		
@@ -73,10 +73,10 @@ public class ArticleManaging {
 		return articles;
 	}
 	
-	public List<Article> getTopArticles(int count) throws StorageException{
+	public Set<Article> getTopArticles(int count) throws StorageException{
 		
-		List<Article> articles = new LinkedList<>();
-		List<Map<String, String>> results;
+		Set<Article> articles = new LinkedHashSet<>();
+		Set<Map<String, String>> results;
 		
 		results = storage.get("articles", "1 = '1'", count);
 		
