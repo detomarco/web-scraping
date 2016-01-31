@@ -10,6 +10,13 @@ import java.util.Set;
 import it.univaq.tlp.webscraper.controller.repository.Storable;
 import it.univaq.tlp.webscraper.controller.repository.StorageException;
 
+/**
+ * This abstract class implements interface Storable to bind with a database-type storage
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico
+ *
+ */
 public abstract class Database implements Storable{
 	
 	@Override
@@ -87,11 +94,39 @@ public abstract class Database implements Storable{
 
 	}
 	
+	/**
+	 * This method provides an interface to sorted select for database tables
+	 * @param table
+	 * @param condition
+	 * @param order
+	 * @return ResultSet of selected records
+	 * @throws Exception
+	 */
 	protected abstract ResultSet select(String table, String condition, String order) throws Exception;
 	
+	/**
+	 * This method provides an interface to select for database tables
+	 * @param table
+	 * @param order
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract ResultSet select(String table, String order) throws Exception;
 	
+	/**
+	 * This method provides an interface to insert for database tables
+	 * @param table
+	 * @param data
+	 * @throws Exception
+	 */
 	protected abstract void insert(String table, Map<String, Object> data) throws Exception;
 	
+	/**
+	 * This method provides an interface to update for database tables
+	 * @param table
+	 * @param data
+	 * @param condition
+	 * @throws Exception
+	 */
 	protected abstract void update(String table, Map<String,Object> data, String condition) throws Exception;
 }

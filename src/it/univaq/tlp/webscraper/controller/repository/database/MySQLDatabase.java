@@ -10,6 +10,11 @@ import java.util.Properties;
 
 import it.univaq.tlp.webscraper.controller.repository.StorageException;
 
+/**
+ * This class provides MySQL implementation methods for databases
+ * @author Gianluca
+ *
+ */
 public class MySQLDatabase extends Database {
 	
 	private Connection db;
@@ -20,6 +25,14 @@ public class MySQLDatabase extends Database {
 	private int port;
 	private String db_name;
 	
+	/**
+	 * 
+	 * @param user
+	 * @param password
+	 * @param host
+	 * @param port
+	 * @param db_name
+	 */
 	public MySQLDatabase(String user, String password, String host, int port, String db_name) {
 		this.user = user;
 		this.password = password;
@@ -28,6 +41,9 @@ public class MySQLDatabase extends Database {
 		this.db_name = db_name;
 	}
 
+	/**
+	 * This method allows connection to database
+	 */
 	public void connect() throws StorageException{
 		Properties connProps = new Properties();
 		connProps.put("user", user);
