@@ -12,6 +12,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +22,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.jaunt.ResponseException;
 
@@ -40,6 +42,9 @@ import it.univaq.tlp.webscraper.model.website.Website;
 public class GUI extends UserInterface{
 
 	protected Shell shell;
+	
+	private String source;
+	private List list;
 	private Text indirizzo;
 	private Text nome;
 	private Text descrizione;
@@ -51,20 +56,34 @@ public class GUI extends UserInterface{
 	private Text context;
 	private Text date;
 	private Text text;
-	private List list;
+	private Text info_title;
+	private Text info_heading;
+	private Text info_eyelet;
+	private Text info_summary;
+	private Text info_date;
+	private Text info_author;
+	private Text info_url;
+	private Text info_text;
+	private Text info_context;
 	private Combo sorgente, contesto;
-	private GUI gui_ob;
+
+	
 	private Map<String, Website> mMap = new HashMap<>();
-	private String source;
-	
-	
+	private Map<String, Article> articleMap = new HashMap<>();
+
 	/**
 	 */
 	public GUI(Storable storage) {
 		super(storage);
-		this.gui_ob = this;
+		
+		try{
+			storage.connect();
+			
+		} catch (StorageException e) {
+			Dialog dialog = new Dialog(Dialog.ERROR_DATABASE);
+			dialog.open();
+		}
 	}
-
 
 	/**
 	 * Launch the application.
@@ -126,6 +145,8 @@ public class GUI extends UserInterface{
 			    
 				//BUTTON INSERISCI ARTICOLO
 				Button addArticle = new Button(grpCrawler, SWT.NONE);
+				addArticle.setBounds(304, 139, 152, 60);
+				addArticle.setText("Inserisci articolo");
 				addArticle.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseDown(MouseEvent arg0) {
@@ -147,31 +168,7 @@ public class GUI extends UserInterface{
 						
 					}
 				});
-				addArticle.setBounds(304, 139, 152, 60);
-				addArticle.setText("Inserisci articolo");
-				
-				Button btnProva = new Button(grpCrawler, SWT.NONE);
-				btnProva.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseDown(MouseEvent arg0) {
-						
-						try {
-							for(String asd : gui_ob.getWebsiteContexts("repubblica.it")){
-								System.out.println(asd);
-							}
-						} catch (StorageException | WebsiteNotFoundException e) {
-							Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
-							dialog.open();
-							e.printStackTrace();
-						}
-						
-						
-					}
-				});
-				btnProva.setBounds(21, 328, 94, 28);
-				btnProva.setText("prova");
 
-		
 		
 		//TAB ARTICOLI
 	    CTabItem tabArticles = new CTabItem(tabBar, SWT.NONE);
@@ -199,19 +196,20 @@ public class GUI extends UserInterface{
 				    
 				    //SORGENTE
 				    sorgente = new Combo(frame1, SWT.NONE);
+				    sorgente.setBounds(75, 108, 113, 24);
 				    sorgente.addSelectionListener(new SelectionAdapter() {
 				    	@Override
 				    	public void widgetSelected(SelectionEvent arg0) {
-				    		
+				    
 				    		contesto.removeAll();
 				    		String name = sorgente.getText();
 				    		if(name == null) return;
 				    		
 				    		Website website = mMap.get(name);
 				    		if(website == null) return;
-				    		
+				    	
 				    		try {
-								for(String context_temp : gui_ob.getWebsiteContexts(website.getAddress())){
+								for(String context_temp : getWebsiteContexts(website.getAddress())){
 									System.out.println(context_temp);
 									contesto.add(context_temp);
 								}
@@ -222,9 +220,9 @@ public class GUI extends UserInterface{
 							}
 				    	}
 				    });
-				    sorgente.setBounds(75, 108, 113, 24);
+				    
 				    try {
-						Set<Website> hostlist = gui_ob.getAllWebsite();
+						Set<Website> hostlist = getAllWebsite();
 						for(Website host:hostlist){
 							mMap.put(host.getName(), host);
 							sorgente.add(host.getName());
@@ -235,15 +233,16 @@ public class GUI extends UserInterface{
 						e2.printStackTrace();
 					}
 
-				    
+			    
 				    //CONTESTO
 					contesto = new Combo(frame1, SWT.NONE);
 					contesto.setBounds(75, 146, 113, 22);
 					
 				    
-				    
 					//BOTTONE CERCA
 				    Button btnSearch = new Button(frame1, SWT.NONE);
+				    btnSearch.setBounds(36, 244, 124, 45);
+				    btnSearch.setText("Cerca");
 				    btnSearch.addMouseListener(new MouseAdapter() {
 				    	@Override
 				    	public void mouseDown(MouseEvent arg0) {
@@ -252,7 +251,7 @@ public class GUI extends UserInterface{
 								Set<Article> articles;
 								try {
 									String source = "";
-									Set<Website> hostlist = gui_ob.getAllWebsite();
+									Set<Website> hostlist = getAllWebsite();
 									for(Website host:hostlist){
 								    	if(sorgente.getText().equals(host.getName())){
 								    		
@@ -264,6 +263,8 @@ public class GUI extends UserInterface{
 									articles = viewWebsiteArticles(source, contesto.getText());
 									for(Article article:articles){
 								    	list.add(article.getHeading());
+								    	articleMap.put(article.getHeading(), article);
+
 								    }
 								} catch (MalformedURLException | StorageException | WebsiteNotFoundException e) {
 									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
@@ -272,9 +273,6 @@ public class GUI extends UserInterface{
 								}   
 				    	}
 				    });
-							    
-				    btnSearch.setBounds(36, 244, 124, 45);
-				    btnSearch.setText("Cerca");
 
 				    
 					//SEPARATORE
@@ -288,9 +286,25 @@ public class GUI extends UserInterface{
 			    
 				    //LISTA ARTICOLI
 				    list = new List(frame2, SWT.BORDER | SWT.V_SCROLL);
+				    list.addSelectionListener(new SelectionAdapter() {
+				    	@Override
+				    	public void widgetSelected(SelectionEvent arg0) {
+				    		int item_count = list.getSelectionIndex();
+				    		Article article = articleMap.get(list.getItem(item_count));
+				    		info_title.setText(article.getTitle());
+					    	info_heading.setText(article.getHeading());
+					    	info_eyelet.setText(article.getEyelet());
+					    	info_summary.setText(article.getSummary());
+					    	info_date.setText(article.getDate());
+					    	info_author.setText(article.getAuthor());
+					    	info_url.setText(article.getSource());
+					    	info_text.setText(article.getText());
+							info_context.setText(article.getContext());
+				    	}
+				    });
 				    list.setBounds(10, 10, 176, 361);
 				    
-				    
+				
 
 		
 			    //TERZA SEZIONE
@@ -301,6 +315,98 @@ public class GUI extends UserInterface{
 				    Group grpInfoArticle = new Group(frame3, SWT.NONE);
 				    grpInfoArticle.setText("Info Articolo");
 				    grpInfoArticle.setBounds(0, 0, 383, 375);
+				    
+				    //LABEL TITOLO
+				    Label lblTitolo = new Label(grpInfoArticle, SWT.NONE);
+				    lblTitolo.setBounds(10, 10, 59, 14);
+				    lblTitolo.setText("Titolo:");
+				    
+				    //LABEL HEADING
+				    Label lblHeading = new Label(grpInfoArticle, SWT.NONE);
+				    lblHeading.setBounds(10, 44, 59, 14);
+				    lblHeading.setText("Heading:");
+				    
+				    //LABEL SUMMARY
+				    Label lblSummary = new Label(grpInfoArticle, SWT.NONE);
+				    lblSummary.setBounds(10, 112, 59, 14);
+				    lblSummary.setText("Summary:");
+				    
+				    //LABEL EYELET
+				    Label lblEyelet = new Label(grpInfoArticle, SWT.NONE);
+				    lblEyelet.setBounds(10, 78, 59, 14);
+				    lblEyelet.setText("Eyelet:");
+				    
+				    //LABEL DATE
+				    Label lblDate = new Label(grpInfoArticle, SWT.NONE);
+				    lblDate.setBounds(10, 146, 59, 14);
+				    lblDate.setText("Date:");
+				    
+				    //LABEL AUTHOR
+				    Label lblAuthor = new Label(grpInfoArticle, SWT.NONE);
+				    lblAuthor.setBounds(10, 180, 59, 14);
+				    lblAuthor.setText("Author:");
+				    
+				    //LABEL URL
+				    Label lblUrl = new Label(grpInfoArticle, SWT.NONE);
+				    lblUrl.setBounds(10, 214, 59, 14);
+				    lblUrl.setText("URL:");
+				    
+				    //LABEL TEXT
+				    Label lblText = new Label(grpInfoArticle, SWT.NONE);
+				    lblText.setBounds(10, 248, 59, 14);
+				    lblText.setText("Text:");
+				    
+				    //INFO_TITLE
+				    info_title = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.H_SCROLL);
+				    info_title.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_title.setBounds(75, 10, 294, 30);
+
+				    //INFO_HEADING
+				    info_heading = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.H_SCROLL);
+				    info_heading.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_heading.setBounds(75, 44, 294, 30);
+				    
+				    //INFO_EYELET
+				    info_eyelet = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.H_SCROLL);
+				    info_eyelet.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_eyelet.setBounds(75, 78, 294, 30);
+				    
+				    //INFO_DATE
+				    info_date = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.H_SCROLL);
+				    info_date.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_date.setBounds(75, 146, 294, 30);
+				    
+				    //INFO_AUTHOR
+				    info_author = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.H_SCROLL);
+				    info_author.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_author.setBounds(75, 180, 294, 30);
+				    
+				    //INFO_URL
+				    info_url = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.H_SCROLL);
+				    info_url.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_url.setBounds(75, 214, 294, 30);
+				    
+				    //INFO_SUMMARY
+				    info_summary = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.H_SCROLL);
+				    info_summary.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_summary.setBounds(75, 112, 294, 30);
+				    
+				    //INFO_TEXT
+				    info_text = new Text(grpInfoArticle, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+				    info_text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_text.setBounds(75, 248, 294, 82);
+				    info_text.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ));
+				    
+				    //LABEL CONTESTO
+				    Label lblContext = new Label(grpInfoArticle, SWT.NONE);
+				    lblContext.setBounds(10, 334, 59, 14);
+				    lblContext.setText("Contesto");
+				    
+				    //INFO_CONTEXT
+				    info_context = new Text(grpInfoArticle, SWT.READ_ONLY);
+				    info_context.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				    info_context.setBounds(75, 334, 294, 16);
+
 	    
 	    //TAB GESTIONE
 	    CTabItem tabGestione = new CTabItem(tabBar, SWT.NONE);
@@ -369,7 +475,7 @@ public class GUI extends UserInterface{
 					    web_site.setBounds(188, 10, 186, 24);
 						Set<Website> hostlist;
 						try {
-							hostlist = gui_ob.getAllWebsite();
+							hostlist = getAllWebsite();
 							for(Website host:hostlist){
 								mMap.put(host.getName(), host);
 								web_site.add(host.getName());
@@ -416,6 +522,8 @@ public class GUI extends UserInterface{
 					   
 					    //BUTTON ADDTEMPLATE
 					    Button addTemplate = new Button(grpInserimentoTemplate, SWT.NONE);
+					    addTemplate.setBounds(259, 327, 115, 39);
+					    addTemplate.setText("Aggiungi");
 					    addTemplate.addMouseListener(new MouseAdapter() {
 					    	@Override
 					    	public void mouseDown(MouseEvent arg0) {
@@ -438,8 +546,7 @@ public class GUI extends UserInterface{
 
 					    	}
 					    });
-					    addTemplate.setBounds(259, 327, 115, 39);
-					    addTemplate.setText("Aggiungi");
+
 					    
 					    //BUTTON RESET_TEMPLATE
 					    Button reset_template = new Button(grpInserimentoTemplate, SWT.NONE);
@@ -495,6 +602,8 @@ public class GUI extends UserInterface{
 				    
 				    //BUTTON ADD_WEBSITE
 				    Button addWebSite = new Button(grpInserimentoWebsite, SWT.NONE);
+				    addWebSite.setBounds(248, 327, 126, 39);
+				    addWebSite.setText("Aggiungi");
 				    addWebSite.addMouseListener(new MouseAdapter() {
 				    	@Override
 				    	public void mouseDown(MouseEvent arg0) {
@@ -511,11 +620,12 @@ public class GUI extends UserInterface{
 							}
 				    	}
 				    });
-				    addWebSite.setBounds(248, 327, 126, 39);
-				    addWebSite.setText("Aggiungi");
+
 				    
 				    //BUTTON RESET_WEBSITE
 				    Button reset_website = new Button(grpInserimentoWebsite, SWT.NONE);
+				    reset_website.setBounds(10, 332, 71, 28);
+				    reset_website.setText("Reset");
 				    reset_website.addMouseListener(new MouseAdapter() {
 				    	@Override
 				    	public void mouseDown(MouseEvent arg0) {
@@ -526,9 +636,6 @@ public class GUI extends UserInterface{
 				    		
 				    	}
 				    });
-				    reset_website.setBounds(10, 332, 71, 28);
-				    reset_website.setText("Reset");
-	   
+   
 	}
-
 }
