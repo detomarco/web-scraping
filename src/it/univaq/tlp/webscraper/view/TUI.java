@@ -9,7 +9,6 @@ import java.util.Set;
 
 import com.jaunt.ResponseException;
 
-import it.univaq.tlp.webscraper.controller.UserInterface;
 import it.univaq.tlp.webscraper.controller.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.controller.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.controller.exception.TemplateNotFoundException;
@@ -105,8 +104,8 @@ public class TUI extends UserInterface{
 			try {						
 				System.out.println("Attendere...");
 				// Scraping dell'URL
-				this.scrap(url);
-				System.out.println("Sono stati aggiunti " + this.last_insert + " articoli");
+				int last_insert = this.controller.scrap(url);
+				System.out.println("Sono stati aggiunti " + last_insert + " articoli");
 				error_url = false;
 				
 			// URL non valido
@@ -162,7 +161,7 @@ public class TUI extends UserInterface{
 			website = new Website(name, url, description);
 			
 			try {
-				this.insertWebsite(website);
+				this.controller.insertWebsite(website);
 				System.out.println("Nuovo sito web inserito");
 				error_url = false;
 			} catch (MalformedURLException e) {
@@ -220,7 +219,7 @@ public class TUI extends UserInterface{
 			article = new ArticleTemplate(context, heading, eyelet, summary, text, author, date);
 			
 			try {
-				this.insertTemplate(article, article_list, url);
+				this.controller.insertTemplate(article, article_list, url);
 				System.out.println("Template inserito correttamente");
 				error = false;
 			} catch (MalformedURLException e) {
@@ -263,7 +262,7 @@ public class TUI extends UserInterface{
 			System.out.print("Inserisci il contesto (lasciare vuoto per mostrare tutti gli articoli del sito): ");
 			context = in.nextLine();
 			try {
-				articles = this.viewWebsiteArticles(host, context);
+				articles = this.controller.viewWebsiteArticles(host, context);
 				
 				if(articles.isEmpty()){
 					System.out.println("Nessun articolo trovato");

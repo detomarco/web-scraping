@@ -18,7 +18,7 @@ import it.univaq.tlp.webscraper.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.model.website.Website;
 import it.univaq.tlp.webscraper.utility.URL;
 
-public abstract class UserInterface {
+public class Controller {
 	
 	/**
 	* Interfaccia per la gestione della UI
@@ -32,15 +32,14 @@ public abstract class UserInterface {
 	private WebsiteManaging website_manager;
 	private ArticleManaging article_manager;
 	
-	protected int last_insert;
-	protected Storable storage;
+	private Storable storage;
 	
 	/**
 	* Metodo costruttore
 	* @param storage, repository utilizzata nell'applicazione
 	*/
 
-	public UserInterface(Storable storage){
+	public Controller(Storable storage){
 		
 		// Connessione al databse
 		this.storage = storage;
@@ -55,15 +54,15 @@ public abstract class UserInterface {
 	* @param url, indirizzo web da analizzare
 	 * @throws ResponseException 
 	*/
-	protected void scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException {
-		this.last_insert = aggregator.crawl(source);
+	public int scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException {
+		return aggregator.crawl(source);
 	}
 	
 	/**
 	* Inserisce un nuovo sito web
 	* @param website, sito web da inserire
 	*/
-	protected void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
+	public void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
 		website_manager.saveWebsite(website);
 	}
 	
@@ -73,17 +72,8 @@ public abstract class UserInterface {
 	* @param arcible_list, template per la lista delgli articoli
 	* @param website_url, indirizzo del sito web a cui inserire il nuovo template
 	*/
-	protected void insertTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextAlreadyExistsException, DataOmittedException {
+	public void insertTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextAlreadyExistsException, DataOmittedException {
 		website_manager.saveTemplate(article, article_list, website_url);
-	}
-	
-	/**
-	 * Visualizza gli articoli aggiunti dopo l'ultima ricerca
-	 * @return
-	 * @throws StorageException
-	 */
-	protected Set<Article> viewLastAddedArticles() throws StorageException {
-		return article_manager.getLastArticles(last_insert);
 	}
 	
 	/**
@@ -92,7 +82,7 @@ public abstract class UserInterface {
 	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
 	* @return lista di articoli trovati
 	*/
-	protected Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException {
+	public Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException {
 		
 		URL url = new URL(address);
 		Website website = website_manager.getWebsite(url.getHost());
@@ -108,25 +98,25 @@ public abstract class UserInterface {
 	 * @throws MalformedURLException
 	 * @throws WebsiteNotFoundException
 	 */
-	protected Set<String> viewContexts(String address) throws StorageException, MalformedURLException, WebsiteNotFoundException{
+	public Set<String> viewContexts(String address) throws StorageException, MalformedURLException, WebsiteNotFoundException{
 		URL url = new URL(address);
 		Website website = website_manager.getWebsite(url.getHost());
 		
 		return article_manager.getWebsiteContexts(website);
 	}
 
-	protected Set<String> getWebsiteContexts(Website website) throws StorageException{
+	public Set<String> getWebsiteContexts(Website website) throws StorageException{
 		return this.article_manager.getWebsiteContexts(website);
 	}
 	
-	protected Set<String> getWebsiteContexts(String website_url) throws StorageException, WebsiteNotFoundException{
+	public Set<String> getWebsiteContexts(String website_url) throws StorageException, WebsiteNotFoundException{
 		return this.article_manager.getWebsiteContexts(this.website_manager.getWebsite(website_url));
 	}
 	
-	protected Set<Website> getAllWebsite() throws StorageException{
+	public Set<Website> getAllWebsite() throws StorageException{
 		return this.website_manager.getAllWebsite();
 	}
 	
 	
-	public abstract void run();
+	
 }

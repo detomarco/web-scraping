@@ -26,7 +26,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.jaunt.ResponseException;
 
-import it.univaq.tlp.webscraper.controller.UserInterface;
 import it.univaq.tlp.webscraper.controller.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.controller.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.controller.exception.TemplateNotFoundException;
@@ -38,6 +37,7 @@ import it.univaq.tlp.webscraper.model.webdata.Article;
 import it.univaq.tlp.webscraper.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.model.website.Website;
+import it.univaq.tlp.webscraper.view.UserInterface;
 
 public class GUI extends UserInterface{
 
@@ -151,7 +151,9 @@ public class GUI extends UserInterface{
 					@Override
 					public void mouseDown(MouseEvent arg0) {
 						try {
-							scrap(url.getText());
+							int last_insert = controller.scrap(url.getText());
+							lblAggiuntiArticoli.setText("Aggiunti: "+last_insert+" articoli");
+							lblAggiuntiArticoli.setVisible(true);
 						} catch (MalformedURLException e) {
 							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_MALFORMED_URL_EXCEPTION);
 							dialog.open();
@@ -172,10 +174,7 @@ public class GUI extends UserInterface{
 							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_RESPONSE_EXCEPTION);
 							dialog.open();
 							e.printStackTrace();
-						} finally {
-							lblAggiuntiArticoli.setText("Aggiunti: "+last_insert+" articoli");
-							lblAggiuntiArticoli.setVisible(true);
-						}
+						} 
 						
 					}
 				});
@@ -220,7 +219,7 @@ public class GUI extends UserInterface{
 				    		if(website == null) return;
 				    	
 				    		try {
-								for(String context_temp : getWebsiteContexts(website.getAddress())){
+								for(String context_temp : controller.getWebsiteContexts(website.getAddress())){
 									System.out.println(context_temp);
 									contesto.add(context_temp);
 								}
@@ -237,7 +236,7 @@ public class GUI extends UserInterface{
 				    });
 				    
 				    try {
-						Set<Website> hostlist = getAllWebsite();
+						Set<Website> hostlist = controller.getAllWebsite();
 						for(Website host:hostlist){
 							mMap.put(host.getName(), host);
 							sorgente.add(host.getName());
@@ -266,7 +265,7 @@ public class GUI extends UserInterface{
 								Set<Article> articles;
 								try {
 									String source = "";
-									Set<Website> hostlist = getAllWebsite();
+									Set<Website> hostlist = controller.getAllWebsite();
 									for(Website host:hostlist){
 								    	if(sorgente.getText().equals(host.getName())){
 								    		
@@ -275,7 +274,7 @@ public class GUI extends UserInterface{
 								    	};
 								    }
 									
-									articles = viewWebsiteArticles(source, contesto.getText());
+									articles = controller.viewWebsiteArticles(source, contesto.getText());
 									for(Article article:articles){
 								    	list.add(article.getHeading());
 								    	articleMap.put(article.getHeading(), article);
@@ -496,7 +495,7 @@ public class GUI extends UserInterface{
 					    web_site.setBounds(188, 10, 186, 24);
 						Set<Website> hostlist;
 						try {
-							hostlist = getAllWebsite();
+							hostlist = controller.getAllWebsite();
 							for(Website host:hostlist){
 								mMap.put(host.getName(), host);
 								web_site.add(host.getName());
@@ -552,7 +551,7 @@ public class GUI extends UserInterface{
 					    		ArticleTemplate template = new ArticleTemplate(context.getText(), header.getText(), eyelet.getText(), summary.getText(), text.getText(), author.getText(), date.getText());
 
 									try {
-										insertTemplate(template, listTemplate, source);
+										controller.insertTemplate(template, listTemplate, source);
 										Dialog dialog = new Dialog(Dialog.SUCCESS_INSERT);
 										dialog.open();
 									} catch (MalformedURLException e) {
@@ -643,7 +642,7 @@ public class GUI extends UserInterface{
 				    		Website website = new Website(nome.getText(), indirizzo.getText(), descrizione.getText());
 				    		
 								try {
-									insertWebsite(website);
+									controller.insertWebsite(website);
 									Dialog dialogtest = new Dialog(Dialog.SUCCESS_INSERT);
 									dialogtest.open();
 								} catch (MalformedURLException e) {
