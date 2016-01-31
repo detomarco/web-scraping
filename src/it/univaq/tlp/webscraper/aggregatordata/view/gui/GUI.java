@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Text;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
+import it.univaq.tlp.webscraper.aggregatordata.controller.UserInterface;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
@@ -28,7 +29,7 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
-import it.univaq.tlp.webscraper.aggregatordata.view.UserInterface;
+
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Group;

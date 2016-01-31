@@ -1,10 +1,10 @@
 package it.univaq.tlp.webscraper.aggregatordata;
 
+import it.univaq.tlp.webscraper.aggregatordata.controller.UserInterface;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
 import it.univaq.tlp.webscraper.aggregatordata.view.TUI;
-import it.univaq.tlp.webscraper.aggregatordata.view.UserInterface;
 
 public class ProgramTUI {
 
