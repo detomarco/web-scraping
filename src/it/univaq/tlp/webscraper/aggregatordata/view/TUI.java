@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.jaunt.ResponseException;
 
+import it.univaq.tlp.webscraper.aggregatordata.controller.UserInterface;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
@@ -38,14 +39,7 @@ public class TUI extends UserInterface{
 	@SuppressWarnings("resource")
 	@Override
 	public void run() {
-			try {
-				for(String str: this.article_manager.getWebsiteContexts(this.website_manager.getWebsite("repubblica.it"))){
-					System.out.println(str);
-				}
-			} catch (StorageException | WebsiteNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		Scanner in = new Scanner(System.in);
 			
 		do{

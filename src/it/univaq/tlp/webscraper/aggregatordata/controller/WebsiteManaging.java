@@ -26,11 +26,11 @@ import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
  * @author Marco De Toma
  * @author Alessandro D'Errico
  */
-public class WebsiteManaging {
+class WebsiteManaging {
 	
 	private Storable storage;
 	
-	public WebsiteManaging(Storable storage){
+	WebsiteManaging(Storable storage){
 		this.storage = storage;
 	}
 	

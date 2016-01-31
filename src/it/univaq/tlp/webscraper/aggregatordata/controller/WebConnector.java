@@ -24,11 +24,11 @@ import jodd.jerry.JerryFunction;
  * @author Marco De Toma
  * @author Alessandro D'Errico
  */
-public class WebConnector implements ConnectorInterface{
+class WebConnector implements ConnectorInterface{
 	
 	private UserAgent userAgent;
 	
-	public WebConnector(){
+	WebConnector(){
 		this.userAgent = new UserAgent();
 		userAgent.settings.autoSaveAsHTML = true;
 		userAgent.settings.autoRedirect = false;

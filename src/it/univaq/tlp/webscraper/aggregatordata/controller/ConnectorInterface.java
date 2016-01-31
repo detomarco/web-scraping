@@ -10,7 +10,7 @@ import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundExcepti
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 
-public interface ConnectorInterface {
+interface ConnectorInterface {
 
 	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException;
 	

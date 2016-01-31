@@ -21,13 +21,13 @@ import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
  * @author Marco De Toma
  * @author Alessandro D'Errico 
  */
-public class DataAggregator {
+class DataAggregator {
 	
 	private ConnectorInterface connector;
 	private WebsiteManaging website_manager;
 	private ArticleManaging article_manager;
 	
-	public DataAggregator(Storable storage){
+	DataAggregator(Storable storage){
 		this.website_manager = new WebsiteManaging(storage);
 		this.article_manager = new ArticleManaging(storage);
 		this.connector = new WebConnector();

@@ -1,4 +1,4 @@
-package it.univaq.tlp.webscraper.aggregatordata.view;
+package it.univaq.tlp.webscraper.aggregatordata.controller;
 
 import java.net.MalformedURLException;
 import java.util.Set;
@@ -6,9 +6,6 @@ import java.util.Set;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.aggregatordata.URL;
-import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
-import it.univaq.tlp.webscraper.aggregatordata.controller.DataAggregator;
-import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
@@ -32,8 +29,8 @@ public abstract class UserInterface {
 
 	private DataAggregator aggregator;
 	
-	protected WebsiteManaging website_manager;
-	protected ArticleManaging article_manager;
+	private WebsiteManaging website_manager;
+	private ArticleManaging article_manager;
 	
 	protected int last_insert;
 	protected Storable storage;
@@ -121,5 +118,11 @@ public abstract class UserInterface {
 	public Set<String> getWebsiteContext(Website website) throws StorageException{
 		return this.article_manager.getWebsiteContexts(website);
 	}
+	
+	public Set<Website> getAllWebsite() throws StorageException{
+		return this.website_manager.getAllWebsite();
+	}
+	
+	
 	public abstract void run();
 }
