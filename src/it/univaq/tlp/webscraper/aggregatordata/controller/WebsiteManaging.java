@@ -72,6 +72,12 @@ class WebsiteManaging {
 		return website;
 	}
 	
+	/**
+	 * Questo metodo recupera l'ID di un sito web andando a cercarne la chiave nel repository 
+	 * @param website
+	 * @return int
+	 * @throws StorageException
+	 */
 	public int getWebsiteId(Website website) throws StorageException{
 		
 		Set<Map<String, String>> results;
@@ -169,7 +175,7 @@ class WebsiteManaging {
 	/**
 	 * Metodo che memorizza un template relativo ad un dato sito web
 	 * @param template
-	 * @param website
+	 * @param website_url
 	 * @throws StorageException
 	 * @throws WebsiteNotFoundException 
 	 * @throws MalformedURLException 
