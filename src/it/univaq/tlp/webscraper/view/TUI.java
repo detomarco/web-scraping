@@ -28,9 +28,10 @@ public class TUI extends UserInterface{
 	* @author Marco De Toma
 	* @author Alessandro D'Errico
 	* @author Gianluca Filippone
+	 * @throws StorageException 
 	*/	
-
-	public TUI(Storable storage) {
+	
+	public TUI(Storable storage) throws StorageException {
 		super(storage);
 		try{
 			storage.connect();
@@ -38,12 +39,15 @@ public class TUI extends UserInterface{
 			// Se la connessione non è andata a buon fine
 			System.out.println("Problema di connessione con la repository, si prega di riprovare più tardi");
 			System.out.println("Dettagli errore:\n" + e.getMessage());
+			throw new StorageException();
 		}
 	}
 
 	@Override
 	public void run() {
-
+		
+		
+		
 		Scanner in = new Scanner(System.in);
 			
 		do{

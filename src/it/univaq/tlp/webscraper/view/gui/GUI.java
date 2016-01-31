@@ -72,8 +72,9 @@ public class GUI extends UserInterface{
 	private Map<String, Article> articleMap = new HashMap<>();
 
 	/**
+	 * @throws StorageException 
 	 */
-	public GUI(Storable storage) {
+	public GUI(Storable storage) throws StorageException {
 		super(storage);
 		
 		try{
@@ -82,6 +83,7 @@ public class GUI extends UserInterface{
 		} catch (StorageException e) {
 			Dialog dialog = new Dialog(Dialog.ERROR_DB_CONNECTION);
 			dialog.open();
+			throw new StorageException();
 		}
 	}
 
