@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Questa classe rappresenta il template per le 
- * pagine contenenti gli elenchi degli articoli
+ * This class represents template for article listing web pages
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico
@@ -14,15 +13,25 @@ public class ArticleListTemplate extends Template{
 
 	private String article_link_selector;
 	
+	/**
+	 * @param context
+	 * @param article_link_selector
+	 */
 	public ArticleListTemplate(String context, String article_link_selector){
 		super(context);
 		this.article_link_selector = article_link_selector;
 	}
 	
+	/**
+	 * @param from_storage
+	 */
 	public ArticleListTemplate(Map<String, String> from_storage){
 		this(from_storage.get("context_name"), from_storage.get("article_link_selector"));
 	}
 	
+	/**
+	 * @return css selector for links to listed articles
+	 */
 	public String getLinkSelector(){
 		return this.article_link_selector;
 	}

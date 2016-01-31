@@ -5,6 +5,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class represents websites
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico
+ *
+ */
 public class Website {
 	
 	private Integer id;
@@ -15,6 +22,12 @@ public class Website {
 	private Set<ArticleTemplate> article_templates;
 	private Set<ArticleListTemplate> list_templates;
 	
+	/**
+	 * 
+	 * @param name
+	 * @param address
+	 * @param description
+	 */
 	public Website(String name, String address, String description){
 		this.name = name;
 		this.address = address;
@@ -23,6 +36,10 @@ public class Website {
 		this.list_templates = new HashSet<ArticleListTemplate>();
 	}
 	
+	/**
+	 * 
+	 * @param from_storage
+	 */
 	public Website(Map<String, String> from_storage){
 		this.id = Integer.parseInt(from_storage.get("id"));
 		this.name = from_storage.get("name");
@@ -32,38 +49,74 @@ public class Website {
 		this.list_templates = new HashSet<ArticleListTemplate>();
 	}
 	
+	/**
+	 * 
+	 * @return website id
+	 */
 	public int getId(){
 		return this.id;
 	}
 	
+	/**
+	 * 
+	 * @return website name
+	 */
 	public String getName(){
 		return this.name;
 	}
 	
+	/**
+	 * 
+	 * @return website address
+	 */
 	public String getAddress(){
 		return this.address;
 	}
 	
+	/**
+	 * 
+	 * @return website description
+	 */
 	public String getDescription(){
 		return this.description;
 	}
 		
+	/**
+	 * 
+	 * @return set of all article templates stored for the website
+	 */
 	public Set<ArticleTemplate> getArticleTemplates(){
 		return this.article_templates;
 	}
 	
+	/**
+	 * 
+	 * @return all list templates stored for the website
+	 */
 	public Set<ArticleListTemplate> getArticleListTemplates(){
 		return this.list_templates;
 	}
 	
+	/**
+	 * This method update website address
+	 * @param address
+	 */
 	public void updateAddress(String address){
 		this.address = address;
 	}
 	
+	/**
+	 * This method updates website description
+	 * @param description
+	 */
 	public void updateDescription(String description){
 		this.description = description;
 	}
 	
+	/**
+	 * This method adds a new template to the website
+	 * @param template
+	 */
 	public void addTemplate(Template template){
 		if (template instanceof ArticleTemplate){
 			article_templates.add((ArticleTemplate)template);
@@ -72,6 +125,10 @@ public class Website {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return number of templates stored for the website
+	 */
 	public int getTemplatesCount(){
 		return article_templates.size()+list_templates.size();
 	}
@@ -81,6 +138,10 @@ public class Website {
 		return name+" ("+address+"): "+description;
 	}
 	
+	/**
+	 * 
+	 * @return Map representing website object
+	 */
 	public Map<String, Object> toMap(){
 		Map<String, Object> map = new HashMap<>();
 		

@@ -29,8 +29,8 @@ public class AggregatedData {
 	private List<String> img_caption;
 	private Map<String, Object> metadata;
 	
-	/*
-	 * Default constructor
+	/**
+	 *  Default constructor
 	 */
 	public AggregatedData(){
 		this.img_caption = new ArrayList<>();
@@ -47,6 +47,18 @@ public class AggregatedData {
 		
 	}
 	
+	/**
+	 * 
+	 * @param context
+	 * @param title
+	 * @param heading
+	 * @param eyelet
+	 * @param summary
+	 * @param text
+	 * @param author
+	 * @param source
+	 * @param date
+	 */
 	public AggregatedData(String context, String title, String heading, String eyelet, String summary, String text, String author, String source, String date){
 		this();
 		putContext(context);
@@ -60,12 +72,8 @@ public class AggregatedData {
 		putDate(date);
 	}
 	
-	/*
-	 * METODI PER INSERIMENTO ELEMENTI NELL'OGGETTO
-	 */
-	
 	/**
-	 * Metodo che inserisce il contesto dell'articolo
+	 * This method puts article context
 	 * @param context
 	 */
 	public void putContext(String context){
@@ -75,7 +83,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce il titolo nell'articolo
+	 * This method puts article page title
 	 * @param title
 	 */
 	public void putTitle(String title){
@@ -85,7 +93,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce l'intestazione
+	 * This method puts article heading
 	 * @param heading
 	 */
 	public void putHeading(String heading){
@@ -95,7 +103,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce l'occhiello
+	 * This method puts article eyelet
 	 * @param eyelet
 	 */
 	public void putEyelet(String eyelet){
@@ -105,7 +113,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce il sommario
+	 * This method puts article summary
 	 * @param summary
 	 */
 	public void putSummary(String summary){
@@ -115,7 +123,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce il testo
+	 * This method puts article text
 	 * @param text
 	 */
 	public void putText(String text){
@@ -125,7 +133,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce l'autore
+	 * This method puts article author
 	 * @param author
 	 */
 	public void putAuthor(String author){
@@ -135,7 +143,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce la fonte (l'indirizzo)
+	 * This method puts article source (web address)
 	 * @param source
 	 */
 	public void putSource(String source){
@@ -145,7 +153,7 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce la data
+	 * This method puts article date
 	 * @param date
 	 */
 	public void putDate(String date){
@@ -155,7 +163,7 @@ public class AggregatedData {
 	}
 
 	/**
-	 * Metodo che inserisce i Metadata
+	 * This method puts article metadatas
 	 * @param key
 	 * @param value
 	 */
@@ -164,96 +172,97 @@ public class AggregatedData {
 	}
 	
 	/**
-	 * Metodo che inserisce le descrizioni delle immagini
+	 * This method puts article image caption
 	 * @param value
 	 */
 	public void addImgCaption(String value){
 		img_caption.add(value.replaceAll("\\s+", " ").trim());
 	}
-	
-	/*
-	 * METODI PER RECUPERO ELEMENTI DALL'OGGETTO
+
+	/**
+	 * 
+	 * @return article context
 	 */
-	
 	public String getContext(){
 		return this.context;
 	}
 	
 	/**
-	 * Metodo che recupera il titolo dall'oggetto
-	 * @return String
+	 *
+	 * @return article page title
 	 */
 	public String getTitle(){
 		return this.title;
 	}
 	
 	/**
-	 * Metodo che recupera il sottotitolo dall'oggetto
-	 * @return String
+	 * 
+	 * @return article heading
 	 */
 	public String getHeading() {
 		return heading;
 	}
 
 	/**
-	 * Metodo che recupera l'occhiello dall'oggetto
-	 * @return String
+	 * 
+	 * @return article eyelet
 	 */
 	public String getEyelet() {
 		return eyelet;
 	}
 	
 	/**
-	 * Metodo che recupera il sommario dall'oggetto
-	 * @return String
+	 * 
+	 * @return article summary
 	 */
 	public String getSummary() {
 		return summary;
 	}
 	
 	/**
-	 * Metodo che recupera il testo dall'oggetto
-	 * @return String
+	 * 
+	 * @return article text
 	 */
 	public String getText(){
 		return this.text;
 	}
 	
 	/**
-	 * Metodo che recupera l'autore dall'oggetto
-	 * @return String
+	 * 
+	 * @return article author
 	 */
 	public String getAuthor(){
 		return this.author;
 	}
 	
 	/**
-	 * Metodo che recupera il sorgente dall'oggetto
-	 * @return String
+	 * 
+	 * @return article web address
 	 */
 	public String getSource(){
 		return this.source;
 	}
 	
 	/**
-	 * Metodo che recupera la data dall'oggetto
-	 * @return Date
+	 * 
+	 * @return article date
 	 */
 	public String getDate(){
 		return this.date;
 	}
 	
 	/**
-	 * Metodo che recupera i Metadata dall'oggetto
-	 * @return Map<String, String>
+	 * 
+	 * @return map containing article page metadatas
 	 */
 	public Map<String, Object> getMetadata(){
 		return this.metadata;
 	}
 	
 	/**
-	 * Metodo che recupera i Metadata dall'oggetto
-	 * @return String
+	 * 
+	 * @param key
+	 * @return article metadata having given key
 	 */
 	public Object getMetadata(String key){
 		return metadata.get(key);
@@ -265,6 +274,9 @@ public class AggregatedData {
 	}
 
 	@Override
+	/**
+	 * @return true if article source are equal
+	 */
 	public boolean equals(Object obj){
 		if ((obj instanceof AggregatedData)) {
 			
