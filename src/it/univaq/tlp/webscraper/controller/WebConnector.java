@@ -19,7 +19,7 @@ import jodd.jerry.Jerry;
 import jodd.jerry.JerryFunction;
 
 /**
- * Questa classe rappresenta il connettore web, fornisce l'implementazione della funzione di interfaccia collect
+ * This class represents the Web Connector element, and provides the collect method implementing ConnectorInterface
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico
@@ -34,15 +34,6 @@ class WebConnector implements ConnectorInterface{
 		userAgent.settings.autoRedirect = false;
 	}
 	
-	/**
-	 * Metodo che si occupa di collezionare gli articoli referenziati sul sito web da quell'url
-	 * @param website
-	 * @param url
-	 * @param is_list
-	 * @return List<AggregatedData>
-	 * @throws TemplateNotFoundException
-	 * @throws ResponseException 
-	 */
 	@Override
 	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException{
 		
@@ -108,13 +99,12 @@ class WebConnector implements ConnectorInterface{
 	
 	
 	/**
-	 * Metodo che recupera gli aricoli referenziati da una lista di url
-	 * (Nota: gli url devono puntare direttamente ad articoli, e non ad elenchi)
+	 * This method collets articles from set of urls of given website
 	 * @param website
 	 * @param urls
-	 * @return List<AggregatedData>
+	 * @return Set of AggregatedData
 	 * @throws TemplateNotFoundException
-	 * @throws ResponseException 
+	 * @throws ResponseException
 	 */
 	public Set<AggregatedData> getAllArticles(Website website, Set<URL> urls) throws TemplateNotFoundException, ResponseException{
 		
@@ -170,11 +160,11 @@ class WebConnector implements ConnectorInterface{
 
 
 	/**
-	 * Metodo che restituisce tutti i dati relativi ad un articolo
+	 * This method collets articles from set of url of given website
 	 * @param template
 	 * @param url
-	 * @return AggregatedData
-	 * @throws ResponseException 
+	 * @return article found
+	 * @throws ResponseException
 	 */
 	public AggregatedData getArticle(ArticleTemplate template, URL url) throws ResponseException{
 		

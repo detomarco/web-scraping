@@ -16,7 +16,7 @@ import it.univaq.tlp.webscraper.model.website.Website;
 import it.univaq.tlp.webscraper.utility.URL;
 
 /**
- * Questa classe si occupa di salvare gli articoli recuperati dal web.
+ * This class provides methods to collect data from websites
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico 
@@ -27,6 +27,10 @@ class DataAggregator {
 	private WebsiteManaging website_manager;
 	private ArticleManaging article_manager;
 	
+	/**
+	 * Constructor method
+	 * @param storage
+	 */
 	DataAggregator(Storable storage){
 		this.website_manager = new WebsiteManaging(storage);
 		this.article_manager = new ArticleManaging(storage);
@@ -34,18 +38,18 @@ class DataAggregator {
 	}
 	
 	/**
-	 * Metodo che recupera informazioni dall'URL e lancia WebConnector.java
+	 * This method recovers datas from given source and stores new articles into the storage
 	 * @param source
-	 * @param is_list
-	 * @return int
+	 * @return number of new articles inserted into the storage
 	 * @throws MalformedURLException
-	 * @throws StorageException 
-	 * @throws ResponseException 
+	 * @throws WebsiteNotFoundException
+	 * @throws TemplateNotFoundException
+	 * @throws StorageException
+	 * @throws ResponseException
 	 */
 	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException{
 		
 		URL url = new URL(source); // Throws MalformedURLException
-		
 		
 		// Recupero sito
 		Website website =  website_manager.getWebsite(url.getHost()); // Throws WebsiteNotFoundException

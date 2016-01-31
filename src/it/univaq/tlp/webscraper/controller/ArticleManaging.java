@@ -14,6 +14,13 @@ import it.univaq.tlp.webscraper.model.webdata.Article;
 import it.univaq.tlp.webscraper.model.website.Website;
 import it.univaq.tlp.webscraper.utility.URL;
 
+/**
+ * This class provides methods to manage store articles data 
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @author Alessandro D'Errico
+ *
+ */
 class ArticleManaging {
 
 	private Storable storage;
@@ -23,10 +30,13 @@ class ArticleManaging {
 	}
 	
 	/**
-	* Visualizza tutti gli articoli di un sito web
-	* @param url, indirizzo del sito web
-	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
-	* @return lista di articoli trovati
+	* 
+	* @param url
+	* @param context
+	* @return all articles stored for given website and context
+	* @throws StorageException
+	* @throws WebsiteNotFounException
+	* @throws MalformedURLException
 	*/
 	public Set<Article> getWebsiteArticles(Website website, String context) throws StorageException, WebsiteNotFoundException, MalformedURLException{
 
@@ -47,7 +57,11 @@ class ArticleManaging {
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @return all stored articles
+	 * @throws StorageException
+	 */
 	public Set<Article> getArticles() throws StorageException{
 		
 		Set<Article> articles = new LinkedHashSet<>();
@@ -62,6 +76,12 @@ class ArticleManaging {
 		return articles;
 	}
 	
+	/**
+	 * 
+	 * @param count
+	 * @return last inserted articles
+	 * @throws StorageException
+	 */
 	public Set<Article> getLastArticles(int count) throws StorageException{
 		
 		Set<Article> articles = new LinkedHashSet<>();
@@ -77,6 +97,12 @@ class ArticleManaging {
 		
 	}
 	
+	/**
+	 * 
+	 * @param website
+	 * @return all contexts available for given website
+	 * @throws StorageException
+	 */
 	public Set<String> getWebsiteContexts(Website website) throws StorageException{
 		
 		Set<String> contexts = new LinkedHashSet<>();
@@ -90,12 +116,25 @@ class ArticleManaging {
 		
 	}
 	
+	/**
+	 * 
+	 * @param url
+	 * @return article with given url
+	 * @throws StorageException
+	 */
 	public Article getArticleByUrl(String url) throws StorageException{
 		
 		return new Article(storage.get("articles", "url = '" + url + "'").iterator().next());
 		
 		
 	}
+	
+	/**
+	 * This method adds into storage given article of given website
+	 * @param article
+	 * @param website
+	 * @throws StorageException
+	 */
 	public void saveArticle(AggregatedData article, Website website) throws StorageException{
 		
 		Map<String, Object> data = new HashMap<>();

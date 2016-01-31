@@ -18,14 +18,14 @@ import it.univaq.tlp.webscraper.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.model.website.Website;
 import it.univaq.tlp.webscraper.utility.URL;
 
+/**
+ * This class provides methods to hide implementative details towards view classes
+ * @author Gianluca Filippone
+ * @author Marco De Toma
+ * @aurhor Alessandro D'Errico
+ *
+ */
 public class Controller {
-	
-	/**
-	* Interfaccia per la gestione della UI
-	* @author Marco De Toma
-	* @author Alessandro D'Errico
-	* @author Gianluca Filippone
-	*/	
 
 	private DataAggregator aggregator;
 	
@@ -35,10 +35,9 @@ public class Controller {
 	private Storable storage;
 	
 	/**
-	* Metodo costruttore
+	* Constructor
 	* @param storage, repository utilizzata nell'applicazione
 	*/
-
 	public Controller(Storable storage){
 		
 		// Connessione al databse
@@ -50,38 +49,54 @@ public class Controller {
 	} 
 	
 	/**
-	* Esegue il web-scraping su un determinato url
-	* @param url, indirizzo web da analizzare
-	 * @throws ResponseException 
-	*/
+	 * This method calls the crawler method of DataAggregator
+	 * @param source
+	 * @return number of new articles collected from given source
+	 * @throws MalformedURLException
+	 * @throws WebsiteNotFoundException
+	 * @throws TemplateNotFoundException
+	 * @throws StorageException
+	 * @throws ResponseException
+	 */
 	public int scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException {
 		return aggregator.crawl(source);
 	}
 	
 	/**
-	* Inserisce un nuovo sito web
-	* @param website, sito web da inserire
-	*/
+	 * This method inserts a new website into the storage
+	 * @param website
+	 * @throws StorageException
+	 * @throws MalformedURLException
+	 * @throws WebsiteAlreadyExistsException
+	 */
 	public void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
 		website_manager.saveWebsite(website);
 	}
 	
 	/**
-	* Inserisce un nuovo template
-	* @param article, template dell'articolo
-	* @param arcible_list, template per la lista delgli articoli
-	* @param website_url, indirizzo del sito web a cui inserire il nuovo template
-	*/
+	 * This method inserts a new website into the storage
+	 * @param article
+	 * @param article_list
+	 * @param website_url
+	 * @throws StorageException
+	 * @throws MalformedURLException
+	 * @throws WebsiteNotFoundException
+	 * @throws ContextAlreadyExistsException
+	 * @throws DataOmittedException
+	 */
 	public void insertTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextAlreadyExistsException, DataOmittedException {
 		website_manager.saveTemplate(article, article_list, website_url);
 	}
 	
 	/**
-	* Visualizza tutti gli articoli di un sito web
-	* @param url, indirizzo del sito web
-	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
-	* @return lista di articoli trovati
-	*/
+	 * This method gets from the storage all articles from given websites 
+	 * @param address
+	 * @param context
+	 * @return Set of articles
+	 * @throws StorageException
+	 * @throws MalformedURLException
+	 * @throws WebsiteNotFoundException
+	 */
 	public Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException {
 		
 		URL url = new URL(address);
@@ -91,9 +106,9 @@ public class Controller {
 	}
 	
 	/**
-	 * Visualizza tutti i contesti relativi agli articoli salvati per quel sito web
+	 * This method gets from the storage all contexts from the given address
 	 * @param address
-	 * @return
+	 * @return Set of strings representing contexts
 	 * @throws StorageException
 	 * @throws MalformedURLException
 	 * @throws WebsiteNotFoundException
@@ -105,14 +120,32 @@ public class Controller {
 		return article_manager.getWebsiteContexts(website);
 	}
 
+	/**
+	 * This method gets from the storage all the contexts from the given website
+	 * @param website
+	 * @return Set of strings representing contexts
+	 * @throws StorageException
+	 */
 	public Set<String> getWebsiteContexts(Website website) throws StorageException{
 		return this.article_manager.getWebsiteContexts(website);
 	}
 	
+	/**
+	 * This method gets from the storage all contexts from the given website address
+	 * @param website_url
+	 * @return Set of strings representing contexts
+	 * @throws StorageException
+	 * @throws WebsiteNotFoundException
+	 */
 	public Set<String> getWebsiteContexts(String website_url) throws StorageException, WebsiteNotFoundException{
 		return this.article_manager.getWebsiteContexts(this.website_manager.getWebsite(website_url));
 	}
 	
+	/**
+	 * This method gets from the storage all websites 
+	 * @return Set of websites
+	 * @throws StorageException
+	 */
 	public Set<Website> getAllWebsite() throws StorageException{
 		return this.website_manager.getAllWebsite();
 	}

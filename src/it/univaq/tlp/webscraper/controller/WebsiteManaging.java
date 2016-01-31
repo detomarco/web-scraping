@@ -21,10 +21,11 @@ import it.univaq.tlp.webscraper.model.website.Website;
 import it.univaq.tlp.webscraper.utility.URL;
 
 /**
- * Questa classe contiene metodi per recuperare ed inserire i template dal database
+ * This class provides methods to manage websites and templates
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico
+ *
  */
 class WebsiteManaging {
 	
@@ -35,10 +36,10 @@ class WebsiteManaging {
 	}
 	
 	/**
-	 * Metodo che recupera dal database il sito internet corrispondente all'indirizzo fornito
+	 * This method recovers from the storage the website having the given hostname
 	 * @param hostname
-	 * @return Website
-	 * @throws StorageException 
+	 * @return website
+	 * @throws StorageException
 	 * @throws WebsiteNotFoundException
 	 */
 	public Website getWebsite(String hostname) throws StorageException, WebsiteNotFoundException{
@@ -73,9 +74,9 @@ class WebsiteManaging {
 	}
 	
 	/**
-	 * Questo metodo recupera l'ID di un sito web andando a cercarne la chiave nel repository 
+	 * This methods recovers from the storage the id of the given website
 	 * @param website
-	 * @return int
+	 * @return website id
 	 * @throws StorageException
 	 */
 	public int getWebsiteId(Website website) throws StorageException{
@@ -88,6 +89,11 @@ class WebsiteManaging {
 		
 	}
 	
+	/**
+	 * This methods recovers all websites stored. Note: templates for websites will not be recovered
+	 * @return Set of website
+	 * @throws StorageException
+	 */
 	public Set<Website> getAllWebsite() throws StorageException{
 		Set<Map<String, String>> results = storage.get("websites", " 1=1");
 		Set<Website> data = new LinkedHashSet<>();
@@ -101,13 +107,13 @@ class WebsiteManaging {
 	}
 	
 	/**
-	 * Metodo che recupera il template dal database
+	 * This method recovers from the storage the template for given website and context
 	 * @param website
 	 * @param context
 	 * @param is_list
-	 * @return Template
+	 * @return template for given context
 	 * @throws TemplateNotFoundException
-	 * @throws StorageException 
+	 * @throws StorageException
 	 */
 	public Template getTemplate(Website website, String context, boolean is_list) throws TemplateNotFoundException, StorageException{
 		
@@ -133,19 +139,17 @@ class WebsiteManaging {
 		} else {
 			template = new ArticleTemplate((Map<String, String>) iter.next());
 		}
-		
-		System.out.println("Template found on database!");
-		
+				
 		return template;
 		
 	}
 	
 	/**
-	 * Metodo che memorizza un nuovo sito web e, se ne contiene, i suoi template
+	 * This method stores the website and its templates
 	 * @param website
 	 * @throws StorageException
-	 * @throws MalformedURLException 
-	 * @throws WebsiteAlreadyExistsException 
+	 * @throws MalformedURLException
+	 * @throws WebsiteAlreadyExistsException
 	 */
 	public void saveWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
 		
@@ -173,14 +177,15 @@ class WebsiteManaging {
 	}
 	
 	/**
-	 * Metodo che memorizza un template relativo ad un dato sito web
-	 * @param template
+	 * This method stores the template for the given website
+	 * @param article
+	 * @param article_list
 	 * @param website_url
 	 * @throws StorageException
-	 * @throws WebsiteNotFoundException 
-	 * @throws MalformedURLException 
-	 * @throws ContextAlreadyExistsException 
-	 * @throws DataOmittedException 
+	 * @throws WebsiteNotFoundException
+	 * @throws MalformedURLException
+	 * @throws ContextAlreadyExistsException
+	 * @throws DataOmittedException
 	 */
 	public void saveTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextAlreadyExistsException, DataOmittedException {
 		
