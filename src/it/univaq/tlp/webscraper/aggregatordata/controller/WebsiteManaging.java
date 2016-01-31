@@ -178,7 +178,12 @@ class WebsiteManaging {
 	 */
 	public void saveTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextAlreadyExistsException, DataOmittedException {
 		
+		/* Questo assegnamento dovrebbe servire per controllare l'url:
+		 * non sarebbe meglio avere in URL un metodo statico che lo controlla?
+		 */
+		@SuppressWarnings("unused")
 		URL url = new URL(website_url);
+		
 		Website website = this.getWebsite(website_url);
 		
 		// Controlla se il contesto è già stato inserito
