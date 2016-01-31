@@ -37,15 +37,7 @@ public class TUI extends UserInterface{
 
 	@Override
 	public void run() {
-			try {
-				for(String asd : this.getWebsiteContexts("repubblica.it")){
-					System.out.println(asd);
-				}
-			} catch (StorageException | WebsiteNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
+
 		Scanner in = new Scanner(System.in);
 			
 		do{

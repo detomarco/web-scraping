@@ -32,7 +32,7 @@ public class ArticleListTemplate extends Template{
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("article_link_selector", this.article_link_selector);
-		map.put("context", this.context);
+		map.put("context_name", this.context);
 		
 		return map;
 	}

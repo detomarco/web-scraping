@@ -73,7 +73,7 @@ public class ArticleTemplate extends Template{
 		map.put("date_selector", this.date_selector);
 		map.put("author_selector", this.author_selector);
 		
-		map.put("context", this.context);
+		map.put("context_name", this.context);
 		
 		return map;
 		
