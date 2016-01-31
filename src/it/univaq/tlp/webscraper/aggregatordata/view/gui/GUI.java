@@ -18,7 +18,6 @@ import com.jaunt.ResponseException;
 import it.univaq.tlp.webscraper.aggregatordata.controller.ArticleManaging;
 import it.univaq.tlp.webscraper.aggregatordata.controller.WebsiteManaging;
 import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.ContextNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
@@ -251,8 +250,7 @@ public class GUI extends UserInterface{
 									for(Article article:articles){
 								    	list.add(article.getHeading());
 								    }
-								} catch (MalformedURLException | StorageException | WebsiteNotFoundException
-										| ContextNotFoundException e) {
+								} catch (MalformedURLException | StorageException | WebsiteNotFoundException e) {
 									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
 									dialog.open();
 									e.printStackTrace();
