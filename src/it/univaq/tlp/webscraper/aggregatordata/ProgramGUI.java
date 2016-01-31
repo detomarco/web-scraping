@@ -1,11 +1,11 @@
 package it.univaq.tlp.webscraper.aggregatordata;
 
 import it.univaq.tlp.webscraper.aggregatordata.controller.UserInterface;
-import it.univaq.tlp.webscraper.aggregatordata.controller.repository.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.controller.repository.StorageException;
-import it.univaq.tlp.webscraper.aggregatordata.controller.repository.database.MySQLDatabase;
-import it.univaq.tlp.webscraper.aggregatordata.view.gui.Dialog;
-import it.univaq.tlp.webscraper.aggregatordata.view.gui.GUI;;
+import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.repository.database.MySQLDatabase;
+import it.univaq.tlp.webscraper.aggregatordata.view.gui.GUI;
+import it.univaq.tlp.webscraper.aggregatordata.view.gui.Dialog;;
 
 
 public class ProgramGUI {
