@@ -213,10 +213,10 @@ public class GUI extends UserInterface{
 					    }
 					} catch (StorageException e2) {
 						Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+						dialog.open();
 						e2.printStackTrace();
 					}
-				    
-				    String source = ("");
+
 				    
 				    //CONTESTO
 					contesto = new Combo(frame1, SWT.NONE);
@@ -403,6 +403,7 @@ public class GUI extends UserInterface{
 									e.printStackTrace();
 								} catch (DataOmittedException e) {
 									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+									dialog.open();
 									e.printStackTrace();
 								}
 
