@@ -55,6 +55,7 @@ public class GUI extends UserInterface{
 	private Combo sorgente, contesto;
 	private GUI gui_ob;
 	private Map<String, Website> mMap = new HashMap<>();
+	private String source;
 	
 	
 	/**
@@ -148,6 +149,27 @@ public class GUI extends UserInterface{
 				});
 				addArticle.setBounds(304, 139, 152, 60);
 				addArticle.setText("Inserisci articolo");
+				
+				Button btnProva = new Button(grpCrawler, SWT.NONE);
+				btnProva.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseDown(MouseEvent arg0) {
+						
+						try {
+							for(String asd : gui_ob.getWebsiteContexts("repubblica.it")){
+								System.out.println(asd);
+							}
+						} catch (StorageException | WebsiteNotFoundException e) {
+							Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+							dialog.open();
+							e.printStackTrace();
+						}
+						
+						
+					}
+				});
+				btnProva.setBounds(21, 328, 94, 28);
+				btnProva.setText("prova");
 
 		
 		
@@ -181,27 +203,23 @@ public class GUI extends UserInterface{
 				    	@Override
 				    	public void widgetSelected(SelectionEvent arg0) {
 				    		
+				    		contesto.removeAll();
 				    		String name = sorgente.getText();
 				    		if(name == null) return;
 				    		
 				    		Website website = mMap.get(name);
 				    		if(website == null) return;
 				    		
-				    		System.out.println(website.getName() + " | " + website.getAddress());
 				    		try {
-				    			contesto.removeAll();
-								Set<String> contesti = gui_ob.getWebsiteContexts(website);
-								if(contesti != null){
-									for(String context : contesti){
-										System.out.println(context);
-										contesto.add(context);
-									}
+								for(String context_temp : gui_ob.getWebsiteContexts(website.getAddress())){
+									System.out.println(context_temp);
+									contesto.add(context_temp);
 								}
-								
-							} catch (StorageException e) {
+							} catch (StorageException | WebsiteNotFoundException e) {
+								Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+								dialog.open();
 								e.printStackTrace();
 							}
-				    		System.out.println("-------------");
 				    	}
 				    });
 				    sorgente.setBounds(75, 108, 113, 24);
@@ -349,9 +367,20 @@ public class GUI extends UserInterface{
 					    //SELECT WEBSITE
 					    Combo web_site = new Combo(grpInserimentoTemplate, SWT.NONE);
 					    web_site.setBounds(188, 10, 186, 24);
-					    web_site.add("opzione 1");
-					    web_site.add("opzione 2");
-					    web_site.add("opzione 3");
+						Set<Website> hostlist;
+						try {
+							hostlist = gui_ob.getAllWebsite();
+							for(Website host:hostlist){
+								mMap.put(host.getName(), host);
+								web_site.add(host.getName());
+								source = host.getAddress();
+						    }
+						} catch (StorageException e1) {
+							Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+							dialog.open();
+							e1.printStackTrace();
+						}
+						
 					    
 					    //TEXTBOX HOMELIST
 					    home_list = new Text(grpInserimentoTemplate, SWT.BORDER);
@@ -391,9 +420,9 @@ public class GUI extends UserInterface{
 					    	@Override
 					    	public void mouseDown(MouseEvent arg0) {
 					    		ArticleListTemplate listTemplate = new ArticleListTemplate(context.getText(), home_list.getText());
-					    		ArticleTemplate template = ArticleTemplate(context.getText(), header.getText(), eyelet.getText(), summary.getText(), text.getText(), author.getText(), date.getText());
+					    		ArticleTemplate template = new ArticleTemplate(context.getText(), header.getText(), eyelet.getText(), summary.getText(), text.getText(), author.getText(), date.getText());
 					    		try {
-									insertTemplate(template, listTemplate, web_site.getText());
+									insertTemplate(template, listTemplate, source);
 									Dialog dialog = new Dialog(Dialog.SUCCESSFUL_INSERT);
 									dialog.open();
 								} catch (MalformedURLException | StorageException | WebsiteNotFoundException
@@ -502,10 +531,4 @@ public class GUI extends UserInterface{
 	   
 	}
 
-
-	protected ArticleTemplate ArticleTemplate(String text2, String text3, String text4, String text5, String text6,
-			String text7, String text8) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
