@@ -55,8 +55,13 @@ public class GUI extends UserInterface{
 	private Text text;
 	private List list;
 	private Combo sorgente, contesto;
+	private String source;
+
 	
 	private Map<String, Website> mMap = new HashMap<>();
+    WebsiteManaging website = new WebsiteManaging(storage);
+    
+
 	
 	
 	/**
@@ -192,9 +197,12 @@ public class GUI extends UserInterface{
 				    		ArticleManaging article = new ArticleManaging(storage);
 				    		try {
 				    			contesto.removeAll();
+					    		System.out.println("remove contest");
 								Set<String> contesti = article.getWebsiteContexts(website);
+					    		System.out.println("getWebSite Context");
 								if(contesti != null){
 									for(String context : contesti){
+							    		System.out.println(" wei");
 										System.out.println(context);
 										contesto.add(context);
 									}
@@ -207,7 +215,6 @@ public class GUI extends UserInterface{
 				    	}
 				    });
 				    sorgente.setBounds(75, 108, 113, 24);
-				    WebsiteManaging website = new WebsiteManaging(storage);
 				    try {
 						Set<Website> hostlist = website.getAllWebsite();
 						for(Website host:hostlist){
@@ -216,10 +223,9 @@ public class GUI extends UserInterface{
 					    }
 					} catch (StorageException e2) {
 						Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+						dialog.open();
 						e2.printStackTrace();
 					}
-				    
-				    String source = ("");
 				    
 				    //CONTESTO
 					contesto = new Combo(frame1, SWT.NONE);
@@ -240,7 +246,6 @@ public class GUI extends UserInterface{
 									Set<Website> hostlist = website.getAllWebsite();
 									for(Website host:hostlist){
 								    	if(sorgente.getText().equals(host.getName())){
-								    		
 								    		source = host.getAddress();
 								    		break;
 								    	};
@@ -351,10 +356,43 @@ public class GUI extends UserInterface{
 					    
 					    //SELECT WEBSITE
 					    Combo web_site = new Combo(grpInserimentoTemplate, SWT.NONE);
+					    web_site.addSelectionListener(new SelectionAdapter() {
+					    	@Override
+					    	public void widgetSelected(SelectionEvent arg0) {
+					    		
+								try {
+						    		Set<Website> hostlist;
+									hostlist = website.getAllWebsite();
+									for(Website host:hostlist){
+								    	if(web_site.getText().equals(host.getName())){
+								    		 source = host.getAddress();
+								    		 System.out.println(source);
+								    		break;
+								    	};
+								    }
+								} catch (StorageException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
+									dialog.open();
+									e.printStackTrace();
+								}
+					    		
+					    	}
+					    		
+					    	
+					    });
 					    web_site.setBounds(188, 10, 186, 24);
-					    web_site.add("opzione 1");
-					    web_site.add("opzione 2");
-					    web_site.add("opzione 3");
+					    try {
+							Set<Website> hostlist = website.getAllWebsite();
+							for(Website host:hostlist){
+								mMap.put(host.getName(), host);
+								web_site.add(host.getName());
+						    }
+						} catch (StorageException e1) {
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
+							dialog.open();
+							e1.printStackTrace();
+						}
+
 					    
 					    //TEXTBOX HOMELIST
 					    home_list = new Text(grpInserimentoTemplate, SWT.BORDER);
@@ -396,7 +434,7 @@ public class GUI extends UserInterface{
 					    		ArticleListTemplate listTemplate = new ArticleListTemplate(context.getText(), home_list.getText());
 					    		ArticleTemplate template = ArticleTemplate(context.getText(), header.getText(), eyelet.getText(), summary.getText(), text.getText(), author.getText(), date.getText());
 					    		try {
-									insertTemplate(template, listTemplate, web_site.getText());
+									insertTemplate(template, listTemplate, source);
 									Dialog dialog = new Dialog(Dialog.SUCCESSFUL_INSERT);
 									dialog.open();
 								} catch (MalformedURLException | StorageException | WebsiteNotFoundException
@@ -406,6 +444,7 @@ public class GUI extends UserInterface{
 									e.printStackTrace();
 								} catch (DataOmittedException e) {
 									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+									dialog.open();
 									e.printStackTrace();
 								}
 
