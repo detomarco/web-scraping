@@ -5,6 +5,8 @@ import java.util.Set;
 
 public interface Storable {
 	
+	public void connect() throws StorageException; 
+	
 	public void save(String kind, Map<String, Object> data) throws StorageException;
 	
 	public Set<Map<String, String>> get(String kind, String condition) throws StorageException;

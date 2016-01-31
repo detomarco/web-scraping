@@ -14,8 +14,21 @@ public class MySQLDatabase extends Database {
 	
 	private Connection db;
 	
-	// Quando la classe viene istanziata, si connette automaticamente
-	public MySQLDatabase(String user, String password, String host, int port, String db_name) throws StorageException{
+	private String user;
+	private String password;
+	private String host;
+	private int port;
+	private String db_name;
+	
+	public MySQLDatabase(String user, String password, String host, int port, String db_name) {
+		this.user = user;
+		this.password = password;
+		this.host = host;
+		this.port = port;
+		this.db_name = db_name;
+	}
+
+	public void connect() throws StorageException{
 		Properties connProps = new Properties();
 		connProps.put("user", user);
 		connProps.put("password", password);
@@ -30,9 +43,8 @@ public class MySQLDatabase extends Database {
 		} catch (Exception e){
 			throw new StorageException("Non definito");
 		} 
+		
 	}
-	
-	
 	
 	@Override
 	protected ResultSet select(String table, String condition, String order) throws SQLException{	

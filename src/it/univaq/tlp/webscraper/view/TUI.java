@@ -33,6 +33,13 @@ public class TUI extends UserInterface{
 
 	public TUI(Storable storage) {
 		super(storage);
+		try{
+			storage.connect();
+		} catch (StorageException e) {
+			// Se la connessione non è andata a buon fine
+			System.out.println("Problema di connessione con la repository, si prega di riprovare più tardi");
+			System.out.println("Dettagli errore:\n" + e.getMessage());
+		}
 	}
 
 	@Override
