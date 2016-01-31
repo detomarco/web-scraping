@@ -79,8 +79,8 @@ public class GUI extends UserInterface{
 		try{
 			storage.connect();
 		} catch (StorageException e) {
-//			Dialog dialog = new Dialog(Dialog.ERROR_DB_CONNECTION);
-//			dialog.open();
+			Dialog dialog = new Dialog(Dialog.ERROR_DB_CONNECTION);
+			dialog.open();
 			throw new StorageException();
 		}
 	}
