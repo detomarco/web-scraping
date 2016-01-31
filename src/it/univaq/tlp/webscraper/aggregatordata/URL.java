@@ -139,4 +139,15 @@ public class URL {
 		UrlValidator validator = new UrlValidator(schemes);
 		if(!validator.isValid(this.source)) throw new MalformedURLException();
 	}
+	
+	/**
+	 * Controlla che la stringa passata come parametro sia un URL valido
+	 * @param url
+	 * @return
+	 * @throws MalformedURLException
+	 */
+	public static boolean validate(String url) throws MalformedURLException{
+		new URL(url);
+		return true;
+	}
 }
