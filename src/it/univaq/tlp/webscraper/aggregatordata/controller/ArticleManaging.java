@@ -114,7 +114,6 @@ class ArticleManaging {
 		storage.save("articles", data);
 		
 		// Recupera id dell'articolo appena inserito
-		Iterator iter = this.getLastArticles(1).iterator();
 		int id_art = this.getArticleByUrl(article.getSource()).getId();
 		
 		Map<String, Object> metadata = new HashMap<>();

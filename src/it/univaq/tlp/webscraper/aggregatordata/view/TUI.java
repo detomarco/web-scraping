@@ -3,7 +3,6 @@ package it.univaq.tlp.webscraper.aggregatordata.view;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -16,7 +15,6 @@ import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
@@ -24,6 +22,7 @@ import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
 import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
 import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 
+@SuppressWarnings("resource")
 public class TUI extends UserInterface{
 	/**
 	* Classe per la gestione della Text-based Graphic User dell'applicazione
@@ -36,10 +35,17 @@ public class TUI extends UserInterface{
 		super(storage);
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public void run() {
-			
+			try {
+				for(String asd : this.getWebsiteContexts("repubblica.it")){
+					System.out.println(asd);
+				}
+			} catch (StorageException | WebsiteNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 		Scanner in = new Scanner(System.in);
 			
 		do{
@@ -182,11 +188,11 @@ public class TUI extends UserInterface{
 	* Modulo per inserire un nuovo template
 	* 
 	*/
+	
 	public void templateManagement(){
 		Scanner in = new Scanner(System.in);
 		boolean error;
 		String list, url, context, heading, summary, eyelet, author, date, text;
-		Website website;
 		ArticleListTemplate article_list; ArticleTemplate article;
 		do{
 			

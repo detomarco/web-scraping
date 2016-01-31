@@ -55,7 +55,7 @@ public abstract class UserInterface {
 	* @param url, indirizzo web da analizzare
 	 * @throws ResponseException 
 	*/
-	public void scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException {
+	protected void scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException {
 		this.last_insert = aggregator.crawl(source);
 	}
 	
@@ -63,7 +63,7 @@ public abstract class UserInterface {
 	* Inserisce un nuovo sito web
 	* @param website, sito web da inserire
 	*/
-	public void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
+	protected void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
 		website_manager.saveWebsite(website);
 	}
 	
@@ -73,7 +73,7 @@ public abstract class UserInterface {
 	* @param arcible_list, template per la lista delgli articoli
 	* @param website_url, indirizzo del sito web a cui inserire il nuovo template
 	*/
-	public void insertTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextAlreadyExistsException, DataOmittedException {
+	protected void insertTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, MalformedURLException, WebsiteNotFoundException, ContextAlreadyExistsException, DataOmittedException {
 		website_manager.saveTemplate(article, article_list, website_url);
 	}
 	
@@ -82,7 +82,7 @@ public abstract class UserInterface {
 	 * @return
 	 * @throws StorageException
 	 */
-	public Set<Article> viewLastAddedArticles() throws StorageException {
+	protected Set<Article> viewLastAddedArticles() throws StorageException {
 		return article_manager.getLastArticles(last_insert);
 	}
 	
@@ -92,7 +92,7 @@ public abstract class UserInterface {
 	* @param context, contesto degli articoli da recuperare (se stringa vuota, recupera tutti gli articoli del sito web)
 	* @return lista di articoli trovati
 	*/
-	public Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException {
+	protected Set<Article> viewWebsiteArticles(String address, String context) throws StorageException, MalformedURLException, WebsiteNotFoundException {
 		
 		URL url = new URL(address);
 		Website website = website_manager.getWebsite(url.getHost());
@@ -108,18 +108,22 @@ public abstract class UserInterface {
 	 * @throws MalformedURLException
 	 * @throws WebsiteNotFoundException
 	 */
-	public Set<String> viewContexts(String address) throws StorageException, MalformedURLException, WebsiteNotFoundException{
+	protected Set<String> viewContexts(String address) throws StorageException, MalformedURLException, WebsiteNotFoundException{
 		URL url = new URL(address);
 		Website website = website_manager.getWebsite(url.getHost());
 		
 		return article_manager.getWebsiteContexts(website);
 	}
 
-	public Set<String> getWebsiteContexts(Website website) throws StorageException{
+	protected Set<String> getWebsiteContexts(Website website) throws StorageException{
 		return this.article_manager.getWebsiteContexts(website);
 	}
 	
-	public Set<Website> getAllWebsite() throws StorageException{
+	protected Set<String> getWebsiteContexts(String website_url) throws StorageException, WebsiteNotFoundException{
+		return this.article_manager.getWebsiteContexts(this.website_manager.getWebsite(website_url));
+	}
+	
+	protected Set<Website> getAllWebsite() throws StorageException{
 		return this.website_manager.getAllWebsite();
 	}
 	

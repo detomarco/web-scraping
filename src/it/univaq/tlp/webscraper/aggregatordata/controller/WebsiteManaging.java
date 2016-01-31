@@ -177,6 +177,7 @@ class WebsiteManaging {
 	 * @throws DataOmittedException 
 	 */
 	public void saveTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextAlreadyExistsException, DataOmittedException {
+		
 		URL url = new URL(website_url);
 		Website website = this.getWebsite(website_url);
 		
