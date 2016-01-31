@@ -80,7 +80,7 @@ public class GUI extends UserInterface{
 			storage.connect();
 			
 		} catch (StorageException e) {
-			Dialog dialog = new Dialog(Dialog.ERROR_DATABASE);
+			Dialog dialog = new Dialog(Dialog.ERROR_DB_CONNECTION);
 			dialog.open();
 		}
 	}
@@ -152,13 +152,24 @@ public class GUI extends UserInterface{
 					public void mouseDown(MouseEvent arg0) {
 						try {
 							scrap(url.getText());
-						} catch (MalformedURLException | WebsiteNotFoundException | TemplateNotFoundException
-								| StorageException e) {
-							Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
+						} catch (MalformedURLException e) {
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_MALFORMED_URL_EXCEPTION);
 							dialog.open();
 							e.printStackTrace();
-						} catch (ResponseException e) {
-							Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
+						} catch (WebsiteNotFoundException e) {
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_WEBSITE_NOT_FOUND_EXCEPTION);
+							dialog.open();
+							e.printStackTrace();
+						} catch (TemplateNotFoundException e) {
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_TEMPLATE_NOT_FOUND_EXCEPTION);
+							dialog.open();
+							e.printStackTrace();
+						} catch (StorageException e) {
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_STORAGE_EXCEPTION);
+							dialog.open();
+							e.printStackTrace();
+						}  catch (ResponseException e) {
+							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_RESPONSE_EXCEPTION);
 							dialog.open();
 							e.printStackTrace();
 						} finally {
@@ -213,8 +224,12 @@ public class GUI extends UserInterface{
 									System.out.println(context_temp);
 									contesto.add(context_temp);
 								}
-							} catch (StorageException | WebsiteNotFoundException e) {
-								Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+							} catch (StorageException e) {
+								Dialog dialog = new Dialog(Dialog.ERROR_COMBO_STORAGE_EXCEPTION);
+								dialog.open();
+								e.printStackTrace();
+							} catch (WebsiteNotFoundException e) {
+								Dialog dialog = new Dialog(Dialog.ERROR_COMBO_WEBSITE_NOT_FOUND_EXCEPTION);
 								dialog.open();
 								e.printStackTrace();
 							}
@@ -228,7 +243,7 @@ public class GUI extends UserInterface{
 							sorgente.add(host.getName());
 					    }
 					} catch (StorageException e2) {
-						Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+						Dialog dialog = new Dialog(Dialog.ERROR_COMBO_STORAGE_EXCEPTION);
 						dialog.open();
 						e2.printStackTrace();
 					}
@@ -266,8 +281,16 @@ public class GUI extends UserInterface{
 								    	articleMap.put(article.getHeading(), article);
 
 								    }
-								} catch (MalformedURLException | StorageException | WebsiteNotFoundException e) {
-									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+								} catch (MalformedURLException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_SEARCH_MALFORMED_URL_EXCEPTION);
+									dialog.open();
+									e.printStackTrace();
+								} catch (StorageException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_SEARCH_STORAGE_EXCEPTION);
+									dialog.open();
+									e.printStackTrace();
+								} catch (WebsiteNotFoundException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_SEARCH_WEBSITE_NOT_FOUND_EXCEPTION);
 									dialog.open();
 									e.printStackTrace();
 								}   
@@ -304,8 +327,6 @@ public class GUI extends UserInterface{
 				    });
 				    list.setBounds(10, 10, 176, 361);
 				    
-				
-
 		
 			    //TERZA SEZIONE
 			    Composite frame3 = new Composite(grpArticoli, SWT.NONE);
@@ -482,7 +503,7 @@ public class GUI extends UserInterface{
 								source = host.getAddress();
 						    }
 						} catch (StorageException e1) {
-							Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
+							Dialog dialog = new Dialog(Dialog.ERROR_COMBO_STORAGE_EXCEPTION);
 							dialog.open();
 							e1.printStackTrace();
 						}
@@ -529,21 +550,32 @@ public class GUI extends UserInterface{
 					    	public void mouseDown(MouseEvent arg0) {
 					    		ArticleListTemplate listTemplate = new ArticleListTemplate(context.getText(), home_list.getText());
 					    		ArticleTemplate template = new ArticleTemplate(context.getText(), header.getText(), eyelet.getText(), summary.getText(), text.getText(), author.getText(), date.getText());
-					    		try {
-									insertTemplate(template, listTemplate, source);
-									Dialog dialog = new Dialog(Dialog.SUCCESSFUL_INSERT);
-									dialog.open();
-								} catch (MalformedURLException | StorageException | WebsiteNotFoundException
-										| ContextAlreadyExistsException e) {
-									Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
-									dialog.open();
-									e.printStackTrace();
-								} catch (DataOmittedException e) {
-									Dialog dialog = new Dialog(Dialog.ERROR_UNKNOWN);
-									dialog.open();
-									e.printStackTrace();
-								}
 
+									try {
+										insertTemplate(template, listTemplate, source);
+										Dialog dialog = new Dialog(Dialog.SUCCESS_INSERT);
+										dialog.open();
+									} catch (MalformedURLException e) {
+										Dialog dialog = new Dialog(Dialog.ERROR_INSERT_MALFORMED_URL_EXCEPTION);
+										dialog.open();
+										e.printStackTrace();
+									} catch (StorageException e) {
+										Dialog dialog = new Dialog(Dialog.ERROR_INSERT_STORAGE_EXCEPTION);
+										dialog.open();
+										e.printStackTrace();
+									} catch (WebsiteNotFoundException e) {
+										Dialog dialog = new Dialog(Dialog.ERROR_INSERT_WEBSITE_NOT_FOUND_EXCEPTION);
+										dialog.open();
+										e.printStackTrace();
+									} catch (ContextAlreadyExistsException e) {
+										Dialog dialog = new Dialog(Dialog.ERROR_INSERT_CONTEXT_ALREADY_EXISTS_EXCEPTION);
+										dialog.open();
+										e.printStackTrace();
+									} catch (DataOmittedException e) {
+										Dialog dialog = new Dialog(Dialog.ERROR_INSERT_DATA_OMITTED_EXCEPTION);
+										dialog.open();
+										e.printStackTrace();
+									}
 					    	}
 					    });
 
@@ -610,14 +642,25 @@ public class GUI extends UserInterface{
 				    		
 				    		Website website = new Website(nome.getText(), indirizzo.getText(), descrizione.getText());
 				    		
-				    		try {
-								insertWebsite(website);
-								Dialog dialogtest = new Dialog(Dialog.SUCCESSFUL_INSERT);
-								dialogtest.open();
-							} catch (MalformedURLException | StorageException | WebsiteAlreadyExistsException e) {
-								Dialog dialog = new Dialog(Dialog.ERROR_INSERT);
-								dialog.open();
-							}
+								try {
+									insertWebsite(website);
+									Dialog dialogtest = new Dialog(Dialog.SUCCESS_INSERT);
+									dialogtest.open();
+								} catch (MalformedURLException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_INSERT_MALFORMED_URL_EXCEPTION);
+									dialog.open();
+									e.printStackTrace();
+								} catch (StorageException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_INSERT_STORAGE_EXCEPTION);
+									dialog.open();
+									e.printStackTrace();
+								} catch (WebsiteAlreadyExistsException e) {
+									Dialog dialog = new Dialog(Dialog.ERROR_INSERT_WEBSITE_ALREADY_EXISTS_EXCEPTION);
+									dialog.open();
+									e.printStackTrace();
+								}
+
+
 				    	}
 				    });
 
