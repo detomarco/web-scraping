@@ -31,9 +31,7 @@ public class Controller {
 	
 	private WebsiteManaging website_manager;
 	private ArticleManaging article_manager;
-	
-	private Storable storage;
-	
+		
 	/**
 	* Constructor
 	* @param storage, repository utilizzata nell'applicazione
@@ -41,7 +39,6 @@ public class Controller {
 	public Controller(Storable storage){
 		
 		// Connessione al databse
-		this.storage = storage;
 		this.aggregator = new DataAggregator(storage);
 		this.website_manager = new WebsiteManaging(storage);
 		this.article_manager = new ArticleManaging(storage);
