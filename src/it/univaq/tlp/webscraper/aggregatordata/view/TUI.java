@@ -38,19 +38,14 @@ public class TUI extends UserInterface{
 	@SuppressWarnings("resource")
 	@Override
 	public void run() {
-		
-//		
-//		Iterator iter;
-//		try {
-//			iter = this.viewWebsiteArticles("repubblica.it", "").iterator();
-//			Article art =(Article) iter.next();
-//			System.out.println("Test : " + AggregatedData.sanitize(art.getText()));
-//		} catch (MalformedURLException | StorageException | WebsiteNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
+			try {
+				for(String str: this.article_manager.getWebsiteContexts(this.website_manager.getWebsite("repubblica.it"))){
+					System.out.println(str);
+				}
+			} catch (StorageException | WebsiteNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		Scanner in = new Scanner(System.in);
 			
 		do{

@@ -118,6 +118,8 @@ public abstract class UserInterface {
 		return article_manager.getWebsiteContexts(website);
 	}
 
-	
+	public Set<String> getWebsiteContext(Website website) throws StorageException{
+		return this.article_manager.getWebsiteContexts(website);
+	}
 	public abstract void run();
 }

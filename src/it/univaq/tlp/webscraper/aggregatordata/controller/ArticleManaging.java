@@ -18,10 +18,8 @@ import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 public class ArticleManaging {
 
 	private Storable storage;
-	private WebsiteManaging website_manager;
 	public ArticleManaging(Storable storage){
 		this.storage = storage;
-		website_manager = new WebsiteManaging(storage);
 	}
 	
 	/**
