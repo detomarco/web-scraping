@@ -9,12 +9,12 @@ import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
-import it.univaq.tlp.webscraper.aggregatordata.URL;
-import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
+import it.univaq.tlp.webscraper.aggregatordata.utility.URL;
 import jodd.jerry.Jerry;
 import jodd.jerry.JerryFunction;
 

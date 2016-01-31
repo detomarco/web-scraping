@@ -10,17 +10,17 @@ import java.util.Set;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.aggregatordata.controller.UserInterface;
-import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.ContextAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.DataOmittedException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.WebsiteAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.repository.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.controller.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
-import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
 
 @SuppressWarnings("resource")
 public class TUI extends UserInterface{

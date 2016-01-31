@@ -7,18 +7,18 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import it.univaq.tlp.webscraper.aggregatordata.URL;
-import it.univaq.tlp.webscraper.aggregatordata.exception.ContextAlreadyExistsException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.DataOmittedException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteAlreadyExistsException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.ContextAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.DataOmittedException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.WebsiteAlreadyExistsException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.repository.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.controller.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.ArticleTemplate;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Template;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
-import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.utility.URL;
 
 /**
  * Questa classe contiene metodi per recuperare ed inserire i template dal database

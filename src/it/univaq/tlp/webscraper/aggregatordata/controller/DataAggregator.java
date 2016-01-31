@@ -6,14 +6,14 @@ import java.util.Set;
 
 import com.jaunt.ResponseException;
 
-import it.univaq.tlp.webscraper.aggregatordata.URL;
-import it.univaq.tlp.webscraper.aggregatordata.exception.TemplateNotFoundException;
-import it.univaq.tlp.webscraper.aggregatordata.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.TemplateNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.exception.WebsiteNotFoundException;
+import it.univaq.tlp.webscraper.aggregatordata.controller.repository.Storable;
+import it.univaq.tlp.webscraper.aggregatordata.controller.repository.StorageException;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.aggregatordata.model.webdata.Article;
 import it.univaq.tlp.webscraper.aggregatordata.model.website.Website;
-import it.univaq.tlp.webscraper.aggregatordata.repository.Storable;
-import it.univaq.tlp.webscraper.aggregatordata.repository.StorageException;
+import it.univaq.tlp.webscraper.aggregatordata.utility.URL;
 
 /**
  * Questa classe si occupa di salvare gli articoli recuperati dal web.
