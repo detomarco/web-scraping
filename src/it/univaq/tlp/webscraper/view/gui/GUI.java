@@ -44,26 +44,8 @@ public class GUI extends UserInterface{
 	
 	private String source;
 	private List list;
-	private Text indirizzo;
-	private Text nome;
-	private Text descrizione;
-	private Text home_list;
-	private Text header;
-	private Text summary;
-	private Text eyelet;
-	private Text author;
-	private Text context;
-	private Text date;
-	private Text text;
-	private Text info_title;
-	private Text info_heading;
-	private Text info_eyelet;
-	private Text info_summary;
-	private Text info_date;
-	private Text info_author;
-	private Text info_url;
-	private Text info_text;
-	private Text info_context;
+	private Text indirizzo, nome, descrizione, home_list, header, summary, eyelet, author, context, date, text;
+	private Text info_title, info_heading, info_eyelet, info_summary, info_date, info_author, info_url, info_text, info_context;
 	private Combo sorgente, contesto;
 
 	
