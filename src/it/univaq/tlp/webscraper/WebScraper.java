@@ -16,7 +16,7 @@ public class WebScraper {
 		
 		try {
 			
-			UserInterface console = new GUI(storage);
+			UserInterface console = new TUI(storage);
 			console.run();
 			
 		} catch (StorageException e) { }

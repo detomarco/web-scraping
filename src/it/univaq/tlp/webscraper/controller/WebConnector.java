@@ -26,12 +26,12 @@ import jodd.jerry.JerryFunction;
  */
 class WebConnector implements ConnectorInterface{
 	
-	private UserAgent userAgent;
+	private UserAgent agent;
 	
 	WebConnector(){
-		this.userAgent = new UserAgent();
-		userAgent.settings.autoSaveAsHTML = true;
-		userAgent.settings.autoRedirect = false;
+		this.agent = new UserAgent();
+		agent.settings.autoSaveAsHTML = true;
+		agent.settings.autoRedirect = false;
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ class WebConnector implements ConnectorInterface{
 			}
 				
 			try{
-				userAgent.visit(url.getSource());		    
+				agent.visit(url.getSource());		    
 			} catch (ResponseException e){
 				e.printStackTrace();
 			}
@@ -74,7 +74,7 @@ class WebConnector implements ConnectorInterface{
 			String HTML = "";
 			
 			try{
-				HTML = userAgent.doc.getFirst("<html>").innerHTML();
+				HTML = agent.doc.getFirst("<html>").innerHTML();
 			} catch (NotFound e){
 //				e.printStackTrace();	
 			}
@@ -170,12 +170,30 @@ class WebConnector implements ConnectorInterface{
 		
 		AggregatedData article = new AggregatedData();
 		
-		userAgent.visit(url.getSource());		    
+		agent.visit(url.getSource());		    
+		
+		// PULIZIA CODICE SORGENTE
+			// Elimina tutti i nodi link
+			for(Element node: agent.doc.findEvery("<link>")){
+				node.removeChildren();
+				node.erase();
+		    }
+			
+			// Elimina tutti i nodi s
+			for(Element node: agent.doc.findEvery("<style>")){
+				node.removeChildren();
+				node.erase();
+		    }
+			
+			// Elimina tutti i nodi script
+			for(Element node: agent.doc.findEvery("<script>")){
+				node.removeChildren();
+				node.erase();
+		    }
 		
 		String HTML = "";
-		
 		try{
-			HTML = userAgent.doc.getFirst("<html>").innerHTML();
+			HTML = agent.doc.getFirst("<html>").innerHTML();
 		} catch (NotFound e){
 //			e.printStackTrace();
 			
@@ -187,15 +205,15 @@ class WebConnector implements ConnectorInterface{
 		article.putTitle((doc.$("head title").html()));
 		
 		if(!(template.getHeadingSelector().equals("")) && (template.getHeadingSelector()!=null)){
-			article.putHeading((doc.$(template.getHeadingSelector()).html()));
+			article.putHeading((doc.$(template.getHeadingSelector()).text()));
 		}  
 		
 		if(!(template.getEyeletSelector().equals("")) && (template.getEyeletSelector()!=null)){
-			article.putEyelet((doc.$(template.getEyeletSelector()).html()));	
+			article.putEyelet((doc.$(template.getEyeletSelector()).text()));	
 		} 
 		
 		if(!(template.getSummarySelector().equals("")) && (template.getSummarySelector()!=null)){
-			article.putSummary((doc.$(template.getSummarySelector()).html()));
+			article.putSummary((doc.$(template.getSummarySelector()).text()));
 		}  
 		
 		if(!(template.getTextSelector().equals("")) && (template.getTextSelector()!=null)){
@@ -203,11 +221,11 @@ class WebConnector implements ConnectorInterface{
 		}  
 		
 		if(!(template.getAuthorSelector().equals("")) && (template.getAuthorSelector()!=null)){
-			article.putAuthor((doc.$(template.getAuthorSelector()).html()));
+			article.putAuthor((doc.$(template.getAuthorSelector()).text()));
 		}  
 				
 		if(!(template.getDateSelector().equals("")) && (template.getDateSelector()!=null)){
-			article.putDate((doc.$(template.getDateSelector()).html()));
+			article.putDate((doc.$(template.getDateSelector()).text()));
 		}  
 		
 		article.putContext(url.getContext());
@@ -216,12 +234,13 @@ class WebConnector implements ConnectorInterface{
 		
 		// Inserimento metadati		
 		try{
-		    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
+		    for(Element node: agent.doc.findFirst("<head>").findEvery("<meta>")){
 		    	
 		    	// Se è presente un contenuto
 		    	if(!node.getAt("content").equals("") && !node.getAt("name").equals("")){
 		    		article.addMetadata(node.getAt("name"), node.getAt("content"));
 		    	}
+		    	
 		    }
 	    } catch (NotFound e){ }
 	    
