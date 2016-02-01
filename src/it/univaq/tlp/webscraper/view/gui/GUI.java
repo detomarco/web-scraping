@@ -627,6 +627,7 @@ public class GUI extends UserInterface{
 									controller.insertWebsite(website);
 									Dialog dialogtest = new Dialog(Dialog.SUCCESS_INSERT);
 									dialogtest.open();
+									refreshAllWebsites(web_site, sorgente);
 								} catch (MalformedURLException e) {
 									Dialog dialog = new Dialog(Dialog.ERROR_INSERT_MALFORMED_URL_EXCEPTION);
 									dialog.open();
@@ -661,5 +662,24 @@ public class GUI extends UserInterface{
 				    	}
 				    });
    
+	}
+	
+	private void refreshAllWebsites(Combo sorgenti1, Combo sorgenti2){
+		
+		Set<Website> hostlist;
+		try {
+			sorgenti1.removeAll();
+			sorgenti2.removeAll();
+			hostlist = controller.getAllWebsite();
+			for(Website host:hostlist){
+				mMap.put(host.getName(), host);
+				sorgenti1.add(host.getName());
+				sorgenti2.add(host.getName());
+		    }
+		} catch (StorageException e1) {
+			Dialog dialog = new Dialog(Dialog.ERROR_COMBO_STORAGE_EXCEPTION);
+			dialog.open();
+			e1.printStackTrace();
+		}
 	}
 }
