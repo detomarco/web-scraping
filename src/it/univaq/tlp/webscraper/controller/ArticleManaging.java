@@ -99,25 +99,6 @@ class ArticleManaging {
 	
 	/**
 	 * 
-	 * @param website
-	 * @return all contexts available for given website
-	 * @throws StorageException
-	 */
-	public Set<String> getWebsiteContexts(Website website) throws StorageException{
-		
-		Set<String> contexts = new LinkedHashSet<>();
-		Set<Map<String, String>> results = storage.getGrouped("articles", "fk_website = '"+ website.getId() + "'", "context_name");
-		
-		for(Map<String, String> current_result: results){
-			contexts.add(current_result.get("context_name"));
-		}
-		
-		return contexts;
-		
-	}
-	
-	/**
-	 * 
 	 * @param url
 	 * @return article with given url
 	 * @throws StorageException

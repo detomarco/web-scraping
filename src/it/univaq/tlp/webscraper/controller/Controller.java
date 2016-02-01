@@ -116,7 +116,7 @@ public class Controller {
 		URL url = new URL(address);
 		Website website = website_manager.getWebsite(url.getHost());
 		
-		return article_manager.getWebsiteContexts(website);
+		return website_manager.getWebsiteContexts(website);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class Controller {
 	 * @throws StorageException
 	 */
 	public Set<String> getWebsiteContexts(Website website) throws StorageException{
-		return this.article_manager.getWebsiteContexts(website);
+		return this.website_manager.getWebsiteContexts(website);
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public class Controller {
 	 * @throws WebsiteNotFoundException
 	 */
 	public Set<String> getWebsiteContexts(String website_url) throws StorageException, WebsiteNotFoundException{
-		return this.article_manager.getWebsiteContexts(this.website_manager.getWebsite(website_url));
+		return this.website_manager.getWebsiteContexts(this.website_manager.getWebsite(website_url));
 	}
 	
 	/**
