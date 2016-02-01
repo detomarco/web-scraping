@@ -3,7 +3,7 @@ package it.univaq.tlp.webscraper.model.webdata;
 import java.util.Map;
 
 /**
- * Classe per la gestione di un articolo recuperato dal database
+ * This class provides methods to manage articles data recover from repository
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico

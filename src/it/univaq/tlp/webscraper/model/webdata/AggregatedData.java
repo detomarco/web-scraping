@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Classe per la gestione di un nuovo articoli recuperato dal web
+ * This class provides methods to manage articles data recover from web
  * @author Gianluca Filippone
  * @author Marco De Toma
  * @author Alessandro D'Errico

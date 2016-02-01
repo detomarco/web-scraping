@@ -7,7 +7,7 @@ import org.apache.commons.validator.routines.UrlValidator;
 public class URL {
 	
 	/**
-	* Classe per la gestione di un URL
+	* This class provides methods to handle a URL
 	* @author Marco De Toma
 	* @author Alessandro D'Errico
 	* @author Gianluca Filippone
@@ -20,8 +20,7 @@ public class URL {
 	private String path;
 	
 	/**
-	* Metodo costruttore
-	* @param source, url da gestire
+	* @param source, url to handle
 	*/
 	public URL(String source) throws MalformedURLException{
 		this.source = source;
@@ -34,7 +33,7 @@ public class URL {
 	}
 	
 	/**
-	* Recupera l'host
+	* @return url host
 	* 
 	*/
 	public String getHost(){
@@ -42,7 +41,7 @@ public class URL {
 	}
 	
 	/**
-	* Recupera il contesto
+	* @return url context
 	* 
 	*/
 	public String getContext(){
@@ -50,7 +49,7 @@ public class URL {
 	}
 	
 	/**
-	* Recupera i parametri
+	* @return url parameters
 	* 
 	*/
 	public String getPath(){
@@ -58,7 +57,7 @@ public class URL {
 	}
 	
 	/**
-	* Recupera l'indirizzo sorgente
+	* @return url source
 	* 
 	*/
 	public String getSource(){
@@ -66,7 +65,8 @@ public class URL {
 	}
 	
 	/**
-	* Verifica se l'url indentifica una lista di articoli o un aricolo singolo
+	 * Check if url source represents a home page
+	* @return true if it is represents a home page, false otherwise
 	* 
 	*/
 	public boolean isList(){
@@ -78,7 +78,6 @@ public class URL {
 		return false;
 		
 	}
-	
 	
 	private void setHost(){
 		
@@ -133,7 +132,12 @@ public class URL {
 		return this.source;
 		
 	}
-		
+	
+	/**
+	 * Check if url source represents a valid url
+	* @return true if it is a valid url, false otherwise
+	* 
+	*/
 	private void validate() throws MalformedURLException{
 		String[] schemes = {"http","https"};
 		UrlValidator validator = new UrlValidator(schemes);
@@ -141,11 +145,10 @@ public class URL {
 	}
 	
 	/**
-	 * Controlla che la stringa passata come parametro sia un URL valido
-	 * @param url
-	 * @return
-	 * @throws MalformedURLException
-	 */
+	 * Check if a url represents a valid url
+	* @return true if it is a valid url, false otherwise
+	* 
+	*/
 	public static boolean validate(String url) throws MalformedURLException{
 		new URL(url);
 		return true;
