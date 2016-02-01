@@ -1,4 +1,4 @@
-package it.univaq.tlp.webscraper.controller.repository;
+package it.univaq.tlp.webscraper.controller.exception;
 
 public class StorageException extends Exception{
 

@@ -10,13 +10,13 @@ import java.util.Set;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
+import it.univaq.tlp.webscraper.controller.Storable;
 import it.univaq.tlp.webscraper.controller.exception.ContextAlreadyExistsException;
 import it.univaq.tlp.webscraper.controller.exception.DataOmittedException;
+import it.univaq.tlp.webscraper.controller.exception.StorageException;
 import it.univaq.tlp.webscraper.controller.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.controller.exception.WebsiteAlreadyExistsException;
 import it.univaq.tlp.webscraper.controller.exception.WebsiteNotFoundException;
-import it.univaq.tlp.webscraper.controller.repository.Storable;
-import it.univaq.tlp.webscraper.controller.repository.StorageException;
 import it.univaq.tlp.webscraper.model.webdata.Article;
 import it.univaq.tlp.webscraper.model.website.ArticleListTemplate;
 import it.univaq.tlp.webscraper.model.website.ArticleTemplate;

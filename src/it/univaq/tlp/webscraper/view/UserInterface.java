@@ -1,7 +1,7 @@
 package it.univaq.tlp.webscraper.view;
 
 import it.univaq.tlp.webscraper.controller.Controller;
-import it.univaq.tlp.webscraper.controller.repository.Storable;
+import it.univaq.tlp.webscraper.controller.Storable;
 
 public abstract class UserInterface {
 

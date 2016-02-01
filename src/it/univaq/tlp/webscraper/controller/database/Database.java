@@ -1,4 +1,4 @@
-package it.univaq.tlp.webscraper.controller.repository.database;
+package it.univaq.tlp.webscraper.controller.database;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -7,8 +7,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import it.univaq.tlp.webscraper.controller.repository.Storable;
-import it.univaq.tlp.webscraper.controller.repository.StorageException;
+import it.univaq.tlp.webscraper.controller.Storable;
+import it.univaq.tlp.webscraper.controller.exception.StorageException;
 
 /**
  * This abstract class implements interface Storable to bind with a database-type storage

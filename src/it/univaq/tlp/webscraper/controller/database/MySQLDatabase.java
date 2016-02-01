@@ -1,4 +1,4 @@
-package it.univaq.tlp.webscraper.controller.repository.database;
+package it.univaq.tlp.webscraper.controller.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
 
-import it.univaq.tlp.webscraper.controller.repository.StorageException;
+import it.univaq.tlp.webscraper.controller.exception.StorageException;
 
 /**
  * This class provides MySQL implementation methods for databases

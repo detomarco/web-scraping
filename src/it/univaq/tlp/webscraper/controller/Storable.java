@@ -1,7 +1,9 @@
-package it.univaq.tlp.webscraper.controller.repository;
+package it.univaq.tlp.webscraper.controller;
 
 import java.util.Map;
 import java.util.Set;
+
+import it.univaq.tlp.webscraper.controller.exception.StorageException;
 
 public interface Storable {
 	

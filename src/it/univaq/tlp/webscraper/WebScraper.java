@@ -1,8 +1,8 @@
 package it.univaq.tlp.webscraper;
 
-import it.univaq.tlp.webscraper.controller.repository.StorageException;
-import it.univaq.tlp.webscraper.controller.repository.database.Database;
-import it.univaq.tlp.webscraper.controller.repository.database.MySQLDatabase;
+import it.univaq.tlp.webscraper.controller.database.Database;
+import it.univaq.tlp.webscraper.controller.database.MySQLDatabase;
+import it.univaq.tlp.webscraper.controller.exception.StorageException;
 import it.univaq.tlp.webscraper.view.TUI;
 import it.univaq.tlp.webscraper.view.gui.GUI;
 import it.univaq.tlp.webscraper.view.UserInterface;
