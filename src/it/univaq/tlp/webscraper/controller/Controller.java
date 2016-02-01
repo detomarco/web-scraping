@@ -103,21 +103,6 @@ public class Controller {
 		
 		return article_manager.getWebsiteArticles(website, context);
 	}
-	
-	/**
-	 * This method gets from the storage all contexts from the given address
-	 * @param address
-	 * @return Set of strings representing contexts
-	 * @throws StorageException
-	 * @throws MalformedURLException
-	 * @throws WebsiteNotFoundException
-	 */
-	public Set<String> viewContexts(String address) throws StorageException, MalformedURLException, WebsiteNotFoundException{
-		URL url = new URL(address);
-		Website website = website_manager.getWebsite(url.getHost());
-		
-		return website_manager.getWebsiteContexts(website);
-	}
 
 	/**
 	 * This method gets from the storage all the contexts from the given website
@@ -137,7 +122,7 @@ public class Controller {
 	 * @throws WebsiteNotFoundException
 	 */
 	public Set<String> getWebsiteContexts(String website_url) throws StorageException, WebsiteNotFoundException{
-		return this.website_manager.getWebsiteContexts(this.website_manager.getWebsite(website_url));
+		return this.getWebsiteContexts(this.website_manager.getWebsite(website_url));
 	}
 	
 	/**
