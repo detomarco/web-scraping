@@ -22,6 +22,7 @@ The articles stored into repository will be available for reading everytime user
 web-scraping has been tested with reference to major italian news websites like Repubblica (www.repubblica.it)
 Il Corriere della Sera (www.corriere.it).
 
+Javadoc - [Github](http://detomarco.github.io/web-scraping/doc/)
 
 How it's done :
 -------------------
