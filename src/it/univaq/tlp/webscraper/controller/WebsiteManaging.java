@@ -99,7 +99,7 @@ class WebsiteManaging {
 		Set<Website> data = new LinkedHashSet<>();
 		
 		for(Map<String, String> element: results){
-			data.add(new Website(element.get("name"), element.get("address"), element.get("description")));
+			data.add(new Website(element));
 		}
 		
 		return data;
@@ -151,7 +151,7 @@ class WebsiteManaging {
 	 * @throws MalformedURLException
 	 * @throws WebsiteAlreadyExistsException
 	 */
-	public void saveWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
+	public void saveWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException, MalformedURLException {
 		
 		URL url = new URL(website.getAddress());
 		

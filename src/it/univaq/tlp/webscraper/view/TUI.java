@@ -149,7 +149,6 @@ public class TUI extends UserInterface{
 	public void websiteManagement(){
 		Scanner in = new Scanner(System.in);
 		String url, name, description;
-		Website website;
 		boolean error_url;
 		
 		do{
@@ -160,11 +159,8 @@ public class TUI extends UserInterface{
 			name = in.nextLine();
 			System.out.print("Inserisci descrizione: ");
 			description = in.nextLine();
-			
-			website = new Website(name, url, description);
-			
 			try {
-				this.controller.insertWebsite(website);
+				this.controller.insertWebsite(new Website(name, url, description));
 				System.out.println("Nuovo sito web inserito");
 				error_url = false;
 			} catch (MalformedURLException e) {

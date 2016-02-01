@@ -620,28 +620,25 @@ public class GUI extends UserInterface{
 				    addWebSite.addMouseListener(new MouseAdapter() {
 				    	@Override
 				    	public void mouseDown(MouseEvent arg0) {
-				    		
-				    		Website website = new Website(nome.getText(), indirizzo.getText(), descrizione.getText());
-				    		
-								try {
-									controller.insertWebsite(website);
-									Dialog dialogtest = new Dialog(Dialog.SUCCESS_INSERT);
-									dialogtest.open();
-									refreshAllWebsites(web_site, sorgente);
-								} catch (MalformedURLException e) {
-									Dialog dialog = new Dialog(Dialog.ERROR_INSERT_MALFORMED_URL_EXCEPTION);
-									dialog.open();
-									e.printStackTrace();
-								} catch (StorageException e) {
-									Dialog dialog = new Dialog(Dialog.ERROR_INSERT_STORAGE_EXCEPTION);
-									dialog.open();
-									e.printStackTrace();
-								} catch (WebsiteAlreadyExistsException e) {
-									Dialog dialog = new Dialog(Dialog.ERROR_INSERT_WEBSITE_ALREADY_EXISTS_EXCEPTION);
-									dialog.open();
-									e.printStackTrace();
-								}
-
+    		
+							try {
+								controller.insertWebsite(new Website(nome.getText(), indirizzo.getText(), descrizione.getText()));
+								Dialog dialogtest = new Dialog(Dialog.SUCCESS_INSERT);
+								dialogtest.open();
+								refreshAllWebsites(web_site, sorgente);
+							} catch (MalformedURLException e) {
+								Dialog dialog = new Dialog(Dialog.ERROR_INSERT_MALFORMED_URL_EXCEPTION);
+								dialog.open();
+								e.printStackTrace();
+							} catch (StorageException e) {
+								Dialog dialog = new Dialog(Dialog.ERROR_INSERT_STORAGE_EXCEPTION);
+								dialog.open();
+								e.printStackTrace();
+							} catch (WebsiteAlreadyExistsException e) {
+								Dialog dialog = new Dialog(Dialog.ERROR_INSERT_WEBSITE_ALREADY_EXISTS_EXCEPTION);
+								dialog.open();
+								e.printStackTrace();
+							}
 
 				    	}
 				    });

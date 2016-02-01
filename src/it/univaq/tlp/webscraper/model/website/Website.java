@@ -1,9 +1,12 @@
 package it.univaq.tlp.webscraper.model.website;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import it.univaq.tlp.webscraper.utility.URL;
 
 /**
  * This class represents websites
@@ -28,9 +31,9 @@ public class Website {
 	 * @param address
 	 * @param description
 	 */
-	public Website(String name, String address, String description){
-		this.name = name;
-		this.address = address;
+	public Website(String name, String address, String description) throws MalformedURLException{
+		this.name = name;		
+		this.address = new URL(address).getHost();
 		this.description = description;
 		this.article_templates = new HashSet<ArticleTemplate>();
 		this.list_templates = new HashSet<ArticleListTemplate>();
