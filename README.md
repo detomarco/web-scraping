@@ -15,7 +15,7 @@ What is :
 web-scraping's goal is to recover, handle and store in a local repository, the articles published on news website or blogs.
 
 This software is able to work with many websites, including major news websites.
-To allow web-scraping get articles from web, the user has needed to store into repository informations about the template of a specific website: simply enter css selectors for article heading, summary, eyelet, author, date and text, and the software will be able to recover articles from article page or pages that listing many of them.
+To allow web-scraping get articles from web, the user needs to store into repository informations about the template of a specific website: simply enter css selectors for article heading, summary, eyelet, author, date and text, and the software will be able to recover articles from article page or pages that listing many of them.
 
 The articles stored into repository will be available for reading everytime user wants.
 
