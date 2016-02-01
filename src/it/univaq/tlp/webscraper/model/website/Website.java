@@ -101,22 +101,6 @@ public class Website {
 	}
 	
 	/**
-	 * This method update website address
-	 * @param address
-	 */
-	public void updateAddress(String address){
-		this.address = address;
-	}
-	
-	/**
-	 * This method updates website description
-	 * @param description
-	 */
-	public void updateDescription(String description){
-		this.description = description;
-	}
-	
-	/**
 	 * This method adds a new template to the website
 	 * @param template
 	 */
@@ -127,35 +111,6 @@ public class Website {
 			list_templates.add((ArticleListTemplate)template);
 		}
 	}
-	
-	/**
-	 * 
-	 * @return number of templates stored for the website
-	 */
-	public int getTemplatesCount(){
-		return article_templates.size()+list_templates.size();
-	}
-	
-	@Override
-	public String toString(){
-		return name+" ("+address+"): "+description;
-	}
-	
-	/**
-	 * 
-	 * @return Map representing website object
-	 */
-	public Map<String, Object> toMap(){
-		Map<String, Object> map = new HashMap<>();
-		
-		map.put("id", this.id);
-		map.put("name", this.name);
-		map.put("address", this.address);
-		map.put("description", this.description);
-		
-		map.put("article_templates", this.article_templates);
-		map.put("list_templates", this.list_templates);
-		
-		return map;
-	}
+
+
 }

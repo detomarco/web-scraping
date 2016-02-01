@@ -168,8 +168,12 @@ class WebsiteManaging {
 	 * @throws StorageException
 	 * @throws MalformedURLException
 	 * @throws WebsiteAlreadyExistsException
+	 * @throws DataOmittedException 
 	 */
-	public void saveWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException, MalformedURLException {
+	public void saveWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException, MalformedURLException, DataOmittedException {
+		
+		if(website.getAddress().equals("") || website.getAddress() == null || website.getName().equals("") || website.getName() == null )
+			throw new DataOmittedException();
 		
 		URL url = new URL(website.getAddress());
 		
@@ -207,9 +211,11 @@ class WebsiteManaging {
 	 */
 	public void saveTemplate(ArticleTemplate article, ArticleListTemplate article_list, String website_url) throws StorageException, WebsiteNotFoundException, MalformedURLException, ContextAlreadyExistsException, DataOmittedException {
 		
-		URL.validate(website_url);
+		// Validazione url
+		URL.validate(website_url); // throws MalformedURLException
 		
-		Website website = this.getWebsite(website_url);
+		
+		Website website = this.getWebsite(website_url); // throws StorageException, WebsiteNotFoundException
 		
 		// Controlla se il contesto è già stato inserito
 		Set<ArticleListTemplate> list_templates = website.getArticleListTemplates();
@@ -218,17 +224,25 @@ class WebsiteManaging {
 			
 		}
 		
-		if(article.getHeadingSelector().equals("") || article.getTextSelector().equals("")) throw new DataOmittedException();
+		// Se non vengono inseriti il selettore dell'heading o del testo
+		if(article.getHeadingSelector().equals("") || article.getTextSelector().equals("") || article.getHeadingSelector() == null || article.getTextSelector() == null) 
+			// Solleva eccezione
+			throw new DataOmittedException();
 		
+		// Se non viene inserito il selettore per i link degli articoli
+		if(article_list.getLinkSelector().equals("") || article_list.getLinkSelector() == null)
+			// Solleva eccezione
+			throw new DataOmittedException();
+			
 		// Inserimento del template list
 		Map<String, Object> data_list = article_list.toMap();
 		data_list.put("fk_website", website.getId());
-		storage.save("list_templates", data_list);
+		storage.save("list_templates", data_list); // throws StorageException
 		
 		// Inserimento del template dell'articolo
 		Map<String, Object> data_article = article.toMap();
 		data_article.put("fk_website", website.getId());
-		storage.save("article_templates", data_article);
+		storage.save("article_templates", data_article); // throws StorageException
 		
 		website.addTemplate(article);
 		website.addTemplate(article_list);

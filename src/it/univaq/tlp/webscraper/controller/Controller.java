@@ -66,8 +66,9 @@ public class Controller {
 	 * @throws StorageException
 	 * @throws MalformedURLException
 	 * @throws WebsiteAlreadyExistsException
+	 * @throws DataOmittedException 
 	 */
-	public void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException {
+	public void insertWebsite(Website website) throws StorageException, MalformedURLException, WebsiteAlreadyExistsException, DataOmittedException {
 		website_manager.saveWebsite(website);
 	}
 	

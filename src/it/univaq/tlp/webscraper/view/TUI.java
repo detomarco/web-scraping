@@ -149,7 +149,7 @@ public class TUI extends UserInterface{
 	public void websiteManagement(){
 		Scanner in = new Scanner(System.in);
 		String url, name, description;
-		boolean error_url;
+		boolean error;
 		
 		do{
 			
@@ -162,21 +162,22 @@ public class TUI extends UserInterface{
 			try {
 				this.controller.insertWebsite(new Website(name, url, description));
 				System.out.println("Nuovo sito web inserito");
-				error_url = false;
+				error = false;
 			} catch (MalformedURLException e) {
 				System.out.println("Sito web non valido");
-				error_url = true;
-			
+				error = true;
 			} catch (WebsiteAlreadyExistsException e) {
 				System.out.println("Il sito web è già stato inserito");
-				error_url = true;
-			
+				error = true;
+			} catch (DataOmittedException e) {
+				System.out.println("L'url ed il nome del sito sono campi obbligatori");
+				error = true;
 			} catch (StorageException e) {
 				System.out.println("Si è verificato un errore con la repository");
-				error_url = false;
-			}
+				error = false;
+			} 
 			
-		}while(error_url);
+		}while(error);
 		
 		
 	}
