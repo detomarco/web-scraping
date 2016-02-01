@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.controller.exception.ContextAlreadyExistsException;
@@ -116,7 +117,7 @@ public class TUI extends UserInterface{
 			} catch (MalformedURLException e){
 				System.out.println("Url non valido");
 				error_url = true;
-			}catch (ResponseException e) {
+			}catch (ResponseException | NotFound e) {
 				System.out.println("Errore di connessione");
 				error_url = false;
 				
@@ -124,17 +125,15 @@ public class TUI extends UserInterface{
 			} catch (WebsiteNotFoundException e){
 				System.out.println("Sito web non trovato");
 				error_url = true;
-				e.printStackTrace();
 				
 			// Template non trovato
 			} catch (TemplateNotFoundException e){
 				System.out.println("Template non trovato");
 				error_url = true;
 			
-			// Errore con il database
+			// Errore con la repository
 			} catch (StorageException e){
 				System.out.println("Si è verificato un errore con la repository");
-				e.printStackTrace();
 				error_url = false;
 			} 
 			
@@ -177,7 +176,7 @@ public class TUI extends UserInterface{
 				error_url = true;
 			
 			} catch (StorageException e) {
-				System.out.println("Si è verificato un errore con la repository: " + e.getMessage());
+				System.out.println("Si è verificato un errore con la repository");
 				error_url = false;
 			}
 			
@@ -240,7 +239,6 @@ public class TUI extends UserInterface{
 				error = true;
 			} catch (StorageException e) {
 				System.out.println("Si è verificato un errore con la repository");
-				e.printStackTrace();
 				error = false;
 			
 			} 
@@ -301,9 +299,8 @@ public class TUI extends UserInterface{
 				error = true;
 				
 			} catch (StorageException e) {
-				System.out.println("Problema con la repository");
+				System.out.println("Si è verificato un errore con la repository");
 				error = false;
-				e.printStackTrace();
 			} 
 			
 		}while(error);

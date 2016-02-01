@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.controller.exception.TemplateNotFoundException;
@@ -46,8 +47,9 @@ class DataAggregator {
 	 * @throws TemplateNotFoundException
 	 * @throws StorageException
 	 * @throws ResponseException
+	 * @throws NotFound 
 	 */
-	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException{
+	public int crawl(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException, NotFound{
 		
 		URL url = new URL(source); // Throws MalformedURLException
 		

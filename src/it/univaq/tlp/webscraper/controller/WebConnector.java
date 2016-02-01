@@ -35,7 +35,7 @@ class WebConnector implements ConnectorInterface{
 	}
 	
 	@Override
-	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException{
+	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException, NotFound{
 		
 		Set <URL> urls = new LinkedHashSet<>();
 		// Se l'url è di un articolo
@@ -64,20 +64,10 @@ class WebConnector implements ConnectorInterface{
 			} catch (NullPointerException e){
 				throw new TemplateNotFoundException();
 			}
-				
-			try{
-				agent.visit(url.getSource());		    
-			} catch (ResponseException e){
-				e.printStackTrace();
-			}
-			
-			String HTML = "";
-			
-			try{
-				HTML = agent.doc.getFirst("<html>").innerHTML();
-			} catch (NotFound e){
-//				e.printStackTrace();	
-			}
+
+			agent.visit(url.getSource());		    
+
+			String HTML = agent.doc.getFirst("<html>").innerHTML();
 			
 			Jerry doc = Jerry.jerry(HTML);
 
@@ -194,10 +184,7 @@ class WebConnector implements ConnectorInterface{
 		String HTML = "";
 		try{
 			HTML = agent.doc.getFirst("<html>").innerHTML();
-		} catch (NotFound e){
-//			e.printStackTrace();
-			
-		}
+		} catch (NotFound e){ }
 		
 		Jerry doc = Jerry.jerry(HTML);
 		

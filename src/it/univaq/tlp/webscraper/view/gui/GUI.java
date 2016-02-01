@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.controller.exception.ContextAlreadyExistsException;
@@ -151,7 +152,7 @@ public class GUI extends UserInterface{
 							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_STORAGE_EXCEPTION);
 							dialog.open();
 							e.printStackTrace();
-						}  catch (ResponseException e) {
+						}  catch (ResponseException | NotFound e) {
 							Dialog dialog = new Dialog(Dialog.ERROR_INSERT_RESPONSE_EXCEPTION);
 							dialog.open();
 							e.printStackTrace();

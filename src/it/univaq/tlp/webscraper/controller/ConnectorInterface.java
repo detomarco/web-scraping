@@ -3,6 +3,7 @@ package it.univaq.tlp.webscraper.controller;
 
 import java.util.Set;
 
+import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.controller.exception.TemplateNotFoundException;
@@ -28,6 +29,6 @@ interface ConnectorInterface {
 	 * @throws TemplateNotFoundException
 	 * @throws ResponseException
 	 */
-	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException;
+	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException, NotFound;
 	
 }

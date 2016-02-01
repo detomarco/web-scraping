@@ -3,6 +3,7 @@ package it.univaq.tlp.webscraper.controller;
 import java.net.MalformedURLException;
 import java.util.Set;
 
+import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.controller.exception.ContextAlreadyExistsException;
@@ -54,8 +55,9 @@ public class Controller {
 	 * @throws TemplateNotFoundException
 	 * @throws StorageException
 	 * @throws ResponseException
+	 * @throws NotFound 
 	 */
-	public int scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException {
+	public int scrap(String source) throws MalformedURLException, WebsiteNotFoundException, TemplateNotFoundException, StorageException, ResponseException, NotFound {
 		return aggregator.crawl(source);
 	}
 	
