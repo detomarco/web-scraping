@@ -7,9 +7,8 @@ public abstract class UserInterface {
 
 	protected Controller controller;
 	
-	public UserInterface(Storable storage){
+	public UserInterface(Storable storage) {
 		controller = new Controller(storage);
-		
 	}
 	
 	public abstract void run();
