@@ -5,8 +5,10 @@ import it.univaq.tlp.webscraper.controller.repository.StorageException;
 import it.univaq.tlp.webscraper.controller.repository.database.MySQLDatabase;
 import it.univaq.tlp.webscraper.view.TUI;
 import it.univaq.tlp.webscraper.view.UserInterface;
+import it.univaq.tlp.webscraper.view.gui.GUI;
 
-public class ProgramTUI {
+@SuppressWarnings("unused")
+public class WebScraper {
 
 	public static void main(String[] args) {
 		
@@ -14,7 +16,7 @@ public class ProgramTUI {
 		
 		try {
 			
-			UserInterface console = new TUI(storage);
+			UserInterface console = new GUI(storage);
 			console.run();
 			
 		} catch (StorageException e) { }

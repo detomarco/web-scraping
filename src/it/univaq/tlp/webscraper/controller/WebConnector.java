@@ -219,20 +219,11 @@ class WebConnector implements ConnectorInterface{
 		    for(Element node: userAgent.doc.findFirst("<head>").findEvery("<meta>")){
 		    	
 		    	// Se è presente un contenuto
-		    	if(!node.getAttx("content").equals("") && !node.getAttx("name").equals("")){
-		    		article.addMetadata(node.getAttx("name"), node.getAttx("content"));
+		    	if(!node.getAt("content").equals("") && !node.getAt("name").equals("")){
+		    		article.addMetadata(node.getAt("name"), node.getAt("content"));
 		    	}
 		    }
 	    } catch (NotFound e){ }
-		
-		// Inserimento didascalie delle immagini
-	    for(Element node: userAgent.doc.findEvery("<img>")){
-	    	// Se � presente una didascalia (verificare che questo sia il controllo giusto)
-	    	if(!node.getAttx("alt").equals("")){
-	    		article.addImgCaption(node.getAttx("alt"));
-	    	}
-	    	
-	    }
 	    
 	    return article;
 	}

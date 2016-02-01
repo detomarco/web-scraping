@@ -1,8 +1,6 @@
 package it.univaq.tlp.webscraper.model.webdata;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,14 +24,13 @@ public class AggregatedData {
 	private String source;
 	private String date;
 	private String context;
-	private List<String> img_caption;
+	
 	private Map<String, Object> metadata;
 	
 	/**
 	 *  Default constructor
 	 */
 	public AggregatedData(){
-		this.img_caption = new ArrayList<>();
 		this.metadata = new HashMap<String, Object>();
 		this.context = "";
 		this.title = "";
@@ -169,14 +166,6 @@ public class AggregatedData {
 	 */
 	public void addMetadata(String key, String value){
 		metadata.put(key.replaceAll("\\s+", " ").trim(), value.replaceAll("\\s+", " ").trim());
-	}
-	
-	/**
-	 * This method puts article image caption
-	 * @param value
-	 */
-	public void addImgCaption(String value){
-		img_caption.add(value.replaceAll("\\s+", " ").trim());
 	}
 
 	/**
