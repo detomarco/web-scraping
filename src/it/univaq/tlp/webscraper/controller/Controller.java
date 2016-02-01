@@ -40,10 +40,10 @@ public class Controller {
 	public Controller(Storable storage){
 		
 		// Connessione al databse
-		this.aggregator = new DataAggregator(storage);
 		this.website_manager = new WebsiteManaging(storage);
 		this.article_manager = new ArticleManaging(storage);
-			
+		this.aggregator = new DataAggregator(website_manager, article_manager);
+		
 	} 
 	
 	/**

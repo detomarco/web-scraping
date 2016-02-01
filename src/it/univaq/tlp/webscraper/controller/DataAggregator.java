@@ -9,7 +9,6 @@ import com.jaunt.ResponseException;
 
 import it.univaq.tlp.webscraper.controller.exception.TemplateNotFoundException;
 import it.univaq.tlp.webscraper.controller.exception.WebsiteNotFoundException;
-import it.univaq.tlp.webscraper.controller.repository.Storable;
 import it.univaq.tlp.webscraper.controller.repository.StorageException;
 import it.univaq.tlp.webscraper.model.webdata.AggregatedData;
 import it.univaq.tlp.webscraper.model.webdata.Article;
@@ -32,9 +31,9 @@ class DataAggregator {
 	 * Constructor method
 	 * @param storage
 	 */
-	DataAggregator(Storable storage){
-		this.website_manager = new WebsiteManaging(storage);
-		this.article_manager = new ArticleManaging(storage);
+	DataAggregator(WebsiteManaging website_manager, ArticleManaging article_manager){
+		this.website_manager = website_manager;
+		this.article_manager = article_manager;
 		this.connector = new WebConnector();
 	}
 	
