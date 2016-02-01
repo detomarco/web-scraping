@@ -57,7 +57,7 @@ class DataAggregator {
 		Website website =  website_manager.getWebsite(url.getHost()); // Throws WebsiteNotFoundException
 		
 		// Recupera tutti gli articoli trovati (opportunamente strutturati)
-		Set<AggregatedData> new_articles = connector.collect(website, url, url.isList()); // Throws TemplateNotFoundException;
+		Set<AggregatedData> new_articles = connector.collect(website, url); // Throws TemplateNotFoundException;
 		
 		// Recupera tutti gli articoli già inseriti nel website
 		Set<Article> stored_articles = new LinkedHashSet<>();

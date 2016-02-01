@@ -29,6 +29,6 @@ interface ConnectorInterface {
 	 * @throws TemplateNotFoundException
 	 * @throws ResponseException
 	 */
-	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException, NotFound;
+	public Set<AggregatedData> collect(Website website, URL url) throws TemplateNotFoundException, ResponseException, NotFound;
 	
 }

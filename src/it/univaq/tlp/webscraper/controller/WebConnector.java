@@ -35,11 +35,12 @@ class WebConnector implements ConnectorInterface{
 	}
 	
 	@Override
-	public Set<AggregatedData> collect(Website website, URL url, boolean is_list) throws TemplateNotFoundException, ResponseException, NotFound{
+	public Set<AggregatedData> collect(Website website, URL url) throws TemplateNotFoundException, ResponseException, NotFound{
 		
 		Set <URL> urls = new LinkedHashSet<>();
+		
 		// Se l'url è di un articolo
-		if (!is_list){
+		if (!url.isList()){
 				// Aggiungi direttamente l'articolo
 				urls.add(url);
 				
@@ -163,23 +164,16 @@ class WebConnector implements ConnectorInterface{
 		agent.visit(url.getSource());		    
 		
 		// PULIZIA CODICE SORGENTE
-			// Elimina tutti i nodi link
-			for(Element node: agent.doc.findEvery("<link>")){
-				node.removeChildren();
-				node.erase();
-		    }
+		
+			// lista di nodi da eliminare
+			String[] nodes = {"link", "style", "script"};
 			
-			// Elimina tutti i nodi s
-			for(Element node: agent.doc.findEvery("<style>")){
-				node.removeChildren();
-				node.erase();
-		    }
-			
-			// Elimina tutti i nodi script
-			for(Element node: agent.doc.findEvery("<script>")){
-				node.removeChildren();
-				node.erase();
-		    }
+			for(String e: nodes){
+				for(Element node: agent.doc.findEvery("<"+e+">")){
+					node.removeChildren();
+					node.erase();
+			    }
+			}
 		
 		String HTML = "";
 		try{
