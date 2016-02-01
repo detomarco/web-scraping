@@ -44,6 +44,7 @@ public class MySQLDatabase extends Database {
 	/**
 	 * This method allows connection to database
 	 */
+	@Override
 	public void connect() throws StorageException{
 		Properties connProps = new Properties();
 		connProps.put("user", user);
@@ -52,12 +53,8 @@ public class MySQLDatabase extends Database {
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.db = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db_name, connProps);
-		} catch (SQLException e){
-			throw new StorageException("SQLException " + e.getMessage());
-		} catch (ClassNotFoundException e){
-			throw new StorageException("Class Not Found!");
 		} catch (Exception e){
-			throw new StorageException("Non definito");
+			throw new StorageException();
 		} 
 		
 	}
