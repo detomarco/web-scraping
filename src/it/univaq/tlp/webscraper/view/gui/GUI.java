@@ -638,6 +638,10 @@ public class GUI extends UserInterface{
 								Dialog dialog = new Dialog(Dialog.ERROR_INSERT_WEBSITE_ALREADY_EXISTS_EXCEPTION);
 								dialog.open();
 								e.printStackTrace();
+							} catch (DataOmittedException e) {
+								Dialog dialog = new Dialog(Dialog.ERROR_INSERT_DATA_OMITTED_EXCEPTION);
+								dialog.open();
+								e.printStackTrace();
 							}
 
 				    	}
