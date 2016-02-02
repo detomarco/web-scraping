@@ -33,7 +33,10 @@ web-scraping is written in Java, using external libraries to support web connect
  
 There is also a graphic user interface, developed using Swing and SWT libraries.
 
-This program has been developed using many interfaces that allow to modify it very quickly and handle different type of user-interface, web-connector or repository.
+This program has been developed using many interfaces that allow to modify it very quickly and handle different type of user-interfaces, web-connectors or repository.
+
+NOTE:
+Although software is written to be flexible on storage type, in this repository is uploaded the library package database to allow web-scraping to work with mysql database storage. A dump of database structure (including some stored content) is uploaded in the file web-scraper.txt in the root directory of the project.
 
 License :
 -------------------
