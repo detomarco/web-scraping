@@ -1,0 +1,9 @@
+it.univaq.tlp.webscraper
+it.univaq.tlp.webscraper.controller
+it.univaq.tlp.webscraper.controller.database
+it.univaq.tlp.webscraper.controller.exception
+it.univaq.tlp.webscraper.model.webdata
+it.univaq.tlp.webscraper.model.website
+it.univaq.tlp.webscraper.utility
+it.univaq.tlp.webscraper.view
+it.univaq.tlp.webscraper.view.gui
