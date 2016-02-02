@@ -32,7 +32,7 @@ public class URL {
 		this.path = this.url.getPath();
 	}
 	
-	/**
+	/** 
 	* @return url host
 	* 
 	*/
@@ -95,6 +95,10 @@ public class URL {
 		if(path.length()>0){
 			this.context = path.substring(1)+"/";
 			this.context = this.context.substring(0, this.context.indexOf("/"));
+			try{
+				Integer.parseInt(this.context);
+				this.context = "";
+			}catch(NumberFormatException e){  }
 		} else {
 			this.context = "";
 		}
@@ -139,9 +143,7 @@ public class URL {
 	* 
 	*/
 	private void validate() throws MalformedURLException{
-		String[] schemes = {"http","https"};
-		UrlValidator validator = new UrlValidator(schemes);
-		if(!validator.isValid(this.source)) throw new MalformedURLException();
+		URL.validate(this.source);
 	}
 	
 	/**
@@ -149,8 +151,9 @@ public class URL {
 	* @return true if it is a valid url, false otherwise
 	* 
 	*/
-	public static boolean validate(String url) throws MalformedURLException{
-		new URL(url);
-		return true;
+	public static void validate(String url) throws MalformedURLException{
+		String[] schemes = {"http","https"};
+		UrlValidator validator = new UrlValidator(schemes);
+		if(!validator.isValid(url)) throw new MalformedURLException();
 	}
 }
