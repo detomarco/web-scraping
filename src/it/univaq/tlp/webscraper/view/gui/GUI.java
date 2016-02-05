@@ -533,6 +533,7 @@ public class GUI extends UserInterface{
 					    		ArticleTemplate template = new ArticleTemplate(context.getText(), header.getText(), eyelet.getText(), summary.getText(), text.getText(), author.getText(), date.getText());
 
 									try {
+										System.out.println(source);
 										controller.insertTemplate(template, listTemplate, source);
 										Dialog dialog = new Dialog(Dialog.SUCCESS_INSERT);
 										dialog.open();

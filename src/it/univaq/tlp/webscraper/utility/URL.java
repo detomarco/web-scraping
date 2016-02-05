@@ -143,7 +143,9 @@ public class URL {
 	* 
 	*/
 	private void validate() throws MalformedURLException{
-		URL.validate(this.source);
+		String[] schemes = {"http","https"};
+		UrlValidator validator = new UrlValidator(schemes);
+		if(!validator.isValid(this.source)) throw new MalformedURLException();
 	}
 	
 	/**
@@ -152,8 +154,6 @@ public class URL {
 	* 
 	*/
 	public static void validate(String url) throws MalformedURLException{
-		String[] schemes = {"http","https"};
-		UrlValidator validator = new UrlValidator(schemes);
-		if(!validator.isValid(url)) throw new MalformedURLException();
+		new URL(url);
 	}
 }
